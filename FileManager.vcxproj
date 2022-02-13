@@ -171,6 +171,7 @@
     <ClInclude Include="src\ForwardDeclaration.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\FileHandle.cpp" />
     <ClCompile Include="src\FileManager.cpp" />
   </ItemGroup>
   <ItemGroup>

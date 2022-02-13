@@ -18,6 +18,11 @@ namespace file_manager
 
 	}
 
+	void FileManager::notify(const filesystem::path& pathToFile)
+	{
+
+	}
+
 	FileManager::FileManager(uint32_t threadsCount) :
 		threadPool(make_unique<threading::ThreadPool>(threadsCount))
 	{

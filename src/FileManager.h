@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <thread>
 #include <mutex>
+#include <fstream>
 
 #include "ForwardDeclaration.h"
 
@@ -30,11 +31,31 @@ namespace file_manager
 
 			filePathState();
 		};
+		
+		class FileHandle
+		{
+		protected:
+			std::filesystem::path pathToFile;
+			std::fstream file;
+			bool isNotifyOnDestruction;
+
+		public:
+			FileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode);
+
+			FileHandle(FileHandle&& other) noexcept;
+
+			FileHandle& operator = (FileHandle&& other) noexcept;
+
+			virtual ~FileHandle();
+		};
 
 	private:
 		std::unique_ptr<threading::ThreadPool> threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, pathHash> files;
 		std::mutex filesMutex;
+
+	private:
+		void notify(const std::filesystem::path& pathToFile);
 
 	private:
 		FileManager(uint32_t threadsCount);
