@@ -171,8 +171,10 @@
     <ClInclude Include="src\ForwardDeclaration.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ReadFileHandle.cpp" />
     <ClCompile Include="src\FileHandle.cpp" />
     <ClCompile Include="src\FileManager.cpp" />
+    <ClCompile Include="src\WriteFileHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies\ThreadPool\LICENSE" />

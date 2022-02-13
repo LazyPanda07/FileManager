@@ -49,13 +49,38 @@ namespace file_manager
 			virtual ~FileHandle();
 		};
 
+	public:
+		class FILE_MANAGER_API ReadFileHandle : public FileHandle
+		{
+		private:
+			ReadFileHandle(const std::filesystem::path& pathToFile);
+
+		public:
+			~ReadFileHandle();
+		};
+
+		class FILE_MANAGER_API WriteFileHandle : public FileHandle
+		{
+		private:
+			WriteFileHandle(const std::filesystem::path& pathToFile);
+
+		public:
+			~WriteFileHandle();
+		};
+
 	private:
 		std::unique_ptr<threading::ThreadPool> threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, pathHash> files;
 		std::mutex filesMutex;
 
 	private:
-		void notify(const std::filesystem::path& pathToFile);
+		void notify(std::filesystem::path&& pathToFile);
+
+		void processQueue(const std::filesystem::path& pathToFile);
+
+		void changeReadRequests(const std::filesystem::path& pathToFile, int value);
+
+		void changeIsWriteRequest(const std::filesystem::path& pathToFile, bool value);
 
 	private:
 		FileManager(uint32_t threadsCount);
@@ -76,4 +101,7 @@ namespace file_manager
 
 		void addFile(const std::filesystem::path& pathToFile, bool isFileAlreadyExist = true);
 	};
+
+	using ReadFileHandle = FileManager::ReadFileHandle;
+	using WriteFileHandle = FileManager::WriteFileHandle;
 }

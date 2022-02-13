@@ -18,9 +18,36 @@ namespace file_manager
 
 	}
 
-	void FileManager::notify(const filesystem::path& pathToFile)
+	void FileManager::notify(filesystem::path&& pathToFile)
+	{
+		lock_guard<mutex> filesLock(filesMutex);
+
+		if (!files[pathToFile].isWriteRequest)
+		{
+			threadPool->addTask([this, path = move(pathToFile)]()
+				{
+					this->processQueue(path);
+				});
+		}
+	}
+
+	void FileManager::processQueue(const filesystem::path& pathToFile)
 	{
 
+	}
+
+	void FileManager::changeReadRequests(const filesystem::path& pathToFile, int value)
+	{
+		lock_guard<mutex> filesLock(filesMutex);
+
+		files[pathToFile].readRequests += value;
+	}
+
+	void FileManager::changeIsWriteRequest(const filesystem::path& pathToFile, bool value)
+	{
+		lock_guard<mutex> filesLock(filesMutex);
+
+		files[pathToFile].isWriteRequest = value;
 	}
 
 	FileManager::FileManager(uint32_t threadsCount) :
