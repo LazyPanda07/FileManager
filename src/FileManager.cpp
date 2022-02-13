@@ -6,6 +6,18 @@ using namespace std;
 
 namespace file_manager
 {
+	size_t FileManager::pathHash::operator () (const filesystem::path& pathToFile) const noexcept
+	{
+		return hash<string>()(pathToFile.string());
+	}
+
+	FileManager::filePathState::filePathState() :
+		readRequests(0),
+		isWriteRequest(false)
+	{
+
+	}
+
 	FileManager::FileManager(uint32_t threadsCount) :
 		threadPool(make_unique<threading::ThreadPool>(threadsCount))
 	{
@@ -24,5 +36,27 @@ namespace file_manager
 		}
 
 		return instance;
+	}
+
+	void FileManager::addFile(const filesystem::path& pathToFile, bool isFileAlreadyExist)
+	{
+		if (isFileAlreadyExist)
+		{
+			if (!filesystem::exists(pathToFile))
+			{
+				lock_guard<mutex> filesLock(filesMutex);
+
+				files.erase(pathToFile);
+
+				throw runtime_error("File doesn't exist");
+			}
+		}
+
+		lock_guard<mutex> filesLock(filesMutex);
+
+		if (files.find(pathToFile) == files.end())
+		{
+			files[pathToFile] = filePathState();
+		}
 	}
 }
