@@ -5,6 +5,9 @@
 #include <thread>
 #include <mutex>
 #include <fstream>
+#include <functional>
+#include <variant>
+#include <queue>
 
 #include "ForwardDeclaration.h"
 
@@ -57,6 +60,8 @@ namespace file_manager
 
 		public:
 			~ReadFileHandle();
+
+			friend class FileManager;
 		};
 
 		class FILE_MANAGER_API WriteFileHandle : public FileHandle
@@ -66,12 +71,30 @@ namespace file_manager
 
 		public:
 			~WriteFileHandle();
+
+			friend class FileManager;
 		};
+
+		using readFileCallback = std::function<void(ReadFileHandle&&)>;
+		using writeFileCallback = std::function<void(WriteFileHandle&&)>;
+
+	private:
+		enum class callbackType
+		{
+			read,
+			write
+		};
+
+		using fileCallback = std::variant<readFileCallback, writeFileCallback>;
+
+		friend bool operator == (const fileCallback& callback, callbackType type);
 
 	private:
 		std::unique_ptr<threading::ThreadPool> threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, pathHash> files;
+		std::unordered_map<std::filesystem::path, std::queue<fileCallback>, pathHash> requests;
 		std::mutex filesMutex;
+		std::mutex requestsMutex;
 
 	private:
 		void notify(std::filesystem::path&& pathToFile);
@@ -104,4 +127,13 @@ namespace file_manager
 
 	using ReadFileHandle = FileManager::ReadFileHandle;
 	using WriteFileHandle = FileManager::WriteFileHandle;
+
+	/// <summary>
+	/// std::function&lt;void(ReadFileHandle&amp;&amp;)&gt;;
+	/// </summary>
+	using readFileCallback = FileManager::readFileCallback;
+	/// <summary>
+	/// std::function&lt;void(WriteFileHandle&amp;&amp;)&gt;;
+	/// </summary>
+	using writeFileCallback = FileManager::writeFileCallback;
 }
