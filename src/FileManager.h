@@ -1,5 +1,10 @@
 #pragma once
 
+#include <filesystem>
+#include <thread>
+
+#include "ForwardDeclaration.h"
+
 #ifdef FILE_MANAGER_DLL
 #define FILE_MANAGER_API __declspec(dllexport)
 #else
@@ -11,7 +16,10 @@ namespace file_manager
 	class FILE_MANAGER_API FileManager
 	{
 	private:
-		FileManager();
+		std::unique_ptr<threading::ThreadPool> threadPool;
+
+	private:
+		FileManager(uint32_t threadsCount);
 
 		~FileManager() = default;
 
@@ -25,7 +33,7 @@ namespace file_manager
 		FileManager& operator = (FileManager&&) noexcept = delete;
 
 	public:
-		static FileManager& getInstance();
+		static FileManager& getInstance(uint32_t threadsCount = std::thread::hardware_concurrency());
 
 
 	};

@@ -39,3 +39,6 @@ bin/
 
 # .sln file
 FileManager.sln
+
+# Dependencies
+!ThreadPool.lib
