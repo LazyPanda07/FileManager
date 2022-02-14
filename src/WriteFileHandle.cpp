@@ -4,8 +4,8 @@ using namespace std;
 
 namespace file_manager
 {
-	WriteFileHandle::WriteFileHandle(const filesystem::path& pathToFile) :
-		FileHandle(pathToFile, ios_base::out)
+	WriteFileHandle::WriteFileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
+		FileHandle(pathToFile, mode | ios_base::out)
 	{
 		FileManager::getInstance().changeIsWriteRequest(pathToFile, true);
 	}

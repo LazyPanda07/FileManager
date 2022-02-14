@@ -31,6 +31,11 @@ namespace file_manager
 		return *this;
 	}
 
+	uintmax_t FileManager::FileHandle::getFileSize() const
+	{
+		return filesystem::file_size(pathToFile);
+	}
+
 	FileManager::FileHandle::~FileHandle()
 	{
 		if (isNotifyOnDestruction)
