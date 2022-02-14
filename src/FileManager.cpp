@@ -1,5 +1,7 @@
 #include "FileManager.h"
 
+#include <future>
+
 #include "ThreadPool.h"
 
 using namespace std;
@@ -36,7 +38,14 @@ namespace file_manager
 		}
 	}
 
-	void FileManager::processQueue(const filesystem::path& pathToFile)
+	void FileManager::addRequest(const filesystem::path& pathToFile, fileCallback&& callback)
+	{
+		lock_guard<mutex> requestsLock(requestsMutex);
+
+		requests[pathToFile].push(move(callback));
+	}
+
+	void FileManager::processQueue(const filesystem::path& pathToFile, const function<void()>& onEndCallback)
 	{
 		lock_guard<mutex> requestsLock(requestsMutex);
 		queue<fileCallback>& requestsQueue = requests[pathToFile];
@@ -63,7 +72,7 @@ namespace file_manager
 				threadPool->addTask([pathToFile, readCallback = move(tem)]()
 				{
 					readCallback(ReadFileHandle(pathToFile));
-				});
+				}, onEndCallback);
 			}
 			else if (callback == callbackType::write)
 			{
@@ -83,7 +92,7 @@ namespace file_manager
 				threadPool->addTask([pathToFile, writeCallback = move(tem)]()
 				{
 					writeCallback(WriteFileHandle(pathToFile));
-				});
+				}, onEndCallback);
 
 				return;
 			}
@@ -143,6 +152,58 @@ namespace file_manager
 		if (files.find(pathToFile) == files.end())
 		{
 			files[pathToFile] = filePathState();
+		}
+	}
+
+	void FileManager::readFile(const filesystem::path& pathToFile, const readFileCallback& callback, bool isWait)
+	{
+		this->addFile(pathToFile);
+
+		this->addRequest(pathToFile, callback);
+
+		if (isWait)
+		{
+			promise<void> isReady;
+			future<void> waiting = isReady.get_future();
+
+			this->processQueue(pathToFile, [&isReady]()
+				{
+					isReady.set_value();
+				});
+
+			this->processQueue(pathToFile);
+
+			waiting.wait();
+		}
+		else
+		{
+			this->processQueue(pathToFile);
+		}
+	}
+
+	void FileManager::writeFile(const filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait)
+	{
+		this->addFile(pathToFile, false);
+
+		this->addRequest(pathToFile, callback);
+
+		if (isWait)
+		{
+			promise<void> isReady;
+			future<void> waiting = isReady.get_future();
+
+			this->processQueue(pathToFile, [&isReady]()
+				{
+					isReady.set_value();
+				});
+
+			this->processQueue(pathToFile);
+
+			waiting.wait();
+		}
+		else
+		{
+			this->processQueue(pathToFile);
 		}
 	}
 }

@@ -10,6 +10,11 @@ namespace file_manager
 		FileManager::getInstance().changeReadRequests(pathToFile, 1);
 	}
 
+	string ReadFileHandle::readAllFile()
+	{
+		return (ostringstream() << file.rdbuf()).str();
+	}
+
 	ReadFileHandle::~ReadFileHandle()
 	{
 		if (isNotifyOnDestruction)

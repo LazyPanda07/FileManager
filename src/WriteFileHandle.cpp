@@ -10,6 +10,11 @@ namespace file_manager
 		FileManager::getInstance().changeIsWriteRequest(pathToFile, true);
 	}
 
+	void WriteFileHandle::write(const std::string& data)
+	{
+		file.write(data.data(), data.size());
+	}
+
 	WriteFileHandle::~WriteFileHandle()
 	{
 		if (isNotifyOnDestruction)

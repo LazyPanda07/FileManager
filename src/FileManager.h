@@ -59,6 +59,8 @@ namespace file_manager
 			ReadFileHandle(const std::filesystem::path& pathToFile);
 
 		public:
+			std::string readAllFile();
+
 			~ReadFileHandle();
 
 			friend class FileManager;
@@ -70,6 +72,8 @@ namespace file_manager
 			WriteFileHandle(const std::filesystem::path& pathToFile);
 
 		public:
+			void write(const std::string& data);
+
 			~WriteFileHandle();
 
 			friend class FileManager;
@@ -99,7 +103,9 @@ namespace file_manager
 	private:
 		void notify(std::filesystem::path&& pathToFile);
 
-		void processQueue(const std::filesystem::path& pathToFile);
+		void addRequest(const std::filesystem::path& pathToFile, fileCallback&& callback);
+
+		void processQueue(const std::filesystem::path& pathToFile, const std::function<void()>& onEndCallback = nullptr);
 
 		void changeReadRequests(const std::filesystem::path& pathToFile, int value);
 
@@ -123,6 +129,10 @@ namespace file_manager
 		static FileManager& getInstance(uint32_t threadsCount = std::thread::hardware_concurrency());
 
 		void addFile(const std::filesystem::path& pathToFile, bool isFileAlreadyExist = true);
+
+		void readFile(const std::filesystem::path& pathToFile, const readFileCallback& callback, bool isWait = true);
+
+		void writeFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait = true);
 	};
 
 	using ReadFileHandle = FileManager::ReadFileHandle;
