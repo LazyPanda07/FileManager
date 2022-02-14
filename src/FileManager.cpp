@@ -1,6 +1,7 @@
 #include "FileManager.h"
 
 #include <future>
+#include <iostream>
 
 #include "ThreadPool.h"
 
@@ -20,16 +21,23 @@ namespace file_manager
 
 	}
 
-	static bool operator == (const FileManager::fileCallback& callback, FileManager::callbackType type)
+	FileManager::requestStruct::requestStruct(fileCallback&& callback, const function<void()>& onEndCallback) :
+		callback(move(callback)),
+		onEndCallback(onEndCallback)
 	{
-		return callback.index() == static_cast<size_t>(type);
+
 	}
 
-	void FileManager::notify(filesystem::path&& pathToFile)
+	static bool operator == (const FileManager::requestStruct& request, FileManager::requestType type)
+	{
+		return request.callback.index() == static_cast<size_t>(type);
+	}
+
+	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
 	{
 		lock_guard<mutex> filesLock(filesMutex);
 
-		if (!files[pathToFile].isWriteRequest)
+		if (mode == ios_base::out && !files[pathToFile].isWriteRequest)
 		{
 			threadPool->addTask([this, tem = move(pathToFile)]()
 			{
@@ -38,23 +46,23 @@ namespace file_manager
 		}
 	}
 
-	void FileManager::addRequest(const filesystem::path& pathToFile, fileCallback&& callback)
+	void FileManager::addRequest(const filesystem::path& pathToFile, fileCallback&& callback, const function<void()>& onEndCallback)
 	{
 		lock_guard<mutex> requestsLock(requestsMutex);
 
-		requests[pathToFile].push(move(callback));
+		requests[pathToFile].push(requestStruct(move(callback), onEndCallback));
 	}
 
-	void FileManager::processQueue(const filesystem::path& pathToFile, const function<void()>& onEndCallback)
+	void FileManager::processQueue(const filesystem::path& pathToFile)
 	{
 		lock_guard<mutex> requestsLock(requestsMutex);
-		queue<fileCallback>& requestsQueue = requests[pathToFile];
+		queue<requestStruct>& requestsQueue = requests[pathToFile];
 
 		while (requestsQueue.size())
 		{
-			fileCallback& callback = requestsQueue.front();
+			requestStruct& request = requestsQueue.front();
 
-			if (callback == callbackType::read)
+			if (request == requestType::read)
 			{
 				{
 					lock_guard<mutex> filesLock(filesMutex);
@@ -65,16 +73,17 @@ namespace file_manager
 					}
 				}
 
-				readFileCallback tem = move(get<readFileCallback>(callback));
+				readFileCallback tem = move(get<readFileCallback>(request.callback));
+				function<void()> onEndCallback = move(request.onEndCallback);
 
 				requestsQueue.pop();
 
-				threadPool->addTask([pathToFile, readCallback = move(tem)]()
+				threadPool->addTask([pathToFile, callback = move(tem)]()
 				{
-					readCallback(ReadFileHandle(pathToFile));
+					callback(ReadFileHandle(pathToFile));
 				}, onEndCallback);
 			}
-			else if (callback == callbackType::write)
+			else if (request == requestType::write)
 			{
 				{
 					lock_guard<mutex> filesLock(filesMutex);
@@ -85,7 +94,8 @@ namespace file_manager
 					}
 				}
 
-				writeFileCallback tem = move(get<writeFileCallback>(callback));
+				writeFileCallback tem = move(get<writeFileCallback>(request.callback));
+				function<void()> onEndCallback = move(request.onEndCallback);
 
 				requestsQueue.pop();
 
@@ -159,24 +169,24 @@ namespace file_manager
 	{
 		this->addFile(pathToFile);
 
-		this->addRequest(pathToFile, callback);
-
 		if (isWait)
 		{
 			promise<void> isReady;
-			future<void> waiting = isReady.get_future();
+			future<void> waitOperation = isReady.get_future();
 
-			this->processQueue(pathToFile, [&isReady]()
+			this->addRequest(pathToFile, callback, [&isReady]()
 				{
 					isReady.set_value();
 				});
 
 			this->processQueue(pathToFile);
 
-			waiting.wait();
+			waitOperation.wait();
 		}
 		else
 		{
+			this->addRequest(pathToFile, callback);
+
 			this->processQueue(pathToFile);
 		}
 	}
@@ -185,24 +195,24 @@ namespace file_manager
 	{
 		this->addFile(pathToFile, false);
 
-		this->addRequest(pathToFile, callback);
-
 		if (isWait)
 		{
 			promise<void> isReady;
-			future<void> waiting = isReady.get_future();
+			future<void> waitOperation = isReady.get_future();
 
-			this->processQueue(pathToFile, [&isReady]()
+			this->addRequest(pathToFile, callback, [&isReady]()
 				{
 					isReady.set_value();
 				});
 
 			this->processQueue(pathToFile);
 
-			waiting.wait();
+			waitOperation.wait();
 		}
 		else
 		{
+			this->addRequest(pathToFile, callback);
+
 			this->processQueue(pathToFile);
 		}
 	}

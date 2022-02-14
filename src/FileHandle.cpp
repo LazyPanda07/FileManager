@@ -7,6 +7,7 @@ namespace file_manager
 	FileManager::FileHandle::FileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
 		pathToFile(pathToFile),
 		file(pathToFile, mode),
+		mode(mode),
 		isNotifyOnDestruction(true)
 	{
 
@@ -21,6 +22,7 @@ namespace file_manager
 	{
 		pathToFile = move(other.pathToFile);
 		file = move(other.file);
+		mode = other.mode;
 
 		isNotifyOnDestruction = true;
 
@@ -35,7 +37,7 @@ namespace file_manager
 		{
 			file.close();
 
-			FileManager::getInstance().notify(move(pathToFile));
+			FileManager::getInstance().notify(move(pathToFile), mode);
 		}
 	}
 }

@@ -40,6 +40,7 @@ namespace file_manager
 		protected:
 			std::filesystem::path pathToFile;
 			std::fstream file;
+			std::ios_base::openmode mode;
 			bool isNotifyOnDestruction;
 
 		public:
@@ -83,7 +84,7 @@ namespace file_manager
 		using writeFileCallback = std::function<void(WriteFileHandle&&)>;
 
 	private:
-		enum class callbackType
+		enum class requestType
 		{
 			read,
 			write
@@ -91,21 +92,29 @@ namespace file_manager
 
 		using fileCallback = std::variant<readFileCallback, writeFileCallback>;
 
-		friend bool operator == (const fileCallback& callback, callbackType type);
+		struct requestStruct
+		{
+			fileCallback callback;
+			std::function<void()> onEndCallback;
+
+			requestStruct(fileCallback&& callback, const std::function<void()>& onEndCallback);
+		};
+
+		friend bool operator == (const requestStruct& request, requestType type);
 
 	private:
 		std::unique_ptr<threading::ThreadPool> threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, pathHash> files;
-		std::unordered_map<std::filesystem::path, std::queue<fileCallback>, pathHash> requests;
+		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, pathHash> requests;
 		std::mutex filesMutex;
 		std::mutex requestsMutex;
 
 	private:
-		void notify(std::filesystem::path&& pathToFile);
+		void notify(std::filesystem::path&& pathToFile, std::ios_base::openmode mode);
 
-		void addRequest(const std::filesystem::path& pathToFile, fileCallback&& callback);
+		void addRequest(const std::filesystem::path& pathToFile, fileCallback&& callback, const std::function<void()>& onEndCallback = nullptr);
 
-		void processQueue(const std::filesystem::path& pathToFile, const std::function<void()>& onEndCallback = nullptr);
+		void processQueue(const std::filesystem::path& pathToFile);
 
 		void changeReadRequests(const std::filesystem::path& pathToFile, int value);
 
