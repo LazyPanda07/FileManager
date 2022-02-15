@@ -1,7 +1,9 @@
 #include "FileManager.h"
 
 #include <future>
-#include <iostream>
+
+#include "Exceptions/FileDoesNotExistException.h"
+#include "Exceptions/NotAFileException.h"
 
 #include "ThreadPool.h"
 
@@ -240,7 +242,12 @@ namespace file_manager
 
 				files.erase(pathToFile);
 
-				throw runtime_error("File doesn't exist");
+				throw exceptions::FileDoesNotExistException(pathToFile);
+			}
+
+			if (!filesystem::is_regular_file(pathToFile))
+			{
+				throw exceptions::NotAFileException(pathToFile);
 			}
 		}
 

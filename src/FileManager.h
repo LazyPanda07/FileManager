@@ -13,6 +13,9 @@
 
 #ifdef FILE_MANAGER_DLL
 #define FILE_MANAGER_API __declspec(dllexport)
+
+#pragma warning(disable: 4251)
+#pragma warning(disable: 4275)
 #else
 #define FILE_MANAGER_API
 #endif
@@ -21,6 +24,7 @@ namespace file_manager
 {
 	using std::streamsize;
 
+	/// @brief Provides files accessing from multiple threads. Singleton
 	class FILE_MANAGER_API FileManager
 	{
 	private:
@@ -58,6 +62,7 @@ namespace file_manager
 		};
 
 	public:
+		/// @brief Provides reading files
 		class FILE_MANAGER_API ReadFileHandle : public FileHandle
 		{
 		private:
@@ -75,6 +80,8 @@ namespace file_manager
 			/// @return Number of characters read
 			streamsize readSome(std::string& outData, streamsize count, bool resizeOutData = true);
 
+			/// @brief Get reading stream
+			/// @return Input stream
 			std::istream& getStream();
 
 			virtual ~ReadFileHandle();
@@ -82,6 +89,7 @@ namespace file_manager
 			friend class FileManager;
 		};
 
+		/// @brief Provides writing files
 		class FILE_MANAGER_API WriteFileHandle : public FileHandle
 		{
 		private:
@@ -92,6 +100,8 @@ namespace file_manager
 			/// @param data Data
 			void write(const std::string& data);
 
+			/// @brief Get writing stream
+			/// @return Output stream
 			std::ostream& getStream();
 
 			virtual ~WriteFileHandle();
@@ -207,18 +217,51 @@ namespace file_manager
 	public:
 		static FileManager& getInstance(uint32_t threadsCount = std::thread::hardware_concurrency());
 
+		/// @brief Add file to manager
+		/// @param pathToFile Path to file
+		/// @param isFileAlreadyExist If true and file does not exist FileDoesNotExistException will be thrown. If true and pathToFile contains path to non regular file NotAFileException will be thrown
+		/// @exception FileDoesNotExistException 
+		/// @exception NotAFileException 
 		void addFile(const std::filesystem::path& pathToFile, bool isFileAlreadyExist = true);
 
+		/// @brief Read file in standard mode
+		/// @param pathToFile Path to file
+		/// @param callback Function that will be called for reading file
+		/// @param isWait If true thread will wait till callback end
+		/// @exception FileDoesNotExistException 
+		/// @exception NotAFileException 
 		void readFile(const std::filesystem::path& pathToFile, const readFileCallback& callback, bool isWait = true);
 
+		/// @brief Read file in binary mode
+		/// @param pathToFile Path to file
+		/// @param callback Function that will be called for reading file
+		/// @param isWait If true thread will wait till callback end
+		/// @exception FileDoesNotExistException 
+		/// @exception NotAFileException 
 		void readBinaryFile(const std::filesystem::path& pathToFile, const readFileCallback& callback, bool isWait = true);
 
+		/// @brief Create/Recreate and write file in standard mode
+		/// @param pathToFile Path to file
+		/// @param callback Function that will be called for writing file
+		/// @param isWait If true thread will wait till callback end
 		void writeFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait = true);
 
+		/// @brief Create file if it does not exist and write file in standard mode
+		/// @param pathToFile Path to file
+		/// @param callback Function that will be called for writing file
+		/// @param isWait If true thread will wait till callback end
 		void appendFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait = true);
 
+		/// @brief Create/Recreate and write file in binary mode
+		/// @param pathToFile Path to file
+		/// @param callback Function that will be called for writing file
+		/// @param isWait If true thread will wait till callback end
 		void writeBinaryFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait = true);
 
+		/// @brief Create file if it does not exist and write file in binary mode
+		/// @param pathToFile Path to file
+		/// @param callback Function that will be called for writing file
+		/// @param isWait If true thread will wait till callback end
 		void appendBinaryFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait = true);
 	};
 
@@ -226,11 +269,11 @@ namespace file_manager
 	using WriteFileHandle = FileManager::WriteFileHandle;
 
 	/// <summary>
-	/// std::function&lt;void(ReadFileHandle&amp;&amp;)&gt;;
+	/// std::function&lt;void(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;;
 	/// </summary>
 	using readFileCallback = FileManager::readFileCallback;
 	/// <summary>
-	/// std::function&lt;void(WriteFileHandle&amp;&amp;)&gt;;
+	/// std::function&lt;void(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;;
 	/// </summary>
 	using writeFileCallback = FileManager::writeFileCallback;
 }

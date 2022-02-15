@@ -167,12 +167,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Exceptions\BaseFileManagerException.h" />
+    <ClInclude Include="src\Exceptions\FileDoesNotExistException.h" />
+    <ClInclude Include="src\Exceptions\NotAFileException.h" />
     <ClInclude Include="src\FileManager.h" />
     <ClInclude Include="src\ForwardDeclaration.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\AppendBinaryFileHandle.cpp" />
     <ClCompile Include="src\AppendFileHandle.cpp" />
+    <ClCompile Include="src\Exceptions\BaseFileManagerException.cpp" />
+    <ClCompile Include="src\Exceptions\FileDoesNotExistException.cpp" />
+    <ClCompile Include="src\Exceptions\NotAFileException.cpp" />
     <ClCompile Include="src\ReadBinaryFileHandle.cpp" />
     <ClCompile Include="src\ReadFileHandle.cpp" />
     <ClCompile Include="src\FileHandle.cpp" />
