@@ -75,6 +75,8 @@ namespace file_manager
 			/// @return Number of characters read
 			streamsize readSome(std::string& outData, streamsize count, bool resizeOutData = true);
 
+			std::istream& getStream();
+
 			virtual ~ReadFileHandle();
 
 			friend class FileManager;
@@ -89,6 +91,8 @@ namespace file_manager
 			/// @brief Write data to file
 			/// @param data Data
 			void write(const std::string& data);
+
+			std::ostream& getStream();
 
 			virtual ~WriteFileHandle();
 
@@ -177,9 +181,9 @@ namespace file_manager
 
 		void processQueue(const std::filesystem::path& pathToFile);
 
-		void changeReadRequests(const std::filesystem::path& pathToFile, int value);
+		void decreaseReadRequests(const std::filesystem::path& pathToFile);
 
-		void changeIsWriteRequest(const std::filesystem::path& pathToFile, bool value);
+		void completeWriteRequest(const std::filesystem::path& pathToFile);
 
 	private:
 		FileManager(uint32_t threadsCount);

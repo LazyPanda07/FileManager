@@ -7,7 +7,7 @@ namespace file_manager
 	ReadFileHandle::ReadFileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
 		FileHandle(pathToFile, mode | ios_base::in)
 	{
-		FileManager::getInstance().changeReadRequests(pathToFile, 1);
+		
 	}
 
 	string ReadFileHandle::readAllData()
@@ -32,11 +32,16 @@ namespace file_manager
 		return result;
 	}
 
+	istream& ReadFileHandle::getStream()
+	{
+		return file.read(nullptr, 0);
+	}
+
 	ReadFileHandle::~ReadFileHandle()
 	{
 		if (isNotifyOnDestruction)
 		{
-			FileManager::getInstance().changeReadRequests(pathToFile, -1);
+			FileManager::getInstance().decreaseReadRequests(pathToFile);
 		}
 	}
 }

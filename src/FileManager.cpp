@@ -93,11 +93,14 @@ namespace file_manager
 			{
 				{
 					lock_guard<mutex> filesLock(filesMutex);
+					filePathState& fileState = files[pathToFile];
 
-					if (files[pathToFile].isWriteRequest)
+					if (fileState.isWriteRequest)
 					{
 						return;
 					}
+
+					fileState.readRequests++;
 				}
 
 				readFileCallback tem = move(get<readFileCallback>(request.callback));
@@ -115,12 +118,14 @@ namespace file_manager
 			{
 				{
 					lock_guard<mutex> filesLock(filesMutex);
-					filePathState& check = files[pathToFile];
+					filePathState& fileState = files[pathToFile];
 
-					if (check.isWriteRequest || files[pathToFile].readRequests)
+					if (fileState.isWriteRequest || fileState.readRequests)
 					{
 						return;
 					}
+
+					fileState.isWriteRequest = true;
 				}
 
 				writeFileCallback tem = move(get<writeFileCallback>(request.callback));
@@ -139,18 +144,18 @@ namespace file_manager
 		}
 	}
 
-	void FileManager::changeReadRequests(const filesystem::path& pathToFile, int value)
+	void FileManager::decreaseReadRequests(const filesystem::path& pathToFile)
 	{
 		lock_guard<mutex> filesLock(filesMutex);
 
-		files[pathToFile].readRequests += value;
+		files[pathToFile].readRequests--;
 	}
 
-	void FileManager::changeIsWriteRequest(const filesystem::path& pathToFile, bool value)
+	void FileManager::completeWriteRequest(const filesystem::path& pathToFile)
 	{
 		lock_guard<mutex> filesLock(filesMutex);
 
-		files[pathToFile].isWriteRequest = value;
+		files[pathToFile].isWriteRequest = false;
 	}
 
 	FileManager::FileManager(uint32_t threadsCount) :
