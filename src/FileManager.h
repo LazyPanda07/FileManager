@@ -95,8 +95,8 @@ namespace file_manager
 			friend class FileManager;
 		};
 
-		using readFileCallback = std::function<void(ReadFileHandle&&)>;
-		using writeFileCallback = std::function<void(WriteFileHandle&&)>;
+		using readFileCallback = std::function<void(std::unique_ptr<ReadFileHandle>&&)>;
+		using writeFileCallback = std::function<void(std::unique_ptr<WriteFileHandle>&&)>;
 
 	private:
 		class ReadBinaryFileHandle : public ReadFileHandle
@@ -169,7 +169,7 @@ namespace file_manager
 		std::mutex requestsMutex;
 
 	private:
-		FileHandle createHandle(const std::filesystem::path& pathToFile, requestFileHandleType handleType);
+		FileHandle* createHandle(const std::filesystem::path& pathToFile, requestFileHandleType handleType);
 
 		void notify(std::filesystem::path&& pathToFile, std::ios_base::openmode mode);
 

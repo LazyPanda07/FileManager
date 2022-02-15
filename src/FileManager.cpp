@@ -34,37 +34,37 @@ namespace file_manager
 		return request.callback.index() == static_cast<size_t>(type);
 	}
 
-	FileManager::FileHandle FileManager::createHandle(const filesystem::path& pathToFile, requestFileHandleType handleType)
+	FileManager::FileHandle* FileManager::createHandle(const filesystem::path& pathToFile, requestFileHandleType handleType)
 	{
 		switch (handleType)
 		{
 		case file_manager::FileManager::requestFileHandleType::read:
-			return ReadFileHandle(pathToFile);
+			return new ReadFileHandle(pathToFile);
 
 		case file_manager::FileManager::requestFileHandleType::write:
-			return WriteFileHandle(pathToFile);
+			return new WriteFileHandle(pathToFile);
 			
 		case file_manager::FileManager::requestFileHandleType::readBinary:
-			return ReadBinaryFileHandle(pathToFile);
+			return new ReadBinaryFileHandle(pathToFile);
 
 		case file_manager::FileManager::requestFileHandleType::writeBinary:
-			return WriteBinaryFileHandle(pathToFile);
+			return new WriteBinaryFileHandle(pathToFile);
 
 		case file_manager::FileManager::requestFileHandleType::append:
-			return AppendFileHandle(pathToFile);
+			return new AppendFileHandle(pathToFile);
 
 		case file_manager::FileManager::requestFileHandleType::appendBinary:
-			return AppendBinaryFileHandle(pathToFile);
+			return new AppendBinaryFileHandle(pathToFile);
 		}
 
-		return FileHandle(pathToFile, NULL);
+		return new FileHandle(pathToFile, NULL);
 	}
 
 	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
 	{
 		lock_guard<mutex> filesLock(filesMutex);
 
-		if (mode == ios_base::out && !files[pathToFile].isWriteRequest)
+		if (mode & ios_base::out && !files[pathToFile].isWriteRequest)
 		{
 			threadPool->addTask([this, tem = move(pathToFile)]()
 			{
@@ -108,15 +108,16 @@ namespace file_manager
 
 				threadPool->addTask([this, pathToFile, callback = move(tem), handleType]()
 				{
-					callback(static_cast<ReadFileHandle&&>(this->createHandle(pathToFile, handleType)));
+					callback(unique_ptr<ReadFileHandle>(static_cast<ReadFileHandle*>(this->createHandle(pathToFile, handleType))));
 				}, onEndCallback);
 			}
 			else if (request == requestType::write)
 			{
 				{
 					lock_guard<mutex> filesLock(filesMutex);
+					filePathState& check = files[pathToFile];
 
-					if (files[pathToFile].readRequests)
+					if (check.isWriteRequest || files[pathToFile].readRequests)
 					{
 						return;
 					}
@@ -130,7 +131,7 @@ namespace file_manager
 
 				threadPool->addTask([this, pathToFile, writeCallback = move(tem), handleType]()
 				{
-					writeCallback(static_cast<WriteFileHandle&&>(this->createHandle(pathToFile, handleType)));
+					writeCallback(unique_ptr<WriteFileHandle>(static_cast<WriteFileHandle*>(this->createHandle(pathToFile, handleType))));
 				}, onEndCallback);
 
 				return;
