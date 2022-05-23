@@ -176,7 +176,7 @@ namespace file_manager
 		friend bool operator == (const requestStruct& request, requestType type);
 
 	private:
-		threading::ThreadPool* threadPool;
+		std::unique_ptr<threading::ThreadPool> threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, pathHash> files;
 		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, pathHash> requests;
 		std::mutex filesMutex;
@@ -198,7 +198,7 @@ namespace file_manager
 	private:
 		FileManager(uint32_t threadsCount);
 
-		~FileManager();
+		~FileManager() = default;
 
 	public:
 		FileManager(const FileManager&) = delete;

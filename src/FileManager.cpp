@@ -161,16 +161,9 @@ namespace file_manager
 	}
 
 	FileManager::FileManager(uint32_t threadsCount) :
-		threadPool(new threading::ThreadPool(threadsCount))
+		threadPool(make_unique<threading::ThreadPool>(threadsCount))
 	{
 
-	}
-
-	FileManager::~FileManager()
-	{
-		delete threadPool;
-
-		threadPool = nullptr;
 	}
 
 	void FileManager::addReadRequest(const filesystem::path& pathToFile, const readFileCallback& callback, requestFileHandleType handleType, bool isWait)
