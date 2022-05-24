@@ -113,7 +113,7 @@ namespace file_manager
 		using writeFileCallback = std::function<void(std::unique_ptr<WriteFileHandle>&&)>;
 
 	private:
-		class ReadBinaryFileHandle : public ReadFileHandle
+		class FILE_MANAGER_API ReadBinaryFileHandle : public ReadFileHandle
 		{
 		public:
 			ReadBinaryFileHandle(const std::filesystem::path& pathToFile);
@@ -121,7 +121,7 @@ namespace file_manager
 			~ReadBinaryFileHandle() = default;
 		};
 
-		class WriteBinaryFileHandle : public WriteFileHandle
+		class FILE_MANAGER_API WriteBinaryFileHandle : public WriteFileHandle
 		{
 		public:
 			WriteBinaryFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
@@ -129,7 +129,7 @@ namespace file_manager
 			virtual ~WriteBinaryFileHandle() = default;
 		};
 
-		class AppendBinaryFileHandle : public WriteBinaryFileHandle
+		class FILE_MANAGER_API AppendBinaryFileHandle : public WriteBinaryFileHandle
 		{
 		public:
 			AppendBinaryFileHandle(const std::filesystem::path& pathToFile);
@@ -137,7 +137,7 @@ namespace file_manager
 			~AppendBinaryFileHandle() = default;
 		};
 
-		class AppendFileHandle : public WriteFileHandle
+		class FILE_MANAGER_API AppendFileHandle : public WriteFileHandle
 		{
 		public:
 			AppendFileHandle(const std::filesystem::path& pathToFile);
@@ -196,7 +196,7 @@ namespace file_manager
 		void completeWriteRequest(const std::filesystem::path& pathToFile);
 
 	private:
-		FileManager(uint32_t threadsCount);
+		FileManager();
 
 		~FileManager() = default;
 
@@ -215,7 +215,7 @@ namespace file_manager
 		void addWriteRequest(const std::filesystem::path& pathToFile, const writeFileCallback& callback, requestFileHandleType handleType, bool isWait);
 
 	public:
-		static FileManager& getInstance(uint32_t threadsCount = std::thread::hardware_concurrency());
+		static FileManager& getInstance();
 
 		/// @brief Add file to manager
 		/// @param pathToFile Path to file

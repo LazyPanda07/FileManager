@@ -64,7 +64,7 @@ namespace file_manager
 
 	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
 	{
-		lock_guard<mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		if (mode & ios_base::out && !files[pathToFile].isWriteRequest)
 		{
@@ -77,14 +77,14 @@ namespace file_manager
 
 	void FileManager::addRequest(const filesystem::path& pathToFile, fileCallback&& callback, const function<void()>& onEndCallback, requestFileHandleType handleType)
 	{
-		lock_guard<mutex> requestsLock(requestsMutex);
+		unique_lock<mutex> requestsLock(requestsMutex);
 
 		requests[pathToFile].push(requestStruct(move(callback), onEndCallback, handleType));
 	}
 
 	void FileManager::processQueue(const filesystem::path& pathToFile)
 	{
-		lock_guard<mutex> requestsLock(requestsMutex);
+		unique_lock<mutex> requestsLock(requestsMutex);
 		queue<requestStruct>& requestsQueue = requests[pathToFile];
 
 		while (requestsQueue.size())
@@ -94,7 +94,7 @@ namespace file_manager
 			if (request == requestType::read)
 			{
 				{
-					lock_guard<mutex> filesLock(filesMutex);
+					unique_lock<mutex> filesLock(filesMutex);
 					filePathState& fileState = files[pathToFile];
 
 					if (fileState.isWriteRequest)
@@ -119,7 +119,7 @@ namespace file_manager
 			else if (request == requestType::write)
 			{
 				{
-					lock_guard<mutex> filesLock(filesMutex);
+					unique_lock<mutex> filesLock(filesMutex);
 					filePathState& fileState = files[pathToFile];
 
 					if (fileState.isWriteRequest || fileState.readRequests)
@@ -148,20 +148,20 @@ namespace file_manager
 
 	void FileManager::decreaseReadRequests(const filesystem::path& pathToFile)
 	{
-		lock_guard<mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		files[pathToFile].readRequests--;
 	}
 
 	void FileManager::completeWriteRequest(const filesystem::path& pathToFile)
 	{
-		lock_guard<mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		files[pathToFile].isWriteRequest = false;
 	}
 
-	FileManager::FileManager(uint32_t threadsCount) :
-		threadPool(make_unique<threading::ThreadPool>(threadsCount))
+	FileManager::FileManager() :
+		threadPool(make_unique<threading::ThreadPool>())
 	{
 
 	}
@@ -218,16 +218,9 @@ namespace file_manager
 		}
 	}
 
-	FileManager& FileManager::getInstance(uint32_t threadsCount)
+	FileManager& FileManager::getInstance()
 	{
-		static FileManager instance(threadsCount);
-
-		if (instance.threadPool->getThreadsCount() != threadsCount)
-		{
-			// TODO: sync
-
-			instance.threadPool->reinit(true, threadsCount);
-		}
+		static FileManager instance;
 
 		return instance;
 	}
@@ -238,7 +231,7 @@ namespace file_manager
 		{
 			if (!filesystem::exists(pathToFile))
 			{
-				lock_guard<mutex> filesLock(filesMutex);
+				unique_lock<mutex> filesLock(filesMutex);
 
 				files.erase(pathToFile);
 
@@ -251,7 +244,7 @@ namespace file_manager
 			}
 		}
 
-		lock_guard<mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		if (files.find(pathToFile) == files.end())
 		{
