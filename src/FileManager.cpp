@@ -11,11 +11,27 @@ using namespace std;
 
 namespace file_manager
 {
-	size_t FileManager::pathHash::operator () (const filesystem::path& pathToFile) const noexcept
+	namespace size_literals
 	{
-		return hash<string>()(pathToFile.string());
-	}
+		uint64_t operator "" _kib(uint64_t count)
+		{
+			return count * 1024;
+		}
 
+		uint64_t operator "" _mib(uint64_t count)
+		{
+			return count * static_cast<uint64_t>(pow(1024, 2));
+		}
+
+		uint64_t operator "" _gib(uint64_t count)
+		{
+			return count * static_cast<uint64_t>(pow(1024, 3));
+		}
+	}
+}
+
+namespace file_manager
+{
 	FileManager::filePathState::filePathState() :
 		readRequests(0),
 		isWriteRequest(false)
@@ -45,7 +61,7 @@ namespace file_manager
 
 		case file_manager::FileManager::requestFileHandleType::write:
 			return new WriteFileHandle(pathToFile);
-			
+
 		case file_manager::FileManager::requestFileHandleType::readBinary:
 			return new ReadBinaryFileHandle(pathToFile);
 
@@ -64,7 +80,7 @@ namespace file_manager
 
 	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
 	{
-		unique_lock<mutex> filesLock(filesMutex);
+		unique_lock<recursive_mutex> filesLock(filesMutex);
 
 		if (mode & ios_base::out && !files[pathToFile].isWriteRequest)
 		{
@@ -94,7 +110,7 @@ namespace file_manager
 			if (request == requestType::read)
 			{
 				{
-					unique_lock<mutex> filesLock(filesMutex);
+					unique_lock<recursive_mutex> filesLock(filesMutex);
 					filePathState& fileState = files[pathToFile];
 
 					if (fileState.isWriteRequest)
@@ -119,7 +135,7 @@ namespace file_manager
 			else if (request == requestType::write)
 			{
 				{
-					unique_lock<mutex> filesLock(filesMutex);
+					unique_lock<recursive_mutex> filesLock(filesMutex);
 					filePathState& fileState = files[pathToFile];
 
 					if (fileState.isWriteRequest || fileState.readRequests)
@@ -128,6 +144,8 @@ namespace file_manager
 					}
 
 					fileState.isWriteRequest = true;
+
+					cache.clear(pathToFile);
 				}
 
 				writeFileCallback tem = move(get<writeFileCallback>(request.callback));
@@ -148,20 +166,21 @@ namespace file_manager
 
 	void FileManager::decreaseReadRequests(const filesystem::path& pathToFile)
 	{
-		unique_lock<mutex> filesLock(filesMutex);
+		unique_lock<recursive_mutex> filesLock(filesMutex);
 
 		files[pathToFile].readRequests--;
 	}
 
 	void FileManager::completeWriteRequest(const filesystem::path& pathToFile)
 	{
-		unique_lock<mutex> filesLock(filesMutex);
+		unique_lock<recursive_mutex> filesLock(filesMutex);
 
 		files[pathToFile].isWriteRequest = false;
 	}
 
 	FileManager::FileManager() :
-		threadPool(make_unique<threading::ThreadPool>())
+		threadPool(make_unique<threading::ThreadPool>()),
+		cache(*this)
 	{
 
 	}
@@ -231,7 +250,7 @@ namespace file_manager
 		{
 			if (!filesystem::exists(pathToFile))
 			{
-				unique_lock<mutex> filesLock(filesMutex);
+				unique_lock<recursive_mutex> filesLock(filesMutex);
 
 				files.erase(pathToFile);
 
@@ -244,7 +263,7 @@ namespace file_manager
 			}
 		}
 
-		unique_lock<mutex> filesLock(filesMutex);
+		unique_lock<recursive_mutex> filesLock(filesMutex);
 
 		if (files.find(pathToFile) == files.end())
 		{
@@ -280,5 +299,15 @@ namespace file_manager
 	void FileManager::appendBinaryFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait)
 	{
 		this->addWriteRequest(pathToFile, callback, requestFileHandleType::appendBinary, isWait);
+	}
+
+	Cache& FileManager::getCache()
+	{
+		return cache;
+	}
+
+	const Cache& FileManager::getCache() const
+	{
+		return cache;
 	}
 }

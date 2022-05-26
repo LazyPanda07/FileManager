@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <unordered_map>
+#include <map>
 #include <thread>
 #include <mutex>
 #include <fstream>
@@ -10,29 +11,34 @@
 #include <queue>
 
 #include "ForwardDeclaration.h"
-
-#ifdef FILE_MANAGER_DLL
-#define FILE_MANAGER_API __declspec(dllexport)
-
-#pragma warning(disable: 4251)
-#pragma warning(disable: 4275)
-#else
-#define FILE_MANAGER_API
-#endif
+#include "Cache.h"
 
 namespace file_manager
 {
 	using std::streamsize;
 
+	inline namespace size_literals
+	{
+		/// @brief Shortcut for declaring KiB (1024 bytes)
+		/// @param count Count of KiB
+		/// @return Result of converting KiB to bytes
+		uint64_t operator "" _kib(uint64_t count);
+
+		/// @brief Shortcut for declaring MiB (1024 KiB)
+		/// @param count Count of MiB
+		/// @return Result of converting MiB to bytes
+		uint64_t operator "" _mib(uint64_t count);
+
+		/// @brief Shortcut for declaring GiB (1024 MiB)
+		/// @param count Count of GiB
+		/// @return Result of converting GiB to bytes
+		uint64_t operator "" _gib(uint64_t count);
+	}
+
 	/// @brief Provides files accessing from multiple threads. Singleton
 	class FILE_MANAGER_API FileManager
 	{
 	private:
-		struct pathHash
-		{
-			size_t operator () (const std::filesystem::path& pathToFile) const noexcept;
-		};
-
 		struct filePathState
 		{
 			size_t readRequests;
@@ -177,10 +183,11 @@ namespace file_manager
 
 	private:
 		std::unique_ptr<threading::ThreadPool> threadPool;
-		std::unordered_map<std::filesystem::path, filePathState, pathHash> files;
-		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, pathHash> requests;
-		std::mutex filesMutex;
+		std::unordered_map<std::filesystem::path, filePathState, utility::pathHash> files;
+		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, utility::pathHash> requests;
+		std::recursive_mutex filesMutex;
 		std::mutex requestsMutex;
+		Cache cache;
 
 	private:
 		FileHandle* createHandle(const std::filesystem::path& pathToFile, requestFileHandleType handleType);
@@ -215,6 +222,8 @@ namespace file_manager
 		void addWriteRequest(const std::filesystem::path& pathToFile, const writeFileCallback& callback, requestFileHandleType handleType, bool isWait);
 
 	public:
+		/// @brief Singleton getter
+		/// @return Singleton instance
 		static FileManager& getInstance();
 
 		/// @brief Add file to manager
@@ -263,6 +272,16 @@ namespace file_manager
 		/// @param callback Function that will be called for writing file
 		/// @param isWait If true thread will wait till callback end
 		void appendBinaryFile(const std::filesystem::path& pathToFile, const writeFileCallback& callback, bool isWait = true);
+
+		/// @brief Cache getter
+		/// @return Cache instance
+		Cache& getCache();
+
+		/// @brief Cache getter
+		/// @return Cache instance
+		const Cache& getCache() const;
+
+		friend class Cache;
 	};
 
 	using ReadFileHandle = FileManager::ReadFileHandle;
@@ -272,6 +291,7 @@ namespace file_manager
 	/// std::function&lt;void(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;;
 	/// </summary>
 	using readFileCallback = FileManager::readFileCallback;
+
 	/// <summary>
 	/// std::function&lt;void(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;;
 	/// </summary>
