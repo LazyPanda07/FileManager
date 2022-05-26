@@ -9,6 +9,7 @@
 #include <functional>
 #include <variant>
 #include <queue>
+#include <sstream>
 
 #include "ForwardDeclaration.h"
 #include "Cache.h"
@@ -72,12 +73,24 @@ namespace file_manager
 		class FILE_MANAGER_API ReadFileHandle : public FileHandle
 		{
 		private:
+			class readOnlyBuffer : public std::stringbuf
+			{
+			public:
+				readOnlyBuffer(std::string_view view);
+			};
+
+		private:
+			std::string data;
+			std::unique_ptr<readOnlyBuffer> buffer;
+
+		private:
 			ReadFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
 
 		public:
 			/// @brief Read all file
 			/// @return File's data
-			std::string readAllData();
+			/// @exception FileDoesNotExistException
+			const std::string& readAllData();
 
 			/// @brief Read some data from file
 			/// @param outData Data from file

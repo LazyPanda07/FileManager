@@ -39,6 +39,11 @@ namespace file_manager
 		/// @return Error code from Cache::CacheErrorCodes
 		CacheResultCodes addCache(const std::filesystem::path& pathToFile);
 
+		/// @brief Check if file data is cached
+		/// @param pathToFile Path to file
+		/// @return Returns true if file is already cached
+		bool contains(const std::filesystem::path& pathToFile) const;
+
 		/// @brief Clear all cache
 		void clear();
 

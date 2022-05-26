@@ -82,6 +82,11 @@ namespace file_manager
 		return CacheResultCodes::noError;
 	}
 
+	bool Cache::contains(const filesystem::path& pathToFile) const
+	{
+		return cacheData.contains(pathToFile);
+	}
+
 	void Cache::clear()
 	{
 		currentCacheSize = 0;

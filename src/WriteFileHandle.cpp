@@ -10,13 +10,15 @@ namespace file_manager
 		
 	}
 
-	void WriteFileHandle::write(const std::string& data)
+	void WriteFileHandle::write(const string& data)
 	{
 		file.write(data.data(), data.size());
 	}
 
 	ostream& WriteFileHandle::getStream()
 	{
+		// TODO: create caching ostream
+
 		return file.write(nullptr, 0);
 	}
 

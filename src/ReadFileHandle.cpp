@@ -1,18 +1,48 @@
 #include "FileManager.h"
 
+#include "Exceptions/FileDoesNotExistException.h"
+
 using namespace std;
 
 namespace file_manager
 {
+	ReadFileHandle::readOnlyBuffer::readOnlyBuffer(string_view view)
+	{
+		char* data = const_cast<char*>(view.data());
+
+		setg(data, data, data + view.size());
+	}
+
 	ReadFileHandle::ReadFileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
 		FileHandle(pathToFile, mode | ios_base::in)
 	{
-		
+		Cache& cache = FileManager::getInstance().getCache();
+
+		if (cache.contains(pathToFile))
+		{
+			buffer = make_unique<readOnlyBuffer>(cache.getCacheData(pathToFile));
+
+			file.set_rdbuf(buffer.get());
+		}
 	}
 
-	string ReadFileHandle::readAllData()
+	const string& ReadFileHandle::readAllData()
 	{
-		return (ostringstream() << file.rdbuf()).str();
+		Cache& cache = FileManager::getInstance().getCache();
+
+		switch (cache.addCache(pathToFile))
+		{
+		case file_manager::Cache::CacheResultCodes::noError:
+			return cache.getCacheData(pathToFile);
+
+		case file_manager::Cache::CacheResultCodes::fileDoesNotExist:
+			throw exceptions::FileDoesNotExistException(pathToFile);
+
+		case file_manager::Cache::CacheResultCodes::notEnoughCacheSize:
+			data = (ostringstream() << file.rdbuf()).str();
+
+			return data;
+		}
 	}
 
 	streamsize ReadFileHandle::readSome(string& outData, streamsize count, bool resizeOutData)
