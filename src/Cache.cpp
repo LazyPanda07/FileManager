@@ -75,6 +75,12 @@ namespace file_manager
 		}
 
 		unique_lock<recursive_mutex> lock(manager.filesMutex);
+
+		if (cacheData.contains(pathToFile))
+		{
+			return CacheResultCodes::noError;
+		}
+
 		string data = (ostringstream() << ifstream(pathToFile).rdbuf()).str();
 
 		cacheData.emplace(pathToFile, move(data));

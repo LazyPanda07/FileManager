@@ -65,6 +65,10 @@ namespace file_manager
 
 			uintmax_t getFileSize() const;
 
+			const std::filesystem::path& getPathToFile() const;
+
+			std::filesystem::path getFileName() const;
+
 			virtual ~FileHandle();
 		};
 

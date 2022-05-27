@@ -40,9 +40,9 @@ namespace file_manager
 
 		case file_manager::Cache::CacheResultCodes::notEnoughCacheSize:
 			data = (ostringstream() << file.rdbuf()).str();
-
-			return data;
 		}
+
+		return data;
 	}
 
 	streamsize ReadFileHandle::readSome(string& outData, streamsize count, bool resizeOutData)

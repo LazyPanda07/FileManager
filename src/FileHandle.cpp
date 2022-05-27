@@ -36,6 +36,16 @@ namespace file_manager
 		return filesystem::file_size(pathToFile);
 	}
 
+	const filesystem::path& FileManager::FileHandle::getPathToFile() const
+	{
+		return pathToFile;
+	}
+
+	filesystem::path FileManager::FileHandle::getFileName() const
+	{
+		return pathToFile.filename();
+	}
+
 	FileManager::FileHandle::~FileHandle()
 	{
 		if (isNotifyOnDestruction)
