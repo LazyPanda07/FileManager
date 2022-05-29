@@ -172,7 +172,6 @@
     <ClInclude Include="src\Exceptions\FileDoesNotExistException.h" />
     <ClInclude Include="src\Exceptions\NotAFileException.h" />
     <ClInclude Include="src\FileManager.h" />
-    <ClInclude Include="src\ForwardDeclaration.h" />
     <ClInclude Include="src\Handlers\AppendBinaryFileHandle.h" />
     <ClInclude Include="src\Handlers\AppendFileHandle.h" />
     <ClInclude Include="src\Handlers\FileHandle.h" />

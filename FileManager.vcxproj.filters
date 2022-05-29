@@ -18,9 +18,6 @@
     <ClInclude Include="src\FileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ForwardDeclaration.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Exceptions\FileDoesNotExistException.h">
       <Filter>Header Files</Filter>
     </ClInclude>

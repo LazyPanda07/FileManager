@@ -39,3 +39,8 @@ namespace file_manager
 		};
 	}
 }
+
+namespace threading
+{
+	class ThreadPool;
+}

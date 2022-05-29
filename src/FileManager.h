@@ -11,7 +11,6 @@
 #include <queue>
 #include <sstream>
 
-#include "ForwardDeclaration.h"
 #include "Cache.h"
 
 #include "Handlers/FileHandle.h"
@@ -63,7 +62,7 @@ namespace file_manager
 		friend bool operator == (const requestStruct& request, requestType type);
 
 	private:
-		std::unique_ptr<threading::ThreadPool> threadPool;
+		threading::ThreadPool* threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, utility::pathHash> files;
 		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, utility::pathHash> requests;
 		std::recursive_mutex filesMutex;
@@ -86,7 +85,7 @@ namespace file_manager
 	private:
 		FileManager();
 
-		~FileManager() = default;
+		~FileManager();
 
 	public:
 		FileManager(const FileManager&) = delete;
