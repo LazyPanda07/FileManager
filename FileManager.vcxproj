@@ -97,7 +97,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -115,7 +115,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);FILE_MANAGER_DLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +133,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -155,7 +155,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);FILE_MANAGER_DLL</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(ProjectDir)dependencies\ThreadPool\include\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,22 +173,29 @@
     <ClInclude Include="src\Exceptions\NotAFileException.h" />
     <ClInclude Include="src\FileManager.h" />
     <ClInclude Include="src\ForwardDeclaration.h" />
+    <ClInclude Include="src\Handlers\AppendBinaryFileHandle.h" />
+    <ClInclude Include="src\Handlers\AppendFileHandle.h" />
+    <ClInclude Include="src\Handlers\FileHandle.h" />
+    <ClInclude Include="src\Handlers\ReadBinaryFileHandle.h" />
+    <ClInclude Include="src\Handlers\ReadFileHandle.h" />
+    <ClInclude Include="src\Handlers\WriteBinaryFileHandle.h" />
+    <ClInclude Include="src\Handlers\WriteFileHandle.h" />
     <ClInclude Include="src\Utility.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AppendBinaryFileHandle.cpp" />
-    <ClCompile Include="src\AppendFileHandle.cpp" />
+    <ClCompile Include="src\Handlers\AppendBinaryFileHandle.cpp" />
+    <ClCompile Include="src\Handlers\AppendFileHandle.cpp" />
     <ClCompile Include="src\Cache.cpp" />
     <ClCompile Include="src\Exceptions\BaseFileManagerException.cpp" />
     <ClCompile Include="src\Exceptions\FileDoesNotExistException.cpp" />
     <ClCompile Include="src\Exceptions\NotAFileException.cpp" />
-    <ClCompile Include="src\ReadBinaryFileHandle.cpp" />
-    <ClCompile Include="src\ReadFileHandle.cpp" />
-    <ClCompile Include="src\FileHandle.cpp" />
+    <ClCompile Include="src\Handlers\ReadBinaryFileHandle.cpp" />
+    <ClCompile Include="src\Handlers\ReadFileHandle.cpp" />
+    <ClCompile Include="src\Handlers\FileHandle.cpp" />
     <ClCompile Include="src\FileManager.cpp" />
     <ClCompile Include="src\Utility.cpp" />
-    <ClCompile Include="src\WriteBinaryFileHandle.cpp" />
-    <ClCompile Include="src\WriteFileHandle.cpp" />
+    <ClCompile Include="src\Handlers\WriteBinaryFileHandle.cpp" />
+    <ClCompile Include="src\Handlers\WriteFileHandle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dependencies\ThreadPool\LICENSE" />

@@ -14,160 +14,15 @@
 #include "ForwardDeclaration.h"
 #include "Cache.h"
 
+#include "Handlers/FileHandle.h"
+#include "Handlers/ReadFileHandle.h"
+#include "Handlers/WriteFileHandle.h"
+
 namespace file_manager
 {
-	using std::streamsize;
-
-	inline namespace size_literals
-	{
-		/// @brief Shortcut for declaring KiB (1024 bytes)
-		/// @param count Count of KiB
-		/// @return Result of converting KiB to bytes
-		uint64_t operator "" _kib(uint64_t count);
-
-		/// @brief Shortcut for declaring MiB (1024 KiB)
-		/// @param count Count of MiB
-		/// @return Result of converting MiB to bytes
-		uint64_t operator "" _mib(uint64_t count);
-
-		/// @brief Shortcut for declaring GiB (1024 MiB)
-		/// @param count Count of GiB
-		/// @return Result of converting GiB to bytes
-		uint64_t operator "" _gib(uint64_t count);
-	}
-
 	/// @brief Provides files accessing from multiple threads. Singleton
 	class FILE_MANAGER_API FileManager
 	{
-	private:
-		struct filePathState
-		{
-			size_t readRequests;
-			bool isWriteRequest;
-
-			filePathState();
-		};
-		
-		class FileHandle
-		{
-		protected:
-			std::filesystem::path pathToFile;
-			std::fstream file;
-			std::ios_base::openmode mode;
-			bool isNotifyOnDestruction;
-
-		public:
-			FileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode);
-
-			FileHandle(FileHandle&& other) noexcept;
-
-			FileHandle& operator = (FileHandle&& other) noexcept;
-
-			uintmax_t getFileSize() const;
-
-			const std::filesystem::path& getPathToFile() const;
-
-			std::filesystem::path getFileName() const;
-
-			virtual ~FileHandle();
-		};
-
-	public:
-		/// @brief Provides reading files
-		class FILE_MANAGER_API ReadFileHandle : public FileHandle
-		{
-		private:
-			class readOnlyBuffer : public std::stringbuf
-			{
-			public:
-				readOnlyBuffer(std::string_view view);
-			};
-
-		private:
-			std::string data;
-			std::unique_ptr<readOnlyBuffer> buffer;
-
-		private:
-			ReadFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
-
-		public:
-			/// @brief Read all file
-			/// @return File's data
-			/// @exception FileDoesNotExistException
-			const std::string& readAllData();
-
-			/// @brief Read some data from file
-			/// @param outData Data from file
-			/// @param count Count of characters to read
-			/// @param resizeOutData If true outData has exactly same size as number of characters read. If false you must provide outData size before calling
-			/// @return Number of characters read
-			streamsize readSome(std::string& outData, streamsize count, bool resizeOutData = true);
-
-			/// @brief Get reading stream
-			/// @return Input stream
-			std::istream& getStream();
-
-			virtual ~ReadFileHandle();
-
-			friend class FileManager;
-		};
-
-		/// @brief Provides writing files
-		class FILE_MANAGER_API WriteFileHandle : public FileHandle
-		{
-		private:
-			WriteFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
-
-		public:
-			/// @brief Write data to file
-			/// @param data Data
-			void write(const std::string& data);
-
-			/// @brief Get writing stream
-			/// @return Output stream
-			std::ostream& getStream();
-
-			virtual ~WriteFileHandle();
-
-			friend class FileManager;
-		};
-
-		using readFileCallback = std::function<void(std::unique_ptr<ReadFileHandle>&&)>;
-		using writeFileCallback = std::function<void(std::unique_ptr<WriteFileHandle>&&)>;
-
-	private:
-		class FILE_MANAGER_API ReadBinaryFileHandle : public ReadFileHandle
-		{
-		public:
-			ReadBinaryFileHandle(const std::filesystem::path& pathToFile);
-
-			~ReadBinaryFileHandle() = default;
-		};
-
-		class FILE_MANAGER_API WriteBinaryFileHandle : public WriteFileHandle
-		{
-		public:
-			WriteBinaryFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
-
-			virtual ~WriteBinaryFileHandle() = default;
-		};
-
-		class FILE_MANAGER_API AppendBinaryFileHandle : public WriteBinaryFileHandle
-		{
-		public:
-			AppendBinaryFileHandle(const std::filesystem::path& pathToFile);
-
-			~AppendBinaryFileHandle() = default;
-		};
-
-		class FILE_MANAGER_API AppendFileHandle : public WriteFileHandle
-		{
-		public:
-			AppendFileHandle(const std::filesystem::path& pathToFile);
-
-			~AppendFileHandle() = default;
-		};
-
 	private:
 		enum class requestType
 		{
@@ -183,6 +38,15 @@ namespace file_manager
 			writeBinary,
 			append,
 			appendBinary
+		};
+		
+	private:
+		struct filePathState
+		{
+			size_t readRequests;
+			bool isWriteRequest;
+
+			filePathState();
 		};
 
 		using fileCallback = std::variant<readFileCallback, writeFileCallback>;
@@ -298,19 +162,9 @@ namespace file_manager
 		/// @return Cache instance
 		const Cache& getCache() const;
 
+		friend class FileHandle;
+		friend class ReadFileHandle;
+		friend class WriteFileHandle;
 		friend class Cache;
 	};
-
-	using ReadFileHandle = FileManager::ReadFileHandle;
-	using WriteFileHandle = FileManager::WriteFileHandle;
-
-	/// <summary>
-	/// std::function&lt;void(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;;
-	/// </summary>
-	using readFileCallback = FileManager::readFileCallback;
-
-	/// <summary>
-	/// std::function&lt;void(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;;
-	/// </summary>
-	using writeFileCallback = FileManager::writeFileCallback;
 }

@@ -1,10 +1,12 @@
+#include "FileHandle.h"
+
 #include "FileManager.h"
 
 using namespace std;
 
 namespace file_manager
 {
-	FileManager::FileHandle::FileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
+	FileHandle::FileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
 		pathToFile(pathToFile),
 		file(pathToFile, mode),
 		mode(mode),
@@ -13,12 +15,12 @@ namespace file_manager
 
 	}
 
-	FileManager::FileHandle::FileHandle(FileHandle&& other) noexcept
+	FileHandle::FileHandle(FileHandle&& other) noexcept
 	{
 		(*this) = move(other);
 	}
 
-	FileManager::FileHandle& FileManager::FileHandle::operator = (FileHandle&& other) noexcept
+	FileHandle& FileHandle::operator = (FileHandle&& other) noexcept
 	{
 		pathToFile = move(other.pathToFile);
 		file = move(other.file);
@@ -31,22 +33,22 @@ namespace file_manager
 		return *this;
 	}
 
-	uintmax_t FileManager::FileHandle::getFileSize() const
+	uint64_t FileHandle::getFileSize() const
 	{
 		return filesystem::file_size(pathToFile);
 	}
 
-	const filesystem::path& FileManager::FileHandle::getPathToFile() const
+	const filesystem::path& FileHandle::getPathToFile() const
 	{
 		return pathToFile;
 	}
 
-	filesystem::path FileManager::FileHandle::getFileName() const
+	filesystem::path FileHandle::getFileName() const
 	{
 		return pathToFile.filename();
 	}
 
-	FileManager::FileHandle::~FileHandle()
+	FileHandle::~FileHandle()
 	{
 		if (isNotifyOnDestruction)
 		{

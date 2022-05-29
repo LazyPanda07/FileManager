@@ -36,30 +36,51 @@
     <ClInclude Include="src\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Handlers\FileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handlers\ReadFileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handlers\WriteFileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handlers\AppendBinaryFileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handlers\AppendFileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handlers\WriteBinaryFileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Handlers\ReadBinaryFileHandle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\FileManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\FileHandle.cpp">
+    <ClCompile Include="src\Handlers\FileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ReadFileHandle.cpp">
+    <ClCompile Include="src\Handlers\ReadFileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\WriteFileHandle.cpp">
+    <ClCompile Include="src\Handlers\WriteFileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ReadBinaryFileHandle.cpp">
+    <ClCompile Include="src\Handlers\ReadBinaryFileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\WriteBinaryFileHandle.cpp">
+    <ClCompile Include="src\Handlers\WriteBinaryFileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AppendBinaryFileHandle.cpp">
+    <ClCompile Include="src\Handlers\AppendBinaryFileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AppendFileHandle.cpp">
+    <ClCompile Include="src\Handlers\AppendFileHandle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Exceptions\FileDoesNotExistException.cpp">

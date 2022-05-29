@@ -2,33 +2,17 @@
 
 #include <future>
 
+#include "Handlers/ReadBinaryFileHandle.h"
+#include "Handlers/WriteBinaryFileHandle.h"
+#include "Handlers/AppendFileHandle.h"
+#include "Handlers/AppendBinaryFileHandle.h"
+
 #include "Exceptions/FileDoesNotExistException.h"
 #include "Exceptions/NotAFileException.h"
 
 #include "ThreadPool.h"
 
 using namespace std;
-
-namespace file_manager
-{
-	namespace size_literals
-	{
-		uint64_t operator "" _kib(uint64_t count)
-		{
-			return count * 1024;
-		}
-
-		uint64_t operator "" _mib(uint64_t count)
-		{
-			return count * static_cast<uint64_t>(pow(1024, 2));
-		}
-
-		uint64_t operator "" _gib(uint64_t count)
-		{
-			return count * static_cast<uint64_t>(pow(1024, 3));
-		}
-	}
-}
 
 namespace file_manager
 {
@@ -52,7 +36,7 @@ namespace file_manager
 		return request.callback.index() == static_cast<size_t>(type);
 	}
 
-	FileManager::FileHandle* FileManager::createHandle(const filesystem::path& pathToFile, requestFileHandleType handleType)
+	FileHandle* FileManager::createHandle(const filesystem::path& pathToFile, requestFileHandleType handleType)
 	{
 		switch (handleType)
 		{

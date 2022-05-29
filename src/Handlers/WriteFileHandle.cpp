@@ -1,3 +1,5 @@
+#include "WriteFileHandle.h"
+
 #include "FileManager.h"
 
 using namespace std;
