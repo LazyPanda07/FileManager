@@ -65,7 +65,7 @@ namespace file_manager
 		threading::ThreadPool* threadPool;
 		std::unordered_map<std::filesystem::path, filePathState, utility::pathHash> files;
 		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, utility::pathHash> requests;
-		std::recursive_mutex filesMutex;
+		std::mutex filesMutex;
 		std::mutex requestsMutex;
 		Cache cache;
 

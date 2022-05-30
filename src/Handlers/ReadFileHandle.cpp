@@ -7,7 +7,7 @@ using namespace std;
 
 namespace file_manager
 {
-	ReadFileHandle::readOnlyBuffer::readOnlyBuffer(string_view view)
+	ReadFileHandle::ReadOnlyBuffer::ReadOnlyBuffer(string_view view)
 	{
 		char* data = const_cast<char*>(view.data());
 
@@ -21,7 +21,7 @@ namespace file_manager
 
 		if (cache.contains(pathToFile))
 		{
-			buffer = make_unique<readOnlyBuffer>(cache.getCacheData(pathToFile));
+			buffer = make_unique<ReadOnlyBuffer>(cache.getCacheData(pathToFile));
 
 			file.set_rdbuf(buffer.get());
 		}
@@ -33,13 +33,13 @@ namespace file_manager
 
 		switch (cache.addCache(pathToFile))
 		{
-		case file_manager::Cache::CacheResultCodes::noError:
+		case Cache::CacheResultCodes::noError:
 			return cache.getCacheData(pathToFile);
 
-		case file_manager::Cache::CacheResultCodes::fileDoesNotExist:
+		case Cache::CacheResultCodes::fileDoesNotExist:
 			throw exceptions::FileDoesNotExistException(pathToFile);
 
-		case file_manager::Cache::CacheResultCodes::notEnoughCacheSize:
+		case Cache::CacheResultCodes::notEnoughCacheSize:
 			data = (ostringstream() << file.rdbuf()).str();
 		}
 

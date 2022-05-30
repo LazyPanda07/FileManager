@@ -10,15 +10,15 @@ namespace file_manager
 	class FILE_MANAGER_API ReadFileHandle : public FileHandle
 	{
 	private:
-		class readOnlyBuffer : public std::stringbuf
+		class ReadOnlyBuffer : public std::stringbuf
 		{
 		public:
-			readOnlyBuffer(std::string_view view);
+			ReadOnlyBuffer(std::string_view view);
 		};
 
 	private:
 		std::string data;
-		std::unique_ptr<readOnlyBuffer> buffer;
+		std::unique_ptr<ReadOnlyBuffer> buffer;
 
 	protected:
 		ReadFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);

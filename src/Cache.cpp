@@ -20,7 +20,7 @@ namespace file_manager
 	{
 		priority_queue<pair<uint64_t, filesystem::path>> paths;
 		vector<pair<uint64_t, const filesystem::path*>> notExistingPaths;
-		unique_lock<recursive_mutex> lock(manager.filesMutex);
+		unique_lock<mutex> cacheDataLock(cacheDataMutex);
 
 		for (const auto& [path, _] : cacheData)
 		{
@@ -35,6 +35,8 @@ namespace file_manager
 
 			paths.emplace(size, path);
 		}
+
+		unique_lock<mutex> currentSizeLock(currentSizeMutex);
 
 		for (const auto& [size, path] : notExistingPaths)
 		{
@@ -55,8 +57,7 @@ namespace file_manager
 		}
 	}
 
-	Cache::Cache(FileManager& manager) :
-		manager(manager),
+	Cache::Cache() :
 		cacheSize(0),
 		currentCacheSize(0)
 	{
@@ -74,7 +75,7 @@ namespace file_manager
 			return CacheResultCodes::notEnoughCacheSize;
 		}
 
-		unique_lock<recursive_mutex> lock(manager.filesMutex);
+		unique_lock<mutex> lock(cacheDataMutex);
 
 		if (cacheData.contains(pathToFile))
 		{
@@ -82,6 +83,12 @@ namespace file_manager
 		}
 
 		string data = (ostringstream() << ifstream(pathToFile).rdbuf()).str();
+
+		{
+			unique_lock<mutex> lock(currentSizeMutex);
+
+			currentCacheSize += data.size();
+		}
 
 		cacheData.emplace(pathToFile, move(data));
 

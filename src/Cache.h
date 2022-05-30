@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <map>
+#include <mutex>
 
 #include "Utility.h"
 
@@ -21,15 +22,16 @@ namespace file_manager
 
 	private:
 		std::unordered_map<std::filesystem::path, std::string, utility::pathHash> cacheData;
-		FileManager& manager;
 		uint64_t cacheSize;
 		uint64_t currentCacheSize;
+		std::mutex currentSizeMutex;
+		std::mutex cacheDataMutex;
 
 	private:
 		void updateCache();
 
 	private:
-		Cache(FileManager& manager);
+		Cache();
 
 		~Cache() = default;
 
@@ -68,6 +70,24 @@ namespace file_manager
 		/// @return Cache size in bytes
 		uint64_t getCurrentCacheSize() const;
 
+		friend void _utility::addCache(std::filesystem::path&& pathToFile, std::string&& data);
+
+		template<template<typename> typename OperationT> requires utility::Operation<OperationT<uint64_t>>
+		friend void _utility::changeCurrentCacheSize(uint64_t amount);
+
 		friend class FileManager;
 	};
+
+	namespace _utility
+	{
+		template<template<typename> typename OperationT> requires utility::Operation<OperationT<uint64_t>>
+		void changeCurrentCacheSize(uint64_t amount)
+		{
+			Cache& cache = FileManager::getInstance().getCache();
+
+			std::unique_lock<std::mutex> lock(cache.currentSizeMutex);
+
+			cache.currentCacheSize = OperationT<uint64_t>()(cache.currentCacheSize, amount);
+		}
+	}
 }

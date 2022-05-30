@@ -9,6 +9,26 @@ namespace file_manager
 	/// @brief Provides writing files
 	class FILE_MANAGER_API WriteFileHandle : public FileHandle
 	{
+	private:
+		class CachingBuffer : public std::filebuf
+		{
+		private:
+			class Cache& cache;
+			std::filesystem::path pathToFile;
+			std::string cacheData;
+			bool isCachingAvailable;
+
+		private:
+			bool increaseCacheData();
+
+		public:
+			CachingBuffer(class Cache& cache, const std::filesystem::path& pathToFile, std::ios_base::openmode mode);
+
+			int sync() override;
+
+			~CachingBuffer();
+		};
+
 	protected:
 		WriteFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
 

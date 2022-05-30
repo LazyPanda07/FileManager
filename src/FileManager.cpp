@@ -64,7 +64,7 @@ namespace file_manager
 
 	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
 	{
-		unique_lock<recursive_mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		if (mode & ios_base::out && !files[pathToFile].isWriteRequest)
 		{
@@ -94,7 +94,7 @@ namespace file_manager
 			if (request == requestType::read)
 			{
 				{
-					unique_lock<recursive_mutex> filesLock(filesMutex);
+					unique_lock<mutex> filesLock(filesMutex);
 					filePathState& fileState = files[pathToFile];
 
 					if (fileState.isWriteRequest)
@@ -119,7 +119,7 @@ namespace file_manager
 			else if (request == requestType::write)
 			{
 				{
-					unique_lock<recursive_mutex> filesLock(filesMutex);
+					unique_lock<mutex> filesLock(filesMutex);
 					filePathState& fileState = files[pathToFile];
 
 					if (fileState.isWriteRequest || fileState.readRequests)
@@ -150,21 +150,20 @@ namespace file_manager
 
 	void FileManager::decreaseReadRequests(const filesystem::path& pathToFile)
 	{
-		unique_lock<recursive_mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		files[pathToFile].readRequests--;
 	}
 
 	void FileManager::completeWriteRequest(const filesystem::path& pathToFile)
 	{
-		unique_lock<recursive_mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		files[pathToFile].isWriteRequest = false;
 	}
 
 	FileManager::FileManager() :
-		threadPool(new threading::ThreadPool()),
-		cache(*this)
+		threadPool(new threading::ThreadPool())
 	{
 
 	}
@@ -241,7 +240,7 @@ namespace file_manager
 		{
 			if (!filesystem::exists(pathToFile))
 			{
-				unique_lock<recursive_mutex> filesLock(filesMutex);
+				unique_lock<mutex> filesLock(filesMutex);
 
 				files.erase(pathToFile);
 
@@ -254,7 +253,7 @@ namespace file_manager
 			}
 		}
 
-		unique_lock<recursive_mutex> filesLock(filesMutex);
+		unique_lock<mutex> filesLock(filesMutex);
 
 		if (files.find(pathToFile) == files.end())
 		{
