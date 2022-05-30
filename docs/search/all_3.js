@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['getstream_6',['getStream',['../classfile__manager_1_1_file_manager_1_1_read_file_handle.html#a12ebed099e91673e415692dea4f4b0b4',1,'file_manager::FileManager::ReadFileHandle::getStream()'],['../classfile__manager_1_1_file_manager_1_1_write_file_handle.html#ab74db84f1bfc2ab7d9af2b288d9caa39',1,'file_manager::FileManager::WriteFileHandle::getStream()']]]
+  ['filedoesnotexistexception_10',['FileDoesNotExistException',['../classfile__manager_1_1exceptions_1_1_file_does_not_exist_exception.html',1,'file_manager::exceptions']]],
+  ['filehandle_11',['FileHandle',['../classfile__manager_1_1_file_handle.html',1,'file_manager']]],
+  ['filemanager_12',['FileManager',['../classfile__manager_1_1_file_manager.html',1,'file_manager']]]
 ];

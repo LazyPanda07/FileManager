@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['write_31',['write',['../classfile__manager_1_1_file_manager_1_1_write_file_handle.html#a9d4f4b4b3b7c78debb14ce14ff4e054c',1,'file_manager::FileManager::WriteFileHandle']]],
-  ['writebinaryfile_32',['writeBinaryFile',['../classfile__manager_1_1_file_manager.html#a7f43de9d1e5ca2583aa396e2fd7b8d6e',1,'file_manager::FileManager']]],
-  ['writefile_33',['writeFile',['../classfile__manager_1_1_file_manager.html#a12e63b17ead7fd5aa2fbe1916fbe565c',1,'file_manager::FileManager']]]
+  ['readalldata_60',['readAllData',['../classfile__manager_1_1_read_file_handle.html#a8400ffdf4e535756491fbda3e7eadd25',1,'file_manager::ReadFileHandle']]],
+  ['readbinaryfile_61',['readBinaryFile',['../classfile__manager_1_1_file_manager.html#aae9e5788bf4e7f8cc7d6e62397bce6cb',1,'file_manager::FileManager']]],
+  ['readfile_62',['readFile',['../classfile__manager_1_1_file_manager.html#a1dbd2b7665b25bca1b30bbe4f02be2e2',1,'file_manager::FileManager']]],
+  ['readsome_63',['readSome',['../classfile__manager_1_1_read_file_handle.html#adb68a34464b1046021d0ebe3a58dfdcd',1,'file_manager::ReadFileHandle']]]
 ];

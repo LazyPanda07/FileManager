@@ -72,7 +72,7 @@ namespace file_manager
 
 		friend void _utility::addCache(std::filesystem::path&& pathToFile, std::string&& data);
 
-		template<template<typename> typename OperationT> requires utility::Operation<OperationT<uint64_t>>
+		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		friend void _utility::changeCurrentCacheSize(uint64_t amount);
 
 		friend class FileManager;
@@ -80,7 +80,7 @@ namespace file_manager
 
 	namespace _utility
 	{
-		template<template<typename> typename OperationT> requires utility::Operation<OperationT<uint64_t>>
+		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		void changeCurrentCacheSize(uint64_t amount)
 		{
 			Cache& cache = FileManager::getInstance().getCache();

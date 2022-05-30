@@ -26,7 +26,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">FileManager
-   &#160;<span id="projectnumber">v1.0</span>
+   &#160;<span id="projectnumber">v1.1</span>
    </div>
    <div id="projectbrief">Manage access to files with async model</div>
   </td>
@@ -85,7 +85,6 @@ $(document).ready(function(){initNavTree('classfile__manager_1_1_file_manager.ht
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="#friends">Friends</a> &#124;
@@ -100,24 +99,6 @@ $(document).ready(function(){initNavTree('classfile__manager_1_1_file_manager.ht
 
 <p><code>#include &lt;<a class="el" href="_file_manager_8h_source.html">FileManager.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_manager_1_1_read_file_handle.html">ReadFileHandle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides reading files.  <a href="classfile__manager_1_1_file_manager_1_1_read_file_handle.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_manager_1_1_write_file_handle.html">WriteFileHandle</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides writing files.  <a href="classfile__manager_1_1_file_manager_1_1_write_file_handle.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
-Public Types</h2></td></tr>
-<tr class="memitem:adb6f93b47be387b3ecd6a73ca0b4a244"><td class="memItemLeft" align="right" valign="top"><a id="adb6f93b47be387b3ecd6a73ca0b4a244"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>readFileCallback</b> = std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classfile__manager_1_1_file_manager_1_1_read_file_handle.html">ReadFileHandle</a> &gt; &amp;&amp;)&gt;</td></tr>
-<tr class="separator:adb6f93b47be387b3ecd6a73ca0b4a244"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac1f00d4c03790fbd68037399b9e79eb"><td class="memItemLeft" align="right" valign="top"><a id="aac1f00d4c03790fbd68037399b9e79eb"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>writeFileCallback</b> = std::function&lt; void(std::unique_ptr&lt; <a class="el" href="classfile__manager_1_1_file_manager_1_1_write_file_handle.html">WriteFileHandle</a> &gt; &amp;&amp;)&gt;</td></tr>
-<tr class="separator:aac1f00d4c03790fbd68037399b9e79eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a9be6f552efdd0b2fa6755ed4080623ec"><td class="memItemLeft" align="right" valign="top"><a id="a9be6f552efdd0b2fa6755ed4080623ec"></a>
@@ -153,15 +134,33 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac60273062fa31c0925e42162a9cbe59a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_manager.html#ac60273062fa31c0925e42162a9cbe59a">appendBinaryFile</a> (const std::filesystem::path &amp;pathToFile, const writeFileCallback &amp;callback, bool isWait=true)</td></tr>
 <tr class="memdesc:ac60273062fa31c0925e42162a9cbe59a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create file if it does not exist and write file in binary mode.  <a href="classfile__manager_1_1_file_manager.html#ac60273062fa31c0925e42162a9cbe59a">More...</a><br /></td></tr>
 <tr class="separator:ac60273062fa31c0925e42162a9cbe59a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b63fe5408d1fd5b8ac20a4f7f440475"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_manager.html#a7b63fe5408d1fd5b8ac20a4f7f440475">getCache</a> ()</td></tr>
+<tr class="memdesc:a7b63fe5408d1fd5b8ac20a4f7f440475"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> getter.  <a href="classfile__manager_1_1_file_manager.html#a7b63fe5408d1fd5b8ac20a4f7f440475">More...</a><br /></td></tr>
+<tr class="separator:a7b63fe5408d1fd5b8ac20a4f7f440475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8d25d41bdb7230631609b6bc3e7762f"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="classfile__manager_1_1_cache.html">Cache</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_manager.html#ac8d25d41bdb7230631609b6bc3e7762f">getCache</a> () const</td></tr>
+<tr class="memdesc:ac8d25d41bdb7230631609b6bc3e7762f"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> getter.  <a href="classfile__manager_1_1_file_manager.html#ac8d25d41bdb7230631609b6bc3e7762f">More...</a><br /></td></tr>
+<tr class="separator:ac8d25d41bdb7230631609b6bc3e7762f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a5a36ccda328943cc92ea171e3d9bcffc"><td class="memItemLeft" align="right" valign="top"><a id="a5a36ccda328943cc92ea171e3d9bcffc"></a>
-static <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getInstance</b> (uint32_t threadsCount=std::thread::hardware_concurrency())</td></tr>
-<tr class="separator:a5a36ccda328943cc92ea171e3d9bcffc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab27d54661e473ed7a3d8859de38db657"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_manager.html#ab27d54661e473ed7a3d8859de38db657">getInstance</a> ()</td></tr>
+<tr class="memdesc:ab27d54661e473ed7a3d8859de38db657"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton getter.  <a href="classfile__manager_1_1_file_manager.html#ab27d54661e473ed7a3d8859de38db657">More...</a><br /></td></tr>
+<tr class="separator:ab27d54661e473ed7a3d8859de38db657"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="friends"></a>
 Friends</h2></td></tr>
+<tr class="memitem:ab1ce0de7907c7217581e9d23cb9f1223"><td class="memItemLeft" align="right" valign="top"><a id="ab1ce0de7907c7217581e9d23cb9f1223"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>FileHandle</b></td></tr>
+<tr class="separator:ab1ce0de7907c7217581e9d23cb9f1223"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a887caa7d505c692107688ae22c016cf1"><td class="memItemLeft" align="right" valign="top"><a id="a887caa7d505c692107688ae22c016cf1"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>ReadFileHandle</b></td></tr>
+<tr class="separator:a887caa7d505c692107688ae22c016cf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20a3475032799bb5be3b0e166738e164"><td class="memItemLeft" align="right" valign="top"><a id="a20a3475032799bb5be3b0e166738e164"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>WriteFileHandle</b></td></tr>
+<tr class="separator:a20a3475032799bb5be3b0e166738e164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac9d22b110b724211d946d911ecacdf64"><td class="memItemLeft" align="right" valign="top"><a id="ac9d22b110b724211d946d911ecacdf64"></a>
+class&#160;</td><td class="memItemRight" valign="bottom"><b>Cache</b></td></tr>
+<tr class="separator:ac9d22b110b724211d946d911ecacdf64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab20a0f38aaf06b74aa1c01efb9ea3ca7"><td class="memItemLeft" align="right" valign="top"><a id="ab20a0f38aaf06b74aa1c01efb9ea3ca7"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const requestStruct &amp;request, requestType type)</td></tr>
 <tr class="separator:ab20a0f38aaf06b74aa1c01efb9ea3ca7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -169,7 +168,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides files accessing from multiple threads. Singleton. </p>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00028">28</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00023">23</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae0dd3103dccf633a72c259df706234b2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae0dd3103dccf633a72c259df706234b2">&#9670;&nbsp;</a></span>addFile()</h2>
@@ -214,7 +213,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00242">242</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00237">237</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -260,7 +259,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00294">294</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00289">289</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -306,7 +305,81 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00284">284</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00279">279</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a7b63fe5408d1fd5b8ac20a4f7f440475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b63fe5408d1fd5b8ac20a4f7f440475">&#9670;&nbsp;</a></span>getCache() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> &amp; file_manager::FileManager::getCache </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> getter. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> instance </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00294">294</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac8d25d41bdb7230631609b6bc3e7762f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8d25d41bdb7230631609b6bc3e7762f">&#9670;&nbsp;</a></span>getCache() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="classfile__manager_1_1_cache.html">Cache</a> &amp; file_manager::FileManager::getCache </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> getter. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="classfile__manager_1_1_cache.html">Cache</a> instance </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00299">299</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ab27d54661e473ed7a3d8859de38db657"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab27d54661e473ed7a3d8859de38db657">&#9670;&nbsp;</a></span>getInstance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp; file_manager::FileManager::getInstance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Singleton getter. </p>
+<dl class="section return"><dt>Returns</dt><dd>Singleton instance </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00230">230</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -360,7 +433,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00274">274</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00269">269</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -414,7 +487,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00269">269</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00264">264</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -460,7 +533,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00289">289</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00284">284</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -506,7 +579,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator==</b> (const
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00279">279</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00274">274</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
