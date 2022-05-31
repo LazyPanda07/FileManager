@@ -50,7 +50,7 @@ namespace file_manager
 
 		void addCache(std::filesystem::path&& pathToFile, std::string&& data);
 
-		template<template<typename> typename OperationT> requires Operation<OperationT<uint64_t>>
+		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		void changeCurrentCacheSize(uint64_t amount);
 	}
 }

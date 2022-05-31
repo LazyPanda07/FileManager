@@ -13,6 +13,7 @@ namespace file_manager
 	class FILE_MANAGER_API Cache
 	{
 	public:
+		/// @brief Result of adding cache
 		enum class CacheResultCodes
 		{
 			noError,
