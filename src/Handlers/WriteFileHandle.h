@@ -45,7 +45,4 @@ namespace file_manager
 
 		friend class FileManager;
 	};
-
-	/// @brief Used in writing requests
-	using writeFileCallback = std::function<void(std::unique_ptr<WriteFileHandle>&&)>;
 }

@@ -44,7 +44,4 @@ namespace file_manager
 
 		friend class FileManager;
 	};
-
-	/// @brief Used in reading requests
-	using readFileCallback = std::function<void(std::unique_ptr<ReadFileHandle>&&)>;
 }
