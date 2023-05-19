@@ -53,7 +53,7 @@ namespace file_manager
 			outData.resize(count);
 		}
 
-		streamsize result = file.readsome(outData.data(), count);
+		streamsize result = file.read(outData.data(), count).gcount();
 
 		if (resizeOutData && outData.size() != result)
 		{
