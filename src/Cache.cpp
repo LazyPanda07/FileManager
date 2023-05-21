@@ -66,6 +66,8 @@ namespace file_manager
 
 	Cache::CacheResultCodes Cache::addCache(const filesystem::path& pathToFile)
 	{
+		unique_lock<mutex> sizeLock(currentSizeMutex);
+
 		if (!filesystem::exists(pathToFile))
 		{
 			return CacheResultCodes::fileDoesNotExist;
@@ -75,7 +77,7 @@ namespace file_manager
 			return CacheResultCodes::notEnoughCacheSize;
 		}
 
-		unique_lock<mutex> lock(cacheDataMutex);
+		unique_lock<mutex> dataLock(cacheDataMutex);
 
 		if (cacheData.contains(pathToFile))
 		{
@@ -84,24 +86,55 @@ namespace file_manager
 
 		string data = (ostringstream() << ifstream(pathToFile).rdbuf()).str();
 
-		{
-			unique_lock<mutex> lock(currentSizeMutex);
-
-			currentCacheSize += data.size();
-		}
+		currentCacheSize += data.size();
 
 		cacheData.emplace(pathToFile, move(data));
 
 		return CacheResultCodes::noError;
 	}
 
+	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& pathToFile, const vector<char>& data)
+	{
+		return this->appendCache(pathToFile, data.data());
+	}
+
+	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& pathToFile, const string_view& data)
+	{
+		unique_lock<mutex> sizeLock(currentSizeMutex);
+
+		if (currentCacheSize + data.size() > cacheSize)
+		{
+			return CacheResultCodes::notEnoughCacheSize;
+		}
+
+		unique_lock<mutex> dataLock(cacheDataMutex);
+
+		if (auto it = cacheData.find(pathToFile); it != cacheData.end())
+		{
+			it->second += data;
+		}
+		else
+		{
+			cacheData[pathToFile] = data;
+		}
+
+		currentCacheSize += data.size();
+
+		return CacheResultCodes::noError;
+	}
+
 	bool Cache::contains(const filesystem::path& pathToFile) const
 	{
+		unique_lock<mutex> dataLock(cacheDataMutex);
+
 		return cacheData.contains(pathToFile);
 	}
 
 	void Cache::clear()
 	{
+		unique_lock<mutex> dataLock(cacheDataMutex);
+		unique_lock<mutex> sizeLock(currentSizeMutex);
+
 		currentCacheSize = 0;
 
 		cacheData.clear();
@@ -109,12 +142,15 @@ namespace file_manager
 
 	void Cache::clear(const filesystem::path& pathToFile)
 	{
+		unique_lock<mutex> dataLock(cacheDataMutex);
 		auto it = cacheData.find(pathToFile);
 
 		if (it == cacheData.end())
 		{
 			return;
 		}
+
+		unique_lock<mutex> sizeLock(currentSizeMutex);
 
 		currentCacheSize -= it->second.size();
 
@@ -133,6 +169,7 @@ namespace file_manager
 
 	const string& Cache::getCacheData(const filesystem::path& pathToFile) const
 	{
+		unique_lock<mutex> dataLock(cacheDataMutex);
 		auto it = cacheData.find(pathToFile);
 
 		if (it == cacheData.end())
@@ -151,5 +188,10 @@ namespace file_manager
 	uint64_t Cache::getCurrentCacheSize() const
 	{
 		return currentCacheSize;
+	}
+
+	const string& Cache::operator [] (const filesystem::path& pathToFile) const
+	{
+		return this->getCacheData(pathToFile);
 	}
 }

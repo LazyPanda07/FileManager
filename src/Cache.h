@@ -10,6 +10,9 @@ namespace file_manager
 {
 	class FileManager;
 
+	/**
+	 * @brief Files cache
+	*/
 	class FILE_MANAGER_API Cache
 	{
 	public:
@@ -25,8 +28,8 @@ namespace file_manager
 		std::unordered_map<std::filesystem::path, std::string, utility::pathHash> cacheData;
 		uint64_t cacheSize;
 		uint64_t currentCacheSize;
-		std::mutex currentSizeMutex;
-		std::mutex cacheDataMutex;
+		mutable std::mutex currentSizeMutex;
+		mutable std::mutex cacheDataMutex;
 
 	private:
 		void updateCache();
@@ -41,6 +44,22 @@ namespace file_manager
 		/// @param pathToFile Path to file
 		/// @return Error code from Cache::CacheErrorCodes
 		CacheResultCodes addCache(const std::filesystem::path& pathToFile);
+
+		/**
+		 * @brief Append specific cache
+		 * @param pathToFile Path to file
+		 * @param data Cache data
+		 * @return Error code from Cache::CacheErrorCodes
+		*/
+		CacheResultCodes appendCache(const std::filesystem::path& pathToFile, const std::vector<char>& data);
+
+		/**
+		 * @brief Append specific cache
+		 * @param pathToFile Path to file
+		 * @param data Cache data
+		 * @return Error code from Cache::CacheErrorCodes
+		*/
+		CacheResultCodes appendCache(const std::filesystem::path& pathToFile, const std::string_view& data);
 
 		/// @brief Check if file data is cached
 		/// @param pathToFile Path to file
@@ -70,6 +89,13 @@ namespace file_manager
 		/// @brief Used cache size
 		/// @return Cache size in bytes
 		uint64_t getCurrentCacheSize() const;
+
+		/**
+		 * @brief Get cached data
+		 * @return Cached data
+		 * @exception FileDoesNotExistException
+		*/
+		const std::string& operator [] (const std::filesystem::path& pathToFile) const;
 
 		friend void _utility::addCache(std::filesystem::path&& pathToFile, std::string&& data);
 
