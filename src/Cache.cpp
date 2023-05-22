@@ -36,8 +36,6 @@ namespace file_manager
 			paths.emplace(size, path);
 		}
 
-		unique_lock<mutex> currentSizeLock(currentSizeMutex);
-
 		for (const auto& [size, path] : notExistingPaths)
 		{
 			currentCacheSize -= size;
@@ -66,8 +64,6 @@ namespace file_manager
 
 	Cache::CacheResultCodes Cache::addCache(const filesystem::path& pathToFile)
 	{
-		unique_lock<mutex> sizeLock(currentSizeMutex);
-
 		if (!filesystem::exists(pathToFile))
 		{
 			return CacheResultCodes::fileDoesNotExist;
@@ -100,8 +96,6 @@ namespace file_manager
 
 	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& pathToFile, const string_view& data)
 	{
-		unique_lock<mutex> sizeLock(currentSizeMutex);
-
 		if (currentCacheSize + data.size() > cacheSize)
 		{
 			return CacheResultCodes::notEnoughCacheSize;
@@ -133,8 +127,7 @@ namespace file_manager
 	void Cache::clear()
 	{
 		unique_lock<mutex> dataLock(cacheDataMutex);
-		unique_lock<mutex> sizeLock(currentSizeMutex);
-
+		
 		currentCacheSize = 0;
 
 		cacheData.clear();
@@ -149,8 +142,6 @@ namespace file_manager
 		{
 			return;
 		}
-
-		unique_lock<mutex> sizeLock(currentSizeMutex);
 
 		currentCacheSize -= it->second.size();
 

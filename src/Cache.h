@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <map>
 #include <mutex>
+#include <atomic>
 
 #include "Utility.h"
 
@@ -27,8 +28,7 @@ namespace file_manager
 	private:
 		std::unordered_map<std::filesystem::path, std::string, utility::pathHash> cacheData;
 		uint64_t cacheSize;
-		uint64_t currentCacheSize;
-		mutable std::mutex currentSizeMutex;
+		std::atomic<uint64_t> currentCacheSize;
 		mutable std::mutex cacheDataMutex;
 
 	private:
@@ -111,8 +111,6 @@ namespace file_manager
 		void changeCurrentCacheSize(uint64_t amount)
 		{
 			Cache& cache = FileManager::getInstance().getCache();
-
-			std::unique_lock<std::mutex> lock(cache.currentSizeMutex);
 
 			cache.currentCacheSize = OperationT<uint64_t>()(cache.currentCacheSize, amount);
 		}
