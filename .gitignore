@@ -42,3 +42,4 @@ FileManager.sln
 
 # Dependencies
 !ThreadPool.lib
+!libThreadPool.a
