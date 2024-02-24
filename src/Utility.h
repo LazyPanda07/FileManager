@@ -3,8 +3,11 @@
 #include <filesystem>
 
 #ifdef FILE_MANAGER_DLL
+#ifdef __LINUX__
+#define FILE_MANAGER_API __attribute__((visibility("default")))
+#else
 #define FILE_MANAGER_API __declspec(dllexport)
-
+#endif
 #pragma warning(disable: 4251)
 #pragma warning(disable: 4275)
 #else

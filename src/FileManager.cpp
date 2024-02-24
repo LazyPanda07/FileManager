@@ -256,6 +256,13 @@ namespace file_manager
 		return instance;
 	}
 
+	string FileManager::getVersion()
+	{
+		string version = "1.3.0";
+
+		return version;
+	}
+
 	void FileManager::addFile(const filesystem::path& pathToFile, bool isFileAlreadyExist)
 	{
 		if (isFileAlreadyExist)

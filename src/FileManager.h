@@ -110,6 +110,12 @@ namespace file_manager
 		/// @return Singleton instance
 		static FileManager& getInstance();
 
+		/**
+		 * @brief FileManager version
+		 * @return Get FileManager version
+		 */
+		static std::string getVersion();
+
 		/// @brief Add file to manager
 		/// @param pathToFile Path to file
 		/// @param isFileAlreadyExist If true and file does not exist FileDoesNotExistException will be thrown. If true and pathToFile contains path to non regular file NotAFileException will be thrown

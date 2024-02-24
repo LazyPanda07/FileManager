@@ -5,6 +5,7 @@
 #include <mutex>
 #include <vector>
 #include <functional>
+#include <concepts>
 
 #include "Tasks/FunctionWrapperTask.h"
 #include "Utility/ConcurrentQueue.h"
@@ -28,18 +29,13 @@ namespace threading
 			std::thread thread;
 
 		public:
-			mutable std::mutex stateMutex;
 			std::unique_ptr<BaseTask> task;
-			threadState state;
+			std::atomic<threadState> state;
 			std::atomic_bool running;
-			std::function<void(Worker*)> onEnd;
+			bool deleteSelf;
 
 		public:
 			Worker(ThreadPool* threadPool);
-
-			Worker(const Worker& other);
-
-			Worker& operator = (const Worker& other);
 
 			void join();
 
@@ -51,7 +47,6 @@ namespace threading
 	private:
 		utility::ConcurrentQueue<std::unique_ptr<BaseTask>> tasks;
 		std::condition_variable hasTask;
-		std::mutex workerMutex;
 		std::vector<Worker*> workers;
 
 	private:
@@ -82,10 +77,24 @@ namespace threading
 
 		/// @brief Add new task to thread pool
 		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(R(*task)(ArgsT...), const std::function<void()>& callback, Args&&... args);
+
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
 		std::unique_ptr<Future> addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args);
 
+		/// @brief Add new task to thread pool
+		template<typename R, typename... ArgsT, typename... Args>
+		std::unique_ptr<Future> addTask(R(*task)(ArgsT...), std::function<void()>&& callback, Args&&... args);
+
+		/**
+		* @brief Create custom new task of type TaskT and add that task to thread pool
+		*/
+		template<typename TaskT, typename... Args>
+		std::unique_ptr<Future> addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>;
+
 		/// @brief Reinitialize thread pool
-		/// @param Wait all threads execution
+		/// @param wait Wait all threads execution
 		/// @param threadsCount New thread pool size
 		void reinit(bool wait = true, size_t threadsCount = std::thread::hardware_concurrency());
 
@@ -116,6 +125,10 @@ namespace threading
 		/// @return Current count of threads in thread pool
 		size_t getThreadsCount() const;
 
+		/// @brief Getter for threadsCount
+		/// @return Current count of threads in thread pool
+		size_t size() const;
+
 		~ThreadPool();
 	};
 
@@ -129,11 +142,38 @@ namespace threading
 	}
 
 	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(R(*task)(ArgsT...), const std::function<void()>& callback, Args&&... args)
+	{
+		return this->addTask
+		(
+			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), callback)
+		);
+	}
+
+	template<typename R, typename... ArgsT, typename... Args>
 	std::unique_ptr<Future> ThreadPool::addTask(const std::function<R(ArgsT...)>& task, std::function<void()>&& callback, Args&&... args)
 	{
 		return this->addTask
 		(
 			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), std::move(callback))
+		);
+	}
+
+	template<typename R, typename... ArgsT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(R(*task)(ArgsT...), std::function<void()>&& callback, Args&&... args)
+	{
+		return this->addTask
+		(
+			std::make_unique<FunctionWrapperTask<R>>(std::bind(task, std::forward<Args>(args)...), std::move(callback))
+		);
+	}
+
+	template<typename TaskT, typename... Args>
+	std::unique_ptr<Future> ThreadPool::addTask(Args&&... args) requires std::derived_from<TaskT, BaseTask>
+	{
+		return this->addTask
+		(
+			std::make_unique<TaskT>(std::forward<Args>(args)...)
 		);
 	}
 }

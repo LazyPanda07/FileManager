@@ -2,6 +2,7 @@
 
 #include <queue>
 #include <mutex>
+#include <optional>
 
 namespace threading
 {
@@ -16,6 +17,10 @@ namespace threading
 
 		public:
 			ConcurrentQueue() = default;
+
+			ConcurrentQueue(ConcurrentQueue&& other) noexcept;
+
+			ConcurrentQueue& operator = (ConcurrentQueue&& other) noexcept;
 
 			/**
 			 * @brief Add element to queue
@@ -33,13 +38,19 @@ namespace threading
 			 * @brief Give out first element from queue
 			 * @return First element in queue
 			*/
-			T pop();
+			std::optional<T> pop();
 
 			/**
 			 * @brief Current size of queue
 			 * @return Queue size
 			*/
 			size_t size() const;
+
+			/**
+			 * @brief Checks whether the queue is empty
+			 * @return 
+			*/
+			bool empty() const;
 
 			~ConcurrentQueue() = default;
 		};
@@ -53,6 +64,20 @@ namespace threading
 		}
 
 		template<typename T>
+		ConcurrentQueue<T>::ConcurrentQueue(ConcurrentQueue&& other) noexcept
+		{
+			(*this) = std::move(other);
+		}
+
+		template<typename T>
+		ConcurrentQueue<T>& ConcurrentQueue<T>::operator = (ConcurrentQueue<T>&& other) noexcept
+		{
+			data = std::move(other.data);
+
+			return *this;
+		}
+
+		template<typename T>
 		void ConcurrentQueue<T>::push(T&& value)
 		{
 			std::unique_lock<std::mutex> lock(dataMutex);
@@ -61,14 +86,24 @@ namespace threading
 		}
 
 		template<typename T>
-		T ConcurrentQueue<T>::pop()
+		std::optional<T> ConcurrentQueue<T>::pop()
 		{
-			std::unique_lock<std::mutex> lock(dataMutex);
-			T value = std::move(data.front());
+			std::optional<T> result;
 
-			data.pop();
+			{
+				std::unique_lock<std::mutex> lock(dataMutex);
 
-			return value;
+				if (data.empty())
+				{
+					return result;
+				}
+
+				result = std::move(data.front());
+
+				data.pop();
+			}
+
+			return result;
 		}
 
 		template<typename T>
@@ -77,6 +112,12 @@ namespace threading
 			std::unique_lock<std::mutex> lock(dataMutex);
 
 			return data.size();
+		}
+
+		template<typename T>
+		bool ConcurrentQueue<T>::empty() const
+		{
+			return !this->size();
 		}
 	}
 }
