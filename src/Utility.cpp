@@ -8,19 +8,19 @@ namespace file_manager
 {
 	namespace size_literals
 	{
-		uint64_t operator "" _kib(uint64_t count)
+		size_t operator "" _kib(size_t count)
 		{
 			return count * 1024;
 		}
 
-		uint64_t operator "" _mib(uint64_t count)
+		size_t operator "" _mib(size_t count)
 		{
-			return count * static_cast<uint64_t>(pow(1024, 2));
+			return count * static_cast<size_t>(pow(1024, 2));
 		}
 
-		uint64_t operator "" _gib(uint64_t count)
+		size_t operator "" _gib(size_t count)
 		{
-			return count * static_cast<uint64_t>(pow(1024, 3));
+			return count * static_cast<size_t>(pow(1024, 3));
 		}
 	}
 

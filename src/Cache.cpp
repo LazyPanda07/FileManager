@@ -55,6 +55,11 @@ namespace file_manager
 		}
 	}
 
+	Cache& Cache::getCache()
+	{
+		return FileManager::getInstance().getCache();
+	}
+
 	Cache::Cache() :
 		cacheSize(0),
 		currentCacheSize(0)

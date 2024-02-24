@@ -35,6 +35,8 @@ namespace file_manager
 	private:
 		void updateCache();
 
+		static Cache& getCache();
+
 	private:
 		Cache();
 
@@ -111,7 +113,7 @@ namespace file_manager
 		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		void changeCurrentCacheSize(uint64_t amount)
 		{
-			Cache& cache = file_manager::FileManager::getInstance().getCache();
+			Cache& cache = Cache::getCache();
 
 			cache.currentCacheSize = OperationT<uint64_t>()(cache.currentCacheSize, amount);
 		}

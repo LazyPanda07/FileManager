@@ -1,7 +1,6 @@
 #pragma once
 
 #include <filesystem>
-#include <cstdint>
 
 #ifdef FILE_MANAGER_DLL
 #ifdef __LINUX__
@@ -26,17 +25,17 @@ namespace file_manager
 		/// @brief Shortcut for declaring KiB (1024 bytes)
 		/// @param count Count of KiB
 		/// @return Result of converting KiB to bytes
-		FILE_MANAGER_API_FUNCTION uint64_t operator "" _kib(uint64_t count);
+		FILE_MANAGER_API_FUNCTION size_t operator "" _kib(size_t count);
 
 		/// @brief Shortcut for declaring MiB (1024 KiB)
 		/// @param count Count of MiB
 		/// @return Result of converting MiB to bytes
-		FILE_MANAGER_API_FUNCTION uint64_t operator "" _mib(uint64_t count);
+		FILE_MANAGER_API_FUNCTION size_t operator "" _mib(size_t count);
 
 		/// @brief Shortcut for declaring GiB (1024 MiB)
 		/// @param count Count of GiB
 		/// @return Result of converting GiB to bytes
-		FILE_MANAGER_API_FUNCTION uint64_t operator "" _gib(uint64_t count);
+		FILE_MANAGER_API_FUNCTION size_t operator "" _gib(size_t count);
 	}
 
 	namespace utility
