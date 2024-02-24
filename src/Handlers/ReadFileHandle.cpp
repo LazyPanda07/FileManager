@@ -23,7 +23,7 @@ namespace file_manager
 		{
 			buffer = make_unique<ReadOnlyBuffer>(cache.getCacheData(pathToFile));
 
-			file.set_rdbuf(buffer.get());
+			static_cast<iostream&>(file).rdbuf(buffer.get());
 		}
 	}
 
