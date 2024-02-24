@@ -52,7 +52,7 @@ namespace file_manager
 		
 	}
 
-	static bool operator == (const FileManager::requestStruct& request, FileManager::requestType type)
+	bool operator == (const FileManager::requestStruct& request, FileManager::requestType type)
 	{
 		return request.callback.index() == static_cast<size_t>(type);
 	}
