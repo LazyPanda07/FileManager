@@ -58,3 +58,44 @@ jobs:
       with:
         path: build/install-dir
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
+
+
+  windows-tests:
+    runs-on: windows-latest
+    needs: windows-build
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: FileManager
+        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
+
+    - name: Get Google Test
+      uses: LazyPanda07/get-gtest@v1
+      with: 
+        install-path: Tests/gtest
+        build-type: ${{ matrix.configuration }}
+
+    - name: Enable NMake
+      uses: ilammy/msvc-dev-cmd@v1.13.0
+
+    - name: Build tests
+      working-directory: Tests
+      run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
+          nmake install
+    
+    - name: Tests
+      working-directory: Tests
+      run: |
+          cd build/bin
+          .\Tests.exe

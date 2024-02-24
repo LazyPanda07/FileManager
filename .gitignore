@@ -37,6 +37,9 @@
 # Binaries
 bin/
 
+# Google Test
+gtest/
+
 # .sln file
 FileManager.sln
 
