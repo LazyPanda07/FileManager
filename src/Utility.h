@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <cstdint>
 
 #ifdef FILE_MANAGER_DLL
 #ifdef __LINUX__
@@ -8,10 +9,14 @@
 #else
 #define FILE_MANAGER_API __declspec(dllexport)
 #endif
+
+#define FILE_MANAGER_API_FUNCTION extern "C" FILE_MANAGER_API
+
 #pragma warning(disable: 4251)
 #pragma warning(disable: 4275)
 #else
 #define FILE_MANAGER_API
+#define FILE_MANAGER_API_FUNCTION
 #endif
 
 namespace file_manager
@@ -21,17 +26,17 @@ namespace file_manager
 		/// @brief Shortcut for declaring KiB (1024 bytes)
 		/// @param count Count of KiB
 		/// @return Result of converting KiB to bytes
-		uint64_t operator "" _kib(uint64_t count);
+		FILE_MANAGER_API_FUNCTION uint64_t operator "" _kib(uint64_t count);
 
 		/// @brief Shortcut for declaring MiB (1024 KiB)
 		/// @param count Count of MiB
 		/// @return Result of converting MiB to bytes
-		uint64_t operator "" _mib(uint64_t count);
+		FILE_MANAGER_API_FUNCTION uint64_t operator "" _mib(uint64_t count);
 
 		/// @brief Shortcut for declaring GiB (1024 MiB)
 		/// @param count Count of GiB
 		/// @return Result of converting GiB to bytes
-		uint64_t operator "" _gib(uint64_t count);
+		FILE_MANAGER_API_FUNCTION uint64_t operator "" _gib(uint64_t count);
 	}
 
 	namespace utility

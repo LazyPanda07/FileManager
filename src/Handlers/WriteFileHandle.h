@@ -30,7 +30,7 @@ namespace file_manager
 		};
 
 	protected:
-		WriteFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
+		WriteFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = std::ios_base::out);
 
 	public:
 		/// @brief Write data to file

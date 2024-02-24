@@ -21,7 +21,7 @@ namespace file_manager
 		std::unique_ptr<ReadOnlyBuffer> buffer;
 
 	protected:
-		ReadFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = 0);
+		ReadFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = std::ios_base::in);
 
 	public:
 		/// @brief Read all file

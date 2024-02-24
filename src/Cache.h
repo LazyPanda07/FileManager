@@ -4,6 +4,7 @@
 #include <map>
 #include <mutex>
 #include <atomic>
+#include <vector>
 
 #include "Utility.h"
 
@@ -110,7 +111,7 @@ namespace file_manager
 		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		void changeCurrentCacheSize(uint64_t amount)
 		{
-			Cache& cache = FileManager::getInstance().getCache();
+			Cache& cache = file_manager::FileManager::getInstance().getCache();
 
 			cache.currentCacheSize = OperationT<uint64_t>()(cache.currentCacheSize, amount);
 		}
