@@ -8,7 +8,7 @@ option(BUILD_SHARED_LIBS "" OFF)
 if (UNIX)
 	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
 
-	add_definitions(__LINUX__)
+	add_definitions(-D__LINUX__)
 
 	install(FILES ${LINK_LIBRARY_PATH}/libThreadPool.a DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/lib)
 else ()
