@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(LINK_LIBRARY_PATH ../dependencies/ThreadPool/lib)
-set(SHARED_OBJECT ../FileManager)
+set(DLL ../FileManager)
 
 if (UNIX)
 	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
 
-	set(SHARED_OBJECT ${SHARED_OBJECT}/lib/libFileManager.so)
+	set(DLL ${DLL}/lib/libFileManager.so)
 
 	add_definitions(-D__LINUX__)
 else ()
@@ -17,8 +17,14 @@ else ()
 		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/release)
 	endif ()
 
-	set(SHARED_OBJECT ${SHARED_OBJECT}/dll/FileManager.dll)
+	set(DLL ${DLL}/dll/FileManager.dll)
 endif (UNIX)
+
+if (EXISTS ${DLL})
+	add_definitions(-DFILE_MANAGER_DLL)
+
+	install(FILES ${DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
+endif ()
 
 project(Tests)
 
@@ -54,7 +60,3 @@ target_link_libraries(
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_BINARY_DIR}/bin)
-
-if (EXISTS ${SHARED_OBJECT})
-	install(FILES ${SHARED_OBJECT} DESTINATION ${CMAKE_BINARY_DIR}/bin)
-endif ()
