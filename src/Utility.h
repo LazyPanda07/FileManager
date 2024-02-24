@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <cmath>
 
 #ifdef FILE_MANAGER_DLL
 #ifdef __LINUX__
@@ -8,14 +9,10 @@
 #else
 #define FILE_MANAGER_API __declspec(dllexport)
 #endif
-
-#define FILE_MANAGER_API_FUNCTION extern "C" FILE_MANAGER_API
-
 #pragma warning(disable: 4251)
 #pragma warning(disable: 4275)
 #else
 #define FILE_MANAGER_API
-#define FILE_MANAGER_API_FUNCTION
 #endif
 
 namespace file_manager
@@ -25,17 +22,26 @@ namespace file_manager
 		/// @brief Shortcut for declaring KiB (1024 bytes)
 		/// @param count Count of KiB
 		/// @return Result of converting KiB to bytes
-		FILE_MANAGER_API_FUNCTION unsigned long long operator "" _kib(unsigned long long count);
+		inline unsigned long long operator "" _kib(unsigned long long count)
+		{
+			return count * 1024;
+		}
 
 		/// @brief Shortcut for declaring MiB (1024 KiB)
 		/// @param count Count of MiB
 		/// @return Result of converting MiB to bytes
-		FILE_MANAGER_API_FUNCTION unsigned long long operator "" _mib(unsigned long long count);
+		inline unsigned long long operator "" _mib(unsigned long long count)
+		{
+			return count * static_cast<unsigned long long>(std::pow(1024, 2));
+		}
 
 		/// @brief Shortcut for declaring GiB (1024 MiB)
 		/// @param count Count of GiB
 		/// @return Result of converting GiB to bytes
-		FILE_MANAGER_API_FUNCTION unsigned long long operator "" _gib(unsigned long long count);
+		inline unsigned long long operator "" _gib(unsigned long long count)
+		{
+			return count * static_cast<unsigned long long>(std::pow(1024, 3));
+		}
 	}
 
 	namespace utility
@@ -44,7 +50,7 @@ namespace file_manager
 		struct FILE_MANAGER_API pathHash
 		{
 			size_t operator () (const std::filesystem::path& pathToFile) const noexcept;
-		};	
+		};
 	}
 
 	namespace _utility

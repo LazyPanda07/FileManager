@@ -77,11 +77,6 @@ jobs:
         path: FileManager
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
 
-    - name: Directories
-      run: |
-          ls
-          ls FileManager
-
     - name: Get Google Test
       uses: LazyPanda07/get-gtest@v1
       with: 
@@ -122,11 +117,6 @@ jobs:
       with:
         path: FileManager
         name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
-
-    - name: Directories
-      run: |
-          ls
-          ls FileManager
 
     - name: Get Google Test
       uses: LazyPanda07/get-gtest@v1
