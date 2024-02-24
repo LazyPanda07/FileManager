@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(LINK_LIBRARY_PATH ../dependencies/ThreadPool/lib)
-set(DLL ../FileManager)
+set(DLL ${PROJECT_SOURCE_DIR}/../FileManager)
 
 if (UNIX)
 	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
@@ -38,15 +38,15 @@ add_executable(
 
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
-	../src
-	../dependencies/ThreadPool/include
+	${PROJECT_SOURCE_DIR}/../src
+	${PROJECT_SOURCE_DIR}/../dependencies/ThreadPool/include
 	gtest/include
 	include
 )
 
 target_link_directories(
 	${PROJECT_NAME} PUBLIC
-	../FileManager/lib
+	${PROJECT_SOURCE_DIR}/../FileManager/lib
 	${LINK_LIBRARY_PATH}
 	gtest/lib
 )
