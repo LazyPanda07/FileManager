@@ -1,5 +1,7 @@
 #include "Utility.h"
 
+#include <cmath>
+
 #include "FileManager.h"
 
 using namespace std;

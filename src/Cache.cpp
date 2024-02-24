@@ -5,14 +5,17 @@
 
 using namespace std;
 
-template<>
-struct less<pair<uint64_t, filesystem::path>>
+namespace std
 {
-	constexpr bool operator()(const pair<uint64_t, filesystem::path>& left, const pair<uint64_t, filesystem::path>& right) const
+	template<>
+	struct less<pair<uint64_t, filesystem::path>>
 	{
-		return left.first > right.first;
-	}
-};
+		constexpr bool operator()(const pair<uint64_t, filesystem::path>& left, const pair<uint64_t, filesystem::path>& right) const
+		{
+			return left.first > right.first;
+		}
+	};
+}
 
 namespace file_manager
 {

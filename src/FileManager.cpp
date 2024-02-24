@@ -85,7 +85,7 @@ namespace file_manager
 			return new AppendBinaryFileHandle(pathToFile);
 		}
 
-		return new FileHandle(pathToFile, NULL);
+		return new FileHandle(pathToFile, ios_base::in);
 	}
 
 	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
