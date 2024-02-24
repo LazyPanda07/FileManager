@@ -91,7 +91,7 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           nmake install
     
     - name: Tests
@@ -99,3 +99,40 @@ jobs:
       run: |
           cd build/bin
           .\Tests.exe
+
+
+  linux-tests:
+    runs-on: ubuntu-latest
+    needs: linux-build
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+        shared: [[ON, DLL], [OFF, ""]]
+    
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: FileManager
+        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
+
+    - name: Get Google Test
+      uses: LazyPanda07/get-gtest@v1
+      with: 
+        install-path: Tests/gtest
+
+    - name: Build tests
+      working-directory: Tests
+      run: |
+          mkdir build
+          cd build
+          cmake -DCMAKE_BUILD_TYPE=Release ..
+          make install -j $(nproc)
+    
+    - name: Tests
+      working-directory: Tests
+      run: |
+          cd build/bin
+          LD_LIBRARY_PATH=$(pwd):${LD_LIBRARY_PATH} ./Tests
