@@ -21,6 +21,10 @@ else ()
 	install(FILES ${LINK_LIBRARY_PATH}/ThreadPool.lib DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/lib)
 endif (UNIX)
 
+if (${BUILD_SHARED_LIBS})
+	add_definitions(-DFILE_MANAGER_DLL)
+endif ()
+
 project(FileManager)
 
 add_library(
