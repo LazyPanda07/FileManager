@@ -37,7 +37,7 @@ struct RequestPromiseHandler
 
 namespace file_manager
 {
-	FileManager::FileManagerPtr FileManager::instance = FileManagerPtr(new FileManager(), &FileManager::deleter);
+	FileManager::FileManagerPtr FileManager::instance = FileManager::FileManagerPtr(nullptr, [](FileManager*) {});
 
 	FileManager::filePathState::filePathState() :
 		readRequests(0),
