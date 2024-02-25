@@ -6,6 +6,8 @@
 
 using namespace std::chrono_literals;
 
+std::atomic<size_t> totalSize = 0;
+
 size_t randomFill(const std::string& fileName)
 {
 	file_manager::FileManager& manager = file_manager::FileManager::getInstance();
@@ -17,6 +19,7 @@ size_t randomFill(const std::string& fileName)
 		if (random() % 2)
 		{
 			result++;
+			totalSize++;
 
 			manager.appendFile
 			(
@@ -35,7 +38,7 @@ size_t randomFill(const std::string& fileName)
 				fileName,
 				[result](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
 				{
-					ASSERT_EQ(handle->readAllData().size(), result);
+					ASSERT_EQ(handle->readAllData().size(), totalSize);
 				}
 			);
 		}
