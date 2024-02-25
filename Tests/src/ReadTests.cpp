@@ -40,7 +40,8 @@ size_t randomFill(const std::string& fileName)
 				[](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
 				{
 					ASSERT_EQ(handle->readAllData().size(), totalSize);
-				}
+				},
+				false
 			);
 		}
 	}
