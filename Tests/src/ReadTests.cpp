@@ -18,7 +18,7 @@ size_t randomFill(const std::string& fileName)
 		{
 			result++;
 
-			manager.writeFile
+			manager.appendFile
 			(
 				fileName,
 				[](std::unique_ptr<file_manager::WriteFileHandle>&& handle)
