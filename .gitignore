@@ -37,6 +37,7 @@
 # Binaries
 bin/
 out/
+build/
 
 # Google Test
 gtest/

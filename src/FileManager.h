@@ -63,7 +63,9 @@ namespace file_manager
 		friend bool operator == (const requestStruct& request, requestType type);
 
 	private:
-		static std::unique_ptr<FileManager> instance;
+		using FileManagerPtr = std::unique_ptr<FileManager, void(*)(FileManager*)>;
+
+		static FileManagerPtr instance;
 		static std::mutex instanceMutex;
 
 	private:
@@ -77,6 +79,8 @@ namespace file_manager
 
 	private:
 		static void threadPoolCallback(std::promise<void>&& requestPromise);
+
+		static void deleter(FileManager* instance);
 
 	private:
 		FileHandle* createHandle(const std::filesystem::path& pathToFile, requestFileHandleType handleType);

@@ -62,6 +62,11 @@ namespace file_manager
 		requestPromise.set_value();
 	}
 
+	void FileManager::deleter(FileManager* instance)
+	{
+		delete instance;
+	}
+
 	FileHandle* FileManager::createHandle(const filesystem::path& pathToFile, requestFileHandleType handleType)
 	{
 		switch (handleType)
@@ -266,7 +271,7 @@ namespace file_manager
 		{
 			unique_lock<mutex> lock(FileManager::instanceMutex);
 
-			instance = make_unique<FileManager>(thread::hardware_concurrency());
+			instance = FileManagerPtr(new FileManager(thread::hardware_concurrency()), &FileManager::deleter);
 		}
 
 		return *instance;
@@ -278,7 +283,7 @@ namespace file_manager
 		{
 			unique_lock<mutex> lock(FileManager::instanceMutex);
 
-			instance = make_unique<FileManager>(threadsNumber);
+			instance = FileManagerPtr(new FileManager(threadsNumber), &FileManager::deleter);
 		}
 
 		if (instance->threadPool->getThreadsCount() != threadsNumber)
@@ -299,7 +304,7 @@ namespace file_manager
 		{
 			unique_lock<mutex> lock(FileManager::instanceMutex);
 
-			instance = make_unique<FileManager>(threadPool);
+			instance = FileManagerPtr(new FileManager(threadPool), &FileManager::deleter);
 		}
 
 		if (instance->threadPool != threadPool)
