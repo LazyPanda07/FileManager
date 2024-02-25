@@ -31,7 +31,6 @@ project(Tests)
 add_executable(
 	${PROJECT_NAME}
 	main.cpp
-	src/Functions.cpp
 	src/ReadTests.cpp
 	src/WriteTests.cpp
 )
@@ -41,7 +40,6 @@ target_include_directories(
 	${CMAKE_SOURCE_DIR}/../src
 	${CMAKE_SOURCE_DIR}/../dependencies/ThreadPool/include
 	gtest/include
-	include
 )
 
 target_link_directories(

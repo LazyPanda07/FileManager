@@ -63,12 +63,17 @@ namespace file_manager
 		friend bool operator == (const requestStruct& request, requestType type);
 
 	private:
-		threading::ThreadPool* threadPool;
+		static std::unique_ptr<FileManager> instance;
+		static std::mutex instanceMutex;
+
+	private:
+		Cache cache;
 		std::unordered_map<std::filesystem::path, filePathState, utility::pathHash> files;
 		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, utility::pathHash> requests;
 		std::mutex filesMutex;
 		std::mutex requestsMutex;
-		Cache cache;
+		threading::ThreadPool* threadPool;
+		bool isThreadPoolWeak;
 
 	private:
 		static void threadPoolCallback(std::promise<void>&& requestPromise);
@@ -87,11 +92,12 @@ namespace file_manager
 		void completeWriteRequest(const std::filesystem::path& pathToFile);
 
 	private:
-		FileManager();
+		FileManager(size_t threadsNumber);
+
+		FileManager(threading::ThreadPool* threadPool);
 
 		~FileManager();
 
-	public:
 		FileManager(const FileManager&) = delete;
 
 		FileManager(FileManager&&) noexcept = delete;
@@ -106,9 +112,27 @@ namespace file_manager
 		std::future<void> addWriteRequest(const std::filesystem::path& pathToFile, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, requestFileHandleType handleType, bool isWait);
 
 	public:
-		/// @brief Singleton getter
-		/// @return Singleton instance
+		/**
+		 * @brief Singleton getter
+		 * Also initialize thread pool with max threads for current hardware
+		 * Default getter after initialization
+		 * @return Singleton instance
+		 */
 		static FileManager& getInstance();
+
+		/**
+		 * @brief Singleton getter. Will reinitialize if threadsNumber != current threadsNumber
+		 * @param threadsNumber ThreadPool threads number
+		 * @return Singleton instance
+		 */
+		static FileManager& getInstance(size_t threadsNumber);
+
+		/**
+		 * @brief Singleton getter
+		 * @param threadPool FileManager will use this thread pool instead of initializing its own thread pool
+		 * @return Singleton instance
+		 */
+		static FileManager& getInstance(threading::ThreadPool* threadPool);
 
 		/**
 		 * @brief FileManager version

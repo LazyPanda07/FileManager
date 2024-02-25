@@ -103,9 +103,13 @@ namespace file_manager
 
 	void FileManager::addRequest(const filesystem::path& pathToFile, fileCallback&& callback, promise<void>&& requestPromise, requestFileHandleType handleType)
 	{
-		unique_lock<mutex> requestsLock(requestsMutex);
+		{
+			unique_lock<mutex> requestsLock(requestsMutex);
 
-		requests[pathToFile].push(requestStruct(move(callback), move(requestPromise), handleType));
+			requests[pathToFile].push(requestStruct(move(callback), move(requestPromise), handleType));
+		}
+		
+		this->processQueue(pathToFile);
 	}
 
 	void FileManager::processQueue(const filesystem::path& pathToFile)
@@ -198,15 +202,26 @@ namespace file_manager
 		files[pathToFile].isWriteRequest = false;
 	}
 
-	FileManager::FileManager() :
-		threadPool(new threading::ThreadPool())
+	FileManager::FileManager(size_t threadsNumber) :
+		threadPool(new threading::ThreadPool(threadsNumber)),
+		isThreadPoolWeak(false)
+	{
+
+	}
+
+	FileManager::FileManager(threading::ThreadPool* threadPool) :
+		threadPool(threadPool),
+		isThreadPoolWeak(true)
 	{
 
 	}
 
 	FileManager::~FileManager()
 	{
-		delete threadPool;
+		if (!isThreadPoolWeak)
+		{
+			delete threadPool;
+		}
 
 		threadPool = nullptr;
 	}
@@ -219,8 +234,6 @@ namespace file_manager
 		future<void> isReady = requestPromise.get_future();
 
 		this->addRequest(pathToFile, callback, move(requestPromise), handleType);
-
-		this->processQueue(pathToFile);
 
 		if (isWait)
 		{
@@ -239,8 +252,6 @@ namespace file_manager
 
 		this->addRequest(pathToFile, callback, move(requestPromise), handleType);
 
-		this->processQueue(pathToFile);
-
 		if (isWait)
 		{
 			isReady.wait();
@@ -251,9 +262,54 @@ namespace file_manager
 
 	FileManager& FileManager::getInstance()
 	{
-		static FileManager instance;
+		if (!instance)
+		{
+			unique_lock<mutex> lock(FileManager::instanceMutex);
 
-		return instance;
+			instance = make_unique<FileManager>(thread::hardware_concurrency());
+		}
+
+		return *instance;
+	}
+
+	FileManager& FileManager::getInstance(size_t threadsNumber)
+	{
+		if (!instance)
+		{
+			unique_lock<mutex> lock(FileManager::instanceMutex);
+
+			instance = make_unique<FileManager>(threadsNumber);
+		}
+
+		if (instance->threadPool->getThreadsCount() != threadsNumber)
+		{
+			unique_lock<mutex> filesLock(instance->filesMutex);
+
+			delete instance->threadPool;
+
+			instance->threadPool = new threading::ThreadPool(threadsNumber);
+		}
+
+		return *instance;
+	}
+
+	FileManager& FileManager::getInstance(threading::ThreadPool* threadPool)
+	{
+		if (!instance)
+		{
+			unique_lock<mutex> lock(FileManager::instanceMutex);
+
+			instance = make_unique<FileManager>(threadPool);
+		}
+
+		if (instance->threadPool != threadPool)
+		{
+			unique_lock<mutex> filesLock(instance->filesMutex);
+
+			instance->threadPool = threadPool;
+		}
+
+		return *instance;
 	}
 
 	string FileManager::getVersion()

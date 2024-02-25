@@ -36,6 +36,7 @@
 
 # Binaries
 bin/
+out/
 
 # Google Test
 gtest/
