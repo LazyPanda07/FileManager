@@ -66,7 +66,7 @@ namespace file_manager
 		using FileManagerPtr = std::unique_ptr<FileManager, void(*)(FileManager*)>;
 
 		static FileManagerPtr instance;
-		static std::mutex instanceMutex;
+		inline static std::mutex instanceMutex;
 
 	private:
 		Cache cache;
@@ -96,6 +96,8 @@ namespace file_manager
 		void completeWriteRequest(const std::filesystem::path& pathToFile);
 
 	private:
+		FileManager();
+
 		FileManager(size_t threadsNumber);
 
 		FileManager(threading::ThreadPool* threadPool);

@@ -37,6 +37,8 @@ struct RequestPromiseHandler
 
 namespace file_manager
 {
+	FileManager::FileManagerPtr FileManager::instance = FileManagerPtr(new FileManager(), &FileManager::deleter);
+
 	FileManager::filePathState::filePathState() :
 		readRequests(0),
 		isWriteRequest(false)
@@ -205,6 +207,13 @@ namespace file_manager
 		unique_lock<mutex> filesLock(filesMutex);
 
 		files[pathToFile].isWriteRequest = false;
+	}
+
+	FileManager::FileManager() :
+		threadPool(nullptr),
+		isThreadPoolWeak(true)
+	{
+
 	}
 
 	FileManager::FileManager(size_t threadsNumber) :
