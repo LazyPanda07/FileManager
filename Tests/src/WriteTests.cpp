@@ -1,5 +1,3 @@
-#include <fstream>
-
 #include "gtest/gtest.h"
 
 #include "FileManager.h"
@@ -52,8 +50,10 @@ TEST(FileManager, Write)
 	std::string data;
 
 	threads.reserve(threadsCount);
-
-	std::ofstream(fileName);
+	
+	{
+		std::ofstream file(fileName);
+	}
 
 	manager.addFile(fileName);
 

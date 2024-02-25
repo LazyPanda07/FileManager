@@ -51,7 +51,9 @@ TEST(FileManager, Read)
 	std::mt19937_64 random(time(nullptr));
 	std::string data;
 
-	std::ofstream(fileName);
+	{
+		std::ofstream file(fileName);
+	}
 
 	manager.addFile(fileName);
 
