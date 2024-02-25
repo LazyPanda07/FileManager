@@ -19,7 +19,6 @@ size_t randomFill(const std::string& fileName)
 		if (random() % 2)
 		{
 			result++;
-			totalSize++;
 
 			manager.appendFile
 			(
@@ -27,6 +26,8 @@ size_t randomFill(const std::string& fileName)
 				[](std::unique_ptr<file_manager::WriteFileHandle>&& handle)
 				{
 					handle->write("1");
+
+					totalSize++;
 				},
 				false
 			);
@@ -38,7 +39,7 @@ size_t randomFill(const std::string& fileName)
 				fileName,
 				[](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
 				{
-					// ASSERT_EQ(handle->readAllData().size(), totalSize);
+					ASSERT_EQ(handle->readAllData().size(), totalSize);
 				}
 			);
 		}
