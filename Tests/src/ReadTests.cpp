@@ -6,7 +6,7 @@
 
 using namespace std::chrono_literals;
 
-std::atomic<size_t> totalSize = 0;
+size_t totalSize = 0;
 
 size_t randomFill(const std::string& fileName)
 {
@@ -64,8 +64,10 @@ TEST(FileManager, Read)
 
 	std::future<size_t> first = std::async(std::launch::async, &randomFill, std::ref(fileName));
 	std::future<size_t> second = std::async(std::launch::async, &randomFill, std::ref(fileName));
+	std::future<size_t> third = std::async(std::launch::async, &randomFill, std::ref(fileName));
+	std::future<size_t> fourth = std::async(std::launch::async, &randomFill, std::ref(fileName));
 
-	size_t randomFillWrites = first.get() + second.get();
+	size_t randomFillWrites = first.get() + second.get() + third.get() + fourth.get();
 
 	manager.readFile
 	(
