@@ -26,9 +26,9 @@ namespace file_manager
 		file = move(other.file);
 		mode = other.mode;
 
-		isNotifyOnDestruction = true;
+		isNotifyOnDestruction = other.isNotifyOnDestruction;
 
-		other.isNotifyOnDestruction = false;
+		other.isNotifyOnDestruction = !other.isNotifyOnDestruction;
 
 		return *this;
 	}

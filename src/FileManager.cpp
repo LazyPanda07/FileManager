@@ -59,7 +59,7 @@ namespace file_manager
 		return request.callback.index() == static_cast<size_t>(type);
 	}
 
-	void FileManager::threadPoolCallback(std::promise<void>&& requestPromise)
+	void FileManager::threadPoolCallback(promise<void>&& requestPromise)
 	{
 		requestPromise.set_value();
 	}
@@ -97,15 +97,10 @@ namespace file_manager
 
 	void FileManager::notify(filesystem::path&& pathToFile, ios_base::openmode mode)
 	{
-		unique_lock<mutex> filesLock(filesMutex);
-
-		if (mode & ios_base::out && !files[pathToFile].isWriteRequest)
-		{
-			threadPool->addTask([this, tem = move(pathToFile)]()
+		threadPool->addTask([this, tem = move(pathToFile)]()
 			{
 				this->processQueue(tem);
 			});
-		}
 	}
 
 	void FileManager::addRequest(const filesystem::path& pathToFile, fileCallback&& callback, promise<void>&& requestPromise, requestFileHandleType handleType)
@@ -113,7 +108,7 @@ namespace file_manager
 		{
 			unique_lock<mutex> requestsLock(requestsMutex);
 
-			requests[pathToFile].push(requestStruct(move(callback), move(requestPromise), handleType));
+			requests[pathToFile].emplace(move(callback), move(requestPromise), handleType);
 		}
 		
 		this->processQueue(pathToFile);
@@ -388,6 +383,13 @@ namespace file_manager
 	future<void> FileManager::appendBinaryFile(const filesystem::path& pathToFile, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, bool isWait)
 	{
 		return this->addWriteRequest(pathToFile, callback, requestFileHandleType::appendBinary, isWait);
+	}
+
+	size_t FileManager::getRequests(const filesystem::path& pathToFile) const
+	{
+		unique_lock<mutex> lock(requestsMutex);
+
+		return requests.at(pathToFile).size();
 	}
 
 	Cache& FileManager::getCache()

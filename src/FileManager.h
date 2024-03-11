@@ -72,8 +72,8 @@ namespace file_manager
 		Cache cache;
 		std::unordered_map<std::filesystem::path, filePathState, utility::pathHash> files;
 		std::unordered_map<std::filesystem::path, std::queue<requestStruct>, utility::pathHash> requests;
-		std::mutex filesMutex;
-		std::mutex requestsMutex;
+		mutable std::mutex filesMutex;
+		mutable std::mutex requestsMutex;
 		threading::ThreadPool* threadPool;
 		bool isThreadPoolWeak;
 
@@ -82,7 +82,7 @@ namespace file_manager
 
 		static void deleter(FileManager* instance);
 
-	private:
+	public:
 		FileHandle* createHandle(const std::filesystem::path& pathToFile, requestFileHandleType handleType);
 
 		void notify(std::filesystem::path&& pathToFile, std::ios_base::openmode mode);
@@ -192,6 +192,8 @@ namespace file_manager
 		/// @param callback Function that will be called for writing file
 		/// @param isWait If true thread will wait till callback end
 		std::future<void> appendBinaryFile(const std::filesystem::path& pathToFile, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool isWait = true);
+
+		size_t getRequests(const std::filesystem::path& pathToFile) const;
 
 		/// @brief Cache getter
 		/// @return Cache instance

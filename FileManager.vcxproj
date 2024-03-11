@@ -143,7 +143,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\debug\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\Windows\debug\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
@@ -160,7 +160,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\debug\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\Windows\debug\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -183,7 +183,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\Windows\release\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
@@ -207,7 +207,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\Windows\release\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
@@ -228,7 +228,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\Windows\release\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -250,7 +250,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\release\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dependencies\ThreadPool\lib\Windows\release\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
