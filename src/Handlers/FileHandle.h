@@ -9,13 +9,13 @@ namespace file_manager
 	class FILE_MANAGER_API FileHandle
 	{
 	protected:
-		std::filesystem::path pathToFile;
+		std::filesystem::path filePath;
 		std::fstream file;
 		std::ios_base::openmode mode;
 		bool isNotifyOnDestruction;
 
 	protected:
-		FileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode);
+		FileHandle(const std::filesystem::path& filePath, std::ios_base::openmode mode);
 
 		FileHandle(FileHandle&& other) noexcept;
 

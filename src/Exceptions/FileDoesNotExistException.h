@@ -10,7 +10,7 @@ namespace file_manager
 		class FILE_MANAGER_API FileDoesNotExistException : public BaseFileManagerException
 		{
 		public:
-			FileDoesNotExistException(const std::filesystem::path& pathToFile);
+			FileDoesNotExistException(const std::filesystem::path& filePath);
 
 			~FileDoesNotExistException() = default;
 		};

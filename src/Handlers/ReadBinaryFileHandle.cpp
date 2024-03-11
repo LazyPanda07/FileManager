@@ -4,8 +4,8 @@ using namespace std;
 
 namespace file_manager
 {
-	ReadBinaryFileHandle::ReadBinaryFileHandle(const filesystem::path& pathToFile) :
-		ReadFileHandle(pathToFile, ios_base::binary)
+	ReadBinaryFileHandle::ReadBinaryFileHandle(const filesystem::path& filePath) :
+		ReadFileHandle(filePath, ios_base::binary)
 	{
 
 	}

@@ -7,7 +7,7 @@ namespace file_manager
 	class AppendFileHandle : public WriteFileHandle
 	{
 	private:
-		AppendFileHandle(const std::filesystem::path& pathToFile);
+		AppendFileHandle(const std::filesystem::path& filePath);
 
 	public:
 		~AppendFileHandle() = default;

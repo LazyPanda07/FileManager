@@ -70,39 +70,39 @@ namespace file_manager
 
 	}
 
-	Cache::CacheResultCodes Cache::addCache(const filesystem::path& pathToFile)
+	Cache::CacheResultCodes Cache::addCache(const filesystem::path& filePath)
 	{
-		if (!filesystem::exists(pathToFile))
+		if (!filesystem::exists(filePath))
 		{
 			return CacheResultCodes::fileDoesNotExist;
 		}
-		else if (currentCacheSize + filesystem::file_size(pathToFile) > cacheSize)
+		else if (currentCacheSize + filesystem::file_size(filePath) > cacheSize)
 		{
 			return CacheResultCodes::notEnoughCacheSize;
 		}
 
 		unique_lock<mutex> dataLock(cacheDataMutex);
 
-		if (cacheData.contains(pathToFile))
+		if (cacheData.contains(filePath))
 		{
 			return CacheResultCodes::noError;
 		}
 
-		string data = (ostringstream() << ifstream(pathToFile).rdbuf()).str();
+		string data = (ostringstream() << ifstream(filePath).rdbuf()).str();
 
 		currentCacheSize += data.size();
 
-		cacheData.emplace(pathToFile, move(data));
+		cacheData.emplace(filePath, move(data));
 
 		return CacheResultCodes::noError;
 	}
 
-	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& pathToFile, const vector<char>& data)
+	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& filePath, const vector<char>& data)
 	{
-		return this->appendCache(pathToFile, data.data());
+		return this->appendCache(filePath, data.data());
 	}
 
-	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& pathToFile, const string_view& data)
+	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& filePath, const string_view& data)
 	{
 		if (currentCacheSize + data.size() > cacheSize)
 		{
@@ -111,13 +111,13 @@ namespace file_manager
 
 		unique_lock<mutex> dataLock(cacheDataMutex);
 
-		if (auto it = cacheData.find(pathToFile); it != cacheData.end())
+		if (auto it = cacheData.find(filePath); it != cacheData.end())
 		{
 			it->second += data;
 		}
 		else
 		{
-			cacheData[pathToFile] = data;
+			cacheData[filePath] = data;
 		}
 
 		currentCacheSize += data.size();
@@ -125,11 +125,11 @@ namespace file_manager
 		return CacheResultCodes::noError;
 	}
 
-	bool Cache::contains(const filesystem::path& pathToFile) const
+	bool Cache::contains(const filesystem::path& filePath) const
 	{
 		unique_lock<mutex> dataLock(cacheDataMutex);
 
-		return cacheData.contains(pathToFile);
+		return cacheData.contains(filePath);
 	}
 
 	void Cache::clear()
@@ -141,10 +141,10 @@ namespace file_manager
 		cacheData.clear();
 	}
 
-	void Cache::clear(const filesystem::path& pathToFile)
+	void Cache::clear(const filesystem::path& filePath)
 	{
 		unique_lock<mutex> dataLock(cacheDataMutex);
-		auto it = cacheData.find(pathToFile);
+		auto it = cacheData.find(filePath);
 
 		if (it == cacheData.end())
 		{
@@ -166,14 +166,14 @@ namespace file_manager
 		}
 	}
 
-	const string& Cache::getCacheData(const filesystem::path& pathToFile) const
+	const string& Cache::getCacheData(const filesystem::path& filePath) const
 	{
 		unique_lock<mutex> dataLock(cacheDataMutex);
-		auto it = cacheData.find(pathToFile);
+		auto it = cacheData.find(filePath);
 
 		if (it == cacheData.end())
 		{
-			throw exceptions::FileDoesNotExistException(pathToFile);
+			throw exceptions::FileDoesNotExistException(filePath);
 		}
 
 		return it->second;
@@ -189,8 +189,8 @@ namespace file_manager
 		return currentCacheSize;
 	}
 
-	const string& Cache::operator [] (const filesystem::path& pathToFile) const
+	const string& Cache::operator [] (const filesystem::path& filePath) const
 	{
-		return this->getCacheData(pathToFile);
+		return this->getCacheData(filePath);
 	}
 }

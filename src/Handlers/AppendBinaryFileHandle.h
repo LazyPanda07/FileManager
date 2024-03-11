@@ -7,7 +7,7 @@ namespace file_manager
 	class AppendBinaryFileHandle : public WriteBinaryFileHandle
 	{
 	private:
-		AppendBinaryFileHandle(const std::filesystem::path& pathToFile);
+		AppendBinaryFileHandle(const std::filesystem::path& filePath);
 
 	public:
 		~AppendBinaryFileHandle() = default;

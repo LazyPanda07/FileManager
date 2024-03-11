@@ -14,7 +14,7 @@ namespace file_manager
 		{
 		private:
 			class Cache& cache;
-			std::filesystem::path pathToFile;
+			std::filesystem::path filePath;
 			std::string cacheData;
 			bool isCachingAvailable;
 
@@ -22,7 +22,7 @@ namespace file_manager
 			bool increaseCacheData();
 
 		public:
-			CachingBuffer(class Cache& cache, const std::filesystem::path& pathToFile, std::ios_base::openmode mode);
+			CachingBuffer(class Cache& cache, const std::filesystem::path& filePath, std::ios_base::openmode mode);
 
 			int sync() override;
 
@@ -30,7 +30,7 @@ namespace file_manager
 		};
 
 	protected:
-		WriteFileHandle(const std::filesystem::path& pathToFile, std::ios_base::openmode mode = std::ios_base::out);
+		WriteFileHandle(const std::filesystem::path& filePath, std::ios_base::openmode mode = std::ios_base::out);
 
 	public:
 		/// @brief Write data to file

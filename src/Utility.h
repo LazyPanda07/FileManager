@@ -49,7 +49,7 @@ namespace file_manager
 		/// @brief filesystem::path hash function
 		struct FILE_MANAGER_API pathHash
 		{
-			size_t operator () (const std::filesystem::path& pathToFile) const noexcept;
+			size_t operator () (const std::filesystem::path& filePath) const noexcept;
 		};
 	}
 
@@ -61,7 +61,7 @@ namespace file_manager
 			{ OperationT()(left, right) } -> std::convertible_to<uint64_t>;
 		};
 
-		void addCache(std::filesystem::path&& pathToFile, std::string&& data);
+		void addCache(std::filesystem::path&& filePath, std::string&& data);
 
 		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		void changeCurrentCacheSize(uint64_t amount);

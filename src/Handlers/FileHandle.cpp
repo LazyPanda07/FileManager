@@ -6,9 +6,9 @@ using namespace std;
 
 namespace file_manager
 {
-	FileHandle::FileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
-		pathToFile(pathToFile),
-		file(pathToFile, mode),
+	FileHandle::FileHandle(const filesystem::path& filePath, ios_base::openmode mode) :
+		filePath(filePath),
+		file(filePath, mode),
 		mode(mode),
 		isNotifyOnDestruction(true)
 	{
@@ -22,7 +22,7 @@ namespace file_manager
 
 	FileHandle& FileHandle::operator = (FileHandle&& other) noexcept
 	{
-		pathToFile = move(other.pathToFile);
+		filePath = move(other.filePath);
 		file = move(other.file);
 		mode = other.mode;
 
@@ -35,17 +35,17 @@ namespace file_manager
 
 	uint64_t FileHandle::getFileSize() const
 	{
-		return filesystem::file_size(pathToFile);
+		return filesystem::file_size(filePath);
 	}
 
 	const filesystem::path& FileHandle::getPathToFile() const
 	{
-		return pathToFile;
+		return filePath;
 	}
 
 	filesystem::path FileHandle::getFileName() const
 	{
-		return pathToFile.filename();
+		return filePath.filename();
 	}
 
 	FileHandle::~FileHandle()
@@ -54,7 +54,7 @@ namespace file_manager
 		{
 			file.close();
 
-			FileManager::getInstance().notify(move(pathToFile), mode);
+			FileManager::getInstance().notify(move(filePath), mode);
 		}
 	}
 }

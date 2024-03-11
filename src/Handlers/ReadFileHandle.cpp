@@ -14,14 +14,14 @@ namespace file_manager
 		setg(data, data, data + view.size());
 	}
 
-	ReadFileHandle::ReadFileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
-		FileHandle(pathToFile, mode | ios_base::in)
+	ReadFileHandle::ReadFileHandle(const filesystem::path& filePath, ios_base::openmode mode) :
+		FileHandle(filePath, mode | ios_base::in)
 	{
 		Cache& cache = FileManager::getInstance().getCache();
 
-		if (cache.contains(pathToFile))
+		if (cache.contains(filePath))
 		{
-			buffer = make_unique<ReadOnlyBuffer>(cache.getCacheData(pathToFile));
+			buffer = make_unique<ReadOnlyBuffer>(cache.getCacheData(filePath));
 
 			static_cast<iostream&>(file).rdbuf(buffer.get());
 		}
@@ -31,13 +31,13 @@ namespace file_manager
 	{
 		Cache& cache = FileManager::getInstance().getCache();
 
-		switch (cache.addCache(pathToFile))
+		switch (cache.addCache(filePath))
 		{
 		case Cache::CacheResultCodes::noError:
-			return cache.getCacheData(pathToFile);
+			return cache.getCacheData(filePath);
 
 		case Cache::CacheResultCodes::fileDoesNotExist:
-			throw exceptions::FileDoesNotExistException(pathToFile);
+			throw exceptions::FileDoesNotExistException(filePath);
 
 		case Cache::CacheResultCodes::notEnoughCacheSize:
 			data = (ostringstream() << file.rdbuf()).str();
@@ -72,7 +72,7 @@ namespace file_manager
 	{
 		if (isNotifyOnDestruction)
 		{
-			FileManager::getInstance().decreaseReadRequests(pathToFile);
+			FileManager::getInstance().decreaseReadRequests(filePath);
 		}
 	}
 }

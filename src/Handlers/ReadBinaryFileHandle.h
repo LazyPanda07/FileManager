@@ -7,7 +7,7 @@ namespace file_manager
 	class ReadBinaryFileHandle : public ReadFileHandle
 	{
 	private:
-		ReadBinaryFileHandle(const std::filesystem::path& pathToFile);
+		ReadBinaryFileHandle(const std::filesystem::path& filePath);
 
 	public:
 		~ReadBinaryFileHandle() = default;

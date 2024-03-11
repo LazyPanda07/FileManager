@@ -33,12 +33,12 @@ namespace file_manager
 		return true;
 	}
 
-	WriteFileHandle::CachingBuffer::CachingBuffer(Cache& cache, const filesystem::path& pathToFile, ios_base::openmode mode) :
+	WriteFileHandle::CachingBuffer::CachingBuffer(Cache& cache, const filesystem::path& filePath, ios_base::openmode mode) :
 		cache(cache),
-		pathToFile(pathToFile),
+		filePath(filePath),
 		isCachingAvailable(cache.getCacheSize())
 	{
-		open(pathToFile, mode);
+		open(filePath, mode);
 	}
 
 	int WriteFileHandle::CachingBuffer::sync()
@@ -55,11 +55,11 @@ namespace file_manager
 			return;
 		}
 
-		_utility::addCache(move(pathToFile), move(cacheData));
+		_utility::addCache(move(filePath), move(cacheData));
 	}
 
-	WriteFileHandle::WriteFileHandle(const filesystem::path& pathToFile, ios_base::openmode mode) :
-		FileHandle(pathToFile, mode | ios_base::out)
+	WriteFileHandle::WriteFileHandle(const filesystem::path& filePath, ios_base::openmode mode) :
+		FileHandle(filePath, mode | ios_base::out)
 	{
 
 	}
@@ -78,7 +78,7 @@ namespace file_manager
 	{
 		if (isNotifyOnDestruction)
 		{
-			FileManager::getInstance().completeWriteRequest(pathToFile);
+			FileManager::getInstance().completeWriteRequest(filePath);
 		}
 	}
 }

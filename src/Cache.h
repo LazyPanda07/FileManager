@@ -44,37 +44,37 @@ namespace file_manager
 
 	public:
 		/// @brief Add cache data
-		/// @param pathToFile Path to file
+		/// @param filePath Path to file
 		/// @return Error code from Cache::CacheErrorCodes
-		CacheResultCodes addCache(const std::filesystem::path& pathToFile);
+		CacheResultCodes addCache(const std::filesystem::path& filePath);
 
 		/**
 		 * @brief Append specific cache
-		 * @param pathToFile Path to file
+		 * @param filePath Path to file
 		 * @param data Cache data
 		 * @return Error code from Cache::CacheErrorCodes
 		*/
-		CacheResultCodes appendCache(const std::filesystem::path& pathToFile, const std::vector<char>& data);
+		CacheResultCodes appendCache(const std::filesystem::path& filePath, const std::vector<char>& data);
 
 		/**
 		 * @brief Append specific cache
-		 * @param pathToFile Path to file
+		 * @param filePath Path to file
 		 * @param data Cache data
 		 * @return Error code from Cache::CacheErrorCodes
 		*/
-		CacheResultCodes appendCache(const std::filesystem::path& pathToFile, const std::string_view& data);
+		CacheResultCodes appendCache(const std::filesystem::path& filePath, const std::string_view& data);
 
 		/// @brief Check if file data is cached
-		/// @param pathToFile Path to file
+		/// @param filePath Path to file
 		/// @return Returns true if file is already cached
-		bool contains(const std::filesystem::path& pathToFile) const;
+		bool contains(const std::filesystem::path& filePath) const;
 
 		/// @brief Clear all cache
 		void clear();
 
 		/// @brief Clear cache of specific file
-		/// @param pathToFile Path to file
-		void clear(const std::filesystem::path& pathToFile);
+		/// @param filePath Path to file
+		void clear(const std::filesystem::path& filePath);
 
 		/// @brief Set cache size
 		/// @param sizeInBytes Size in bytes
@@ -83,7 +83,7 @@ namespace file_manager
 		/// @brief Get cached data
 		/// @return Cached data
 		/// @exception FileDoesNotExistException
-		const std::string& getCacheData(const std::filesystem::path& pathToFile) const;
+		const std::string& getCacheData(const std::filesystem::path& filePath) const;
 
 		/// @brief Get global cache size
 		/// @return Cache size in bytes
@@ -98,9 +98,9 @@ namespace file_manager
 		 * @return Cached data
 		 * @exception FileDoesNotExistException
 		*/
-		const std::string& operator [] (const std::filesystem::path& pathToFile) const;
+		const std::string& operator [] (const std::filesystem::path& filePath) const;
 
-		friend void _utility::addCache(std::filesystem::path&& pathToFile, std::string&& data);
+		friend void _utility::addCache(std::filesystem::path&& filePath, std::string&& data);
 
 		template<template<typename> typename OperationT> requires _utility::Operation<OperationT<uint64_t>>
 		friend void _utility::changeCurrentCacheSize(uint64_t amount);

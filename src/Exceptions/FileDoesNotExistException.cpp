@@ -8,8 +8,8 @@ namespace file_manager
 {
 	namespace exceptions
 	{
-		FileDoesNotExistException::FileDoesNotExistException(const filesystem::path& pathToFile) :
-			BaseFileManagerException(format("File '{}' does not exist"sv, pathToFile.string()))
+		FileDoesNotExistException::FileDoesNotExistException(const filesystem::path& filePath) :
+			BaseFileManagerException(format("File '{}' does not exist"sv, filePath.string()))
 		{
 
 		}
