@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(LINK_LIBRARY_PATH dependencies/ThreadPool/lib)
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir)
 option(BUILD_SHARED_LIBS "" OFF)
 
 if (UNIX)
@@ -10,7 +10,7 @@ if (UNIX)
 
 	add_definitions(-D__LINUX__)
 
-	install(FILES ${LINK_LIBRARY_PATH}/libThreadPool.a DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/lib)
+	install(FILES ${LINK_LIBRARY_PATH}/libThreadPool.a DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 else ()
 	if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/debug)
@@ -18,7 +18,7 @@ else ()
 		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/release)
 	endif()
 
-	install(FILES ${LINK_LIBRARY_PATH}/ThreadPool.lib DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/lib)
+	install(FILES ${LINK_LIBRARY_PATH}/ThreadPool.lib DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 endif (UNIX)
 
 if (${BUILD_SHARED_LIBS})
@@ -62,11 +62,11 @@ target_link_libraries(
 
 install(
 	TARGETS ${PROJECT_NAME}
-	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/lib
-	LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/lib
-	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/dll
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+	LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
 )
 
 if (${CMAKE_BUILD_TYPE} STREQUAL "Release")
-	install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_PREFIX}/install-dir/include FILES_MATCHING PATTERN "*.h")
+	install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include FILES_MATCHING PATTERN "*.h")
 endif ()

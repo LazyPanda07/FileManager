@@ -42,9 +42,6 @@ build/
 # Google Test
 gtest/
 
-# .sln file
-FileManager.sln
-
 # Dependencies
 !ThreadPool.lib
 !libThreadPool.a
