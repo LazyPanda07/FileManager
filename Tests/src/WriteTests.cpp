@@ -138,6 +138,8 @@ TEST(FileManager, MultipleFilesWrite)
 				data[index] = handle->readAllData();
 			}
 		);
+
+		index++;
 	}
 
 	for (const std::string& fileData : data)
