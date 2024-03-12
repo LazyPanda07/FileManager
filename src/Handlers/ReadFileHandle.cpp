@@ -46,7 +46,7 @@ namespace file_manager
 		return data;
 	}
 
-	streamsize ReadFileHandle::readSome(string& outData, streamsize count, bool resizeOutData)
+	streamsize ReadFileHandle::readSome(string& outData, streamsize count, bool shrinkOutData, bool resizeOutData)
 	{
 		if (resizeOutData && outData.size() != count)
 		{
@@ -55,7 +55,7 @@ namespace file_manager
 
 		streamsize result = file.read(outData.data(), count).gcount();
 
-		if (resizeOutData && outData.size() != result)
+		if (shrinkOutData && outData.size() != result)
 		{
 			outData.resize(result);
 		}

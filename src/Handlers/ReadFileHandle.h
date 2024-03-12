@@ -32,9 +32,10 @@ namespace file_manager
 		/// @brief Read some data from file
 		/// @param outData Data from file
 		/// @param count Count of characters to read
-		/// @param resizeOutData If true outData has exactly same size as number of characters read. If false you must provide outData size before calling
+		/// @param shrinkOutData If true outData will be shrinked
+		/// @param resizeOutData If true outData will be resized to count size. If false you must provide outData size before calling
 		/// @return Number of characters read
-		std::streamsize readSome(std::string& outData, std::streamsize count, bool resizeOutData = true);
+		std::streamsize readSome(std::string& outData, std::streamsize count, bool shrinkOutData = true, bool resizeOutData = true);
 
 		/// @brief Get reading stream
 		/// @return Input stream

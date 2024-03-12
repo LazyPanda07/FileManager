@@ -66,7 +66,7 @@ namespace file_manager
 
 	void WriteFileHandle::write(const string& data)
 	{
-		file.write(data.data(), data.size());
+		file.write(data.data(), data.size()).flush();
 	}
 
 	ostream& WriteFileHandle::getStream()
