@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "gtest/gtest.h"
 
 #include "FileManager.h"
@@ -96,7 +98,7 @@ TEST(FileManager, MultipleFilesWrite)
 	file_manager::FileManager& manager = file_manager::FileManager::getInstance();
 	std::vector<std::string> files;
 	std::vector<std::future<void>> threads;
-	vector<std::string> data;
+	std::vector<std::string> data;
 
 	threads.reserve(threadsCount);
 	
