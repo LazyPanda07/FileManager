@@ -1,5 +1,7 @@
 #include "FileManager.h"
 
+#include <iostream>
+
 #include "Handlers/ReadBinaryFileHandle.h"
 #include "Handlers/WriteBinaryFileHandle.h"
 #include "Handlers/AppendFileHandle.h"
@@ -134,12 +136,12 @@ namespace file_manager
 	{
 		unique_lock<mutex> lock(readWriteMutex);
 
-		data[filePath] = new FileNode();
-	}
+		if (data.contains(filePath))
+		{
+			return;
+		}
 
-	mutex& FileManager::NodesContainer::getReadWriteMutex()
-	{
-		return readWriteMutex;
+		data[filePath] = new FileNode();
 	}
 
 	FileManager::FileNode* FileManager::NodesContainer::operator [](const filesystem::path& filePath) const
@@ -312,8 +314,6 @@ namespace file_manager
 
 		if (instance->threadPool->getThreadsCount() != threadsNumber)
 		{
-			unique_lock<mutex> filesLock(instance->nodes.getReadWriteMutex());
-
 			delete instance->threadPool;
 
 			instance->threadPool = new threading::ThreadPool(threadsNumber);
@@ -333,8 +333,6 @@ namespace file_manager
 
 		if (instance->threadPool != threadPool)
 		{
-			unique_lock<mutex> filesLock(instance->nodes.getReadWriteMutex());
-
 			instance->threadPool = threadPool;
 		}
 
@@ -354,6 +352,11 @@ namespace file_manager
 		{
 			if (!filesystem::exists(filePath))
 			{
+				for (const auto& it : filesystem::directory_iterator(filePath.parent_path()))
+				{
+					cout << it << endl;
+				}
+
 				throw exceptions::FileDoesNotExistException(filePath);
 			}
 

@@ -94,8 +94,6 @@ namespace file_manager
 
 			void addNode(const std::filesystem::path& filePath);
 			
-			std::mutex& getReadWriteMutex();
-
 			FileNode* operator [](const std::filesystem::path& filePath) const;
 
 			~NodesContainer();
