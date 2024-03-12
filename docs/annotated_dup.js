@@ -19,6 +19,8 @@ var annotated_dup =
       [ "WriteBinaryFileHandle", "classfile__manager_1_1_write_binary_file_handle.html", null ],
       [ "WriteFileHandle", "classfile__manager_1_1_write_file_handle.html", "classfile__manager_1_1_write_file_handle" ]
     ] ],
-    [ "less< pair< uint64_t, filesystem::path > >", "structless_3_01pair_3_01uint64__t_00_01filesystem_1_1path_01_4_01_4.html", null ],
+    [ "std", null, [
+      [ "less< pair< uint64_t, filesystem::path > >", "structstd_1_1less_3_01pair_3_01uint64__t_00_01filesystem_1_1path_01_4_01_4.html", null ]
+    ] ],
     [ "RequestPromiseHandler", "struct_request_promise_handler.html", null ]
 ];

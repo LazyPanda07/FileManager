@@ -131,9 +131,9 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:abde0196eafb70dc9cff73fcca7d976d4" id="r_abde0196eafb70dc9cff73fcca7d976d4"><td class="memItemLeft" align="right" valign="top"><a id="abde0196eafb70dc9cff73fcca7d976d4" name="abde0196eafb70dc9cff73fcca7d976d4"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>FileHandle</b> (const std::filesystem::path &amp;pathToFile, std::ios_base::openmode mode)</td></tr>
-<tr class="separator:abde0196eafb70dc9cff73fcca7d976d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90cc8bd02cce0dc2a4087b944cf10df8" id="r_a90cc8bd02cce0dc2a4087b944cf10df8"><td class="memItemLeft" align="right" valign="top"><a id="a90cc8bd02cce0dc2a4087b944cf10df8" name="a90cc8bd02cce0dc2a4087b944cf10df8"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>FileHandle</b> (const std::filesystem::path &amp;filePath, std::ios_base::openmode mode)</td></tr>
+<tr class="separator:a90cc8bd02cce0dc2a4087b944cf10df8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a275f831f83089dffa2a402eca0345c45" id="r_a275f831f83089dffa2a402eca0345c45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a275f831f83089dffa2a402eca0345c45">FileHandle</a> (<a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> &amp;&amp;other) noexcept</td></tr>
 <tr class="separator:a275f831f83089dffa2a402eca0345c45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99f166e2195af4945bf0dd17d19acd0c" id="r_a99f166e2195af4945bf0dd17d19acd0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a99f166e2195af4945bf0dd17d19acd0c">operator=</a> (<a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> &amp;&amp;other) noexcept</td></tr>
@@ -141,8 +141,8 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a536c919a123a2e487a1828295692d3c6" id="r_a536c919a123a2e487a1828295692d3c6"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a536c919a123a2e487a1828295692d3c6">pathToFile</a></td></tr>
-<tr class="separator:a536c919a123a2e487a1828295692d3c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ac87ba64f395025f626352c72764114" id="r_a4ac87ba64f395025f626352c72764114"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a4ac87ba64f395025f626352c72764114">filePath</a></td></tr>
+<tr class="separator:a4ac87ba64f395025f626352c72764114"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ac7bd38efda7b6c658f664a2781bcca" id="r_a4ac7bd38efda7b6c658f664a2781bcca"><td class="memItemLeft" align="right" valign="top">std::fstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a4ac7bd38efda7b6c658f664a2781bcca">file</a></td></tr>
 <tr class="separator:a4ac7bd38efda7b6c658f664a2781bcca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9803a29bdd5a73e483fabfbeeab1aad" id="r_ac9803a29bdd5a73e483fabfbeeab1aad"><td class="memItemLeft" align="right" valign="top">std::ios_base::openmode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#ac9803a29bdd5a73e483fabfbeeab1aad">mode</a></td></tr>
@@ -350,6 +350,30 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a4ac87ba64f395025f626352c72764114" name="a4ac87ba64f395025f626352c72764114"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ac87ba64f395025f626352c72764114">&#9670;&#160;</a></span>filePath</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::filesystem::path file_manager::FileHandle::filePath</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_file_handle_8h_source.html#l00012">12</a> of file <a class="el" href="_file_handle_8h_source.html">FileHandle.h</a>.</p>
+
+</div>
+</div>
 <a id="adce7d43bd5d58f00e5bd5ffc277be765" name="adce7d43bd5d58f00e5bd5ffc277be765"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adce7d43bd5d58f00e5bd5ffc277be765">&#9670;&#160;</a></span>isNotifyOnDestruction</h2>
 
@@ -395,30 +419,6 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_file_handle_8h_source.html#l00014">14</a> of file <a class="el" href="_file_handle_8h_source.html">FileHandle.h</a>.</p>
-
-</div>
-</div>
-<a id="a536c919a123a2e487a1828295692d3c6" name="a536c919a123a2e487a1828295692d3c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a536c919a123a2e487a1828295692d3c6">&#9670;&#160;</a></span>pathToFile</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::filesystem::path file_manager::FileHandle::pathToFile</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_file_handle_8h_source.html#l00012">12</a> of file <a class="el" href="_file_handle_8h_source.html">FileHandle.h</a>.</p>
 
 </div>
 </div>

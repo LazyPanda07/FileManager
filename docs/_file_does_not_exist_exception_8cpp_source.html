@@ -108,8 +108,8 @@ $(document).ready(function(){initNavTree('_file_does_not_exist_exception_8cpp_so
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">namespace </span>exceptions</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        FileDoesNotExistException::FileDoesNotExistException(<span class="keyword">const</span> filesystem::path&amp; pathToFile) :</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            BaseFileManagerException(format(<span class="stringliteral">&quot;File &#39;{}&#39; does not exist&quot;</span>sv, pathToFile.string()))</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        FileDoesNotExistException::FileDoesNotExistException(<span class="keyword">const</span> filesystem::path&amp; filePath) :</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            BaseFileManagerException(format(<span class="stringliteral">&quot;File &#39;{}&#39; does not exist&quot;</span>sv, filePath.string()))</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        }</div>

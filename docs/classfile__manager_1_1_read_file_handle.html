@@ -120,9 +120,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8400ffdf4e535756491fbda3e7eadd25" id="r_a8400ffdf4e535756491fbda3e7eadd25"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_read_file_handle.html#a8400ffdf4e535756491fbda3e7eadd25">readAllData</a> ()</td></tr>
 <tr class="memdesc:a8400ffdf4e535756491fbda3e7eadd25"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read all file.  <br /></td></tr>
 <tr class="separator:a8400ffdf4e535756491fbda3e7eadd25"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb68a34464b1046021d0ebe3a58dfdcd" id="r_adb68a34464b1046021d0ebe3a58dfdcd"><td class="memItemLeft" align="right" valign="top">std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_read_file_handle.html#adb68a34464b1046021d0ebe3a58dfdcd">readSome</a> (std::string &amp;outData, std::streamsize count, bool resizeOutData=true)</td></tr>
-<tr class="memdesc:adb68a34464b1046021d0ebe3a58dfdcd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read some data from file.  <br /></td></tr>
-<tr class="separator:adb68a34464b1046021d0ebe3a58dfdcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a610cf76ae4cc3b0ddbebb2ef6070d1ca" id="r_a610cf76ae4cc3b0ddbebb2ef6070d1ca"><td class="memItemLeft" align="right" valign="top">std::streamsize&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_read_file_handle.html#a610cf76ae4cc3b0ddbebb2ef6070d1ca">readSome</a> (std::string &amp;outData, std::streamsize count, bool shrinkOutData=true, bool resizeOutData=true)</td></tr>
+<tr class="memdesc:a610cf76ae4cc3b0ddbebb2ef6070d1ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read some data from file.  <br /></td></tr>
+<tr class="separator:a610cf76ae4cc3b0ddbebb2ef6070d1ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12ebed099e91673e415692dea4f4b0b4" id="r_a12ebed099e91673e415692dea4f4b0b4"><td class="memItemLeft" align="right" valign="top">std::istream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_read_file_handle.html#a12ebed099e91673e415692dea4f4b0b4">getStream</a> ()</td></tr>
 <tr class="memdesc:a12ebed099e91673e415692dea4f4b0b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get reading stream.  <br /></td></tr>
 <tr class="separator:a12ebed099e91673e415692dea4f4b0b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,12 +142,12 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:acbd03b1b5e3e2ede013ef4ee73831c98" id="r_acbd03b1b5e3e2ede013ef4ee73831c98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_read_file_handle.html#acbd03b1b5e3e2ede013ef4ee73831c98">ReadFileHandle</a> (const std::filesystem::path &amp;pathToFile, std::ios_base::openmode mode=0)</td></tr>
-<tr class="separator:acbd03b1b5e3e2ede013ef4ee73831c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28aa34632150e5ebaf742774f792451b" id="r_a28aa34632150e5ebaf742774f792451b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_read_file_handle.html#a28aa34632150e5ebaf742774f792451b">ReadFileHandle</a> (const std::filesystem::path &amp;filePath, std::ios_base::openmode mode=std::ios_base::in)</td></tr>
+<tr class="separator:a28aa34632150e5ebaf742774f792451b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_classfile__manager_1_1_file_handle"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classfile__manager_1_1_file_handle')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classfile__manager_1_1_file_handle.html">file_manager::FileHandle</a></td></tr>
-<tr class="memitem:abde0196eafb70dc9cff73fcca7d976d4 inherit pro_methods_classfile__manager_1_1_file_handle" id="r_abde0196eafb70dc9cff73fcca7d976d4"><td class="memItemLeft" align="right" valign="top">
-&#160;</td><td class="memItemRight" valign="bottom"><b>FileHandle</b> (const std::filesystem::path &amp;pathToFile, std::ios_base::openmode mode)</td></tr>
-<tr class="separator:abde0196eafb70dc9cff73fcca7d976d4 inherit pro_methods_classfile__manager_1_1_file_handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90cc8bd02cce0dc2a4087b944cf10df8 inherit pro_methods_classfile__manager_1_1_file_handle" id="r_a90cc8bd02cce0dc2a4087b944cf10df8"><td class="memItemLeft" align="right" valign="top">
+&#160;</td><td class="memItemRight" valign="bottom"><b>FileHandle</b> (const std::filesystem::path &amp;filePath, std::ios_base::openmode mode)</td></tr>
+<tr class="separator:a90cc8bd02cce0dc2a4087b944cf10df8 inherit pro_methods_classfile__manager_1_1_file_handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a275f831f83089dffa2a402eca0345c45 inherit pro_methods_classfile__manager_1_1_file_handle" id="r_a275f831f83089dffa2a402eca0345c45"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a275f831f83089dffa2a402eca0345c45">FileHandle</a> (<a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> &amp;&amp;other) noexcept</td></tr>
 <tr class="separator:a275f831f83089dffa2a402eca0345c45 inherit pro_methods_classfile__manager_1_1_file_handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99f166e2195af4945bf0dd17d19acd0c inherit pro_methods_classfile__manager_1_1_file_handle" id="r_a99f166e2195af4945bf0dd17d19acd0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a99f166e2195af4945bf0dd17d19acd0c">operator=</a> (<a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> &amp;&amp;other) noexcept</td></tr>
@@ -161,8 +161,8 @@ Friends</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_attribs_classfile__manager_1_1_file_handle"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classfile__manager_1_1_file_handle')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classfile__manager_1_1_file_handle.html">file_manager::FileHandle</a></td></tr>
-<tr class="memitem:a536c919a123a2e487a1828295692d3c6 inherit pro_attribs_classfile__manager_1_1_file_handle" id="r_a536c919a123a2e487a1828295692d3c6"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a536c919a123a2e487a1828295692d3c6">pathToFile</a></td></tr>
-<tr class="separator:a536c919a123a2e487a1828295692d3c6 inherit pro_attribs_classfile__manager_1_1_file_handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ac87ba64f395025f626352c72764114 inherit pro_attribs_classfile__manager_1_1_file_handle" id="r_a4ac87ba64f395025f626352c72764114"><td class="memItemLeft" align="right" valign="top">std::filesystem::path&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a4ac87ba64f395025f626352c72764114">filePath</a></td></tr>
+<tr class="separator:a4ac87ba64f395025f626352c72764114 inherit pro_attribs_classfile__manager_1_1_file_handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ac7bd38efda7b6c658f664a2781bcca inherit pro_attribs_classfile__manager_1_1_file_handle" id="r_a4ac7bd38efda7b6c658f664a2781bcca"><td class="memItemLeft" align="right" valign="top">std::fstream&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#a4ac7bd38efda7b6c658f664a2781bcca">file</a></td></tr>
 <tr class="separator:a4ac7bd38efda7b6c658f664a2781bcca inherit pro_attribs_classfile__manager_1_1_file_handle"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9803a29bdd5a73e483fabfbeeab1aad inherit pro_attribs_classfile__manager_1_1_file_handle" id="r_ac9803a29bdd5a73e483fabfbeeab1aad"><td class="memItemLeft" align="right" valign="top">std::ios_base::openmode&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfile__manager_1_1_file_handle.html#ac9803a29bdd5a73e483fabfbeeab1aad">mode</a></td></tr>
@@ -175,8 +175,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_read_file_handle_8h_source.html#l00010">10</a> of file <a class="el" href="_read_file_handle_8h_source.html">ReadFileHandle.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="acbd03b1b5e3e2ede013ef4ee73831c98" name="acbd03b1b5e3e2ede013ef4ee73831c98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acbd03b1b5e3e2ede013ef4ee73831c98">&#9670;&#160;</a></span>ReadFileHandle()</h2>
+<a id="a28aa34632150e5ebaf742774f792451b" name="a28aa34632150e5ebaf742774f792451b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28aa34632150e5ebaf742774f792451b">&#9670;&#160;</a></span>ReadFileHandle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,13 +188,13 @@ Additional Inherited Members</h2></td></tr>
           <td class="memname">file_manager::ReadFileHandle::ReadFileHandle </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>pathToFile</em>, </td>
+          <td class="paramname"><em>filePath</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::ios_base::openmode&#160;</td>
-          <td class="paramname"><em>mode</em> = <code>0</code>&#160;</td>
+          <td class="paramname"><em>mode</em> = <code>std::ios_base::in</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -291,8 +291,8 @@ Additional Inherited Members</h2></td></tr>
 
 </div>
 </div>
-<a id="adb68a34464b1046021d0ebe3a58dfdcd" name="adb68a34464b1046021d0ebe3a58dfdcd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb68a34464b1046021d0ebe3a58dfdcd">&#9670;&#160;</a></span>readSome()</h2>
+<a id="a610cf76ae4cc3b0ddbebb2ef6070d1ca" name="a610cf76ae4cc3b0ddbebb2ef6070d1ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a610cf76ae4cc3b0ddbebb2ef6070d1ca">&#9670;&#160;</a></span>readSome()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -313,6 +313,12 @@ Additional Inherited Members</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>shrinkOutData</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>resizeOutData</em> = <code>true</code>&#160;</td>
         </tr>
         <tr>
@@ -328,7 +334,8 @@ Additional Inherited Members</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">outData</td><td>Data from file </td></tr>
     <tr><td class="paramname">count</td><td>Count of characters to read </td></tr>
-    <tr><td class="paramname">resizeOutData</td><td>If true outData has exactly same size as number of characters read. If false you must provide outData size before calling </td></tr>
+    <tr><td class="paramname">shrinkOutData</td><td>If true outData will be shrinked </td></tr>
+    <tr><td class="paramname">resizeOutData</td><td>If true outData will be resized to count size. If false you must provide outData size before calling </td></tr>
   </table>
   </dd>
 </dl>
@@ -359,7 +366,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_read_file_handle_8h_source.html#l00045">45</a> of file <a class="el" href="_read_file_handle_8h_source.html">ReadFileHandle.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_read_file_handle_8h_source.html#l00046">46</a> of file <a class="el" href="_read_file_handle_8h_source.html">ReadFileHandle.h</a>.</p>
 
 </div>
 </div>

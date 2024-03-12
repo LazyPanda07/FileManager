@@ -121,21 +121,21 @@ $(document).ready(function(){initNavTree('_read_file_handle_8h_source.html','');
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        std::unique_ptr&lt;ReadOnlyBuffer&gt; buffer;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <a class="code hl_class" href="classfile__manager_1_1_read_file_handle.html">ReadFileHandle</a>(<span class="keyword">const</span> std::filesystem::path&amp; pathToFile, std::ios_base::openmode mode = 0);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <a class="code hl_class" href="classfile__manager_1_1_read_file_handle.html">ReadFileHandle</a>(<span class="keyword">const</span> std::filesystem::path&amp; filePath, std::ios_base::openmode mode = std::ios_base::in);</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keyword">const</span> std::string&amp; readAllData();</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        std::streamsize readSome(std::string&amp; outData, std::streamsize count, <span class="keywordtype">bool</span> resizeOutData = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        std::istream&amp; getStream();</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">virtual</span> <a class="code hl_class" href="classfile__manager_1_1_read_file_handle.html">~ReadFileHandle</a>();</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    };</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        std::streamsize readSome(std::string&amp; outData, std::streamsize count, <span class="keywordtype">bool</span> shrinkOutData = <span class="keyword">true</span>, <span class="keywordtype">bool</span> resizeOutData = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        std::istream&amp; getStream();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">virtual</span> <a class="code hl_class" href="classfile__manager_1_1_read_file_handle.html">~ReadFileHandle</a>();</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    };</div>
 </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
 <div class="ttc" id="aclassfile__manager_1_1_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_file_handle.html">file_manager::FileHandle</a></div><div class="ttdef"><b>Definition</b> <a href="_file_handle_8h_source.html#l00009">FileHandle.h:10</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_file_manager_html"><div class="ttname"><a href="classfile__manager_1_1_file_manager.html">file_manager::FileManager</a></div><div class="ttdoc">Provides files accessing from multiple threads. Singleton.</div><div class="ttdef"><b>Definition</b> <a href="_file_manager_8h_source.html#l00024">FileManager.h:25</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_read_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_read_file_handle.html">file_manager::ReadFileHandle</a></div><div class="ttdoc">Provides reading files.</div><div class="ttdef"><b>Definition</b> <a href="_read_file_handle_8h_source.html#l00010">ReadFileHandle.h:11</a></div></div>
