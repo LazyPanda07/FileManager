@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(LINK_LIBRARY_PATH dependencies/ThreadPool/lib)
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
 option(BUILD_SHARED_LIBS "" OFF)
 
 if (UNIX)

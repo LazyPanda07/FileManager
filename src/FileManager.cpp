@@ -341,7 +341,7 @@ namespace file_manager
 
 	string FileManager::getVersion()
 	{
-		string version = "1.3.0";
+		string version = "1.3.1";
 
 		return version;
 	}
