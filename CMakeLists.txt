@@ -6,9 +6,9 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
 option(BUILD_SHARED_LIBS "" OFF)
 
 if (UNIX)
-	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
-
 	add_definitions(-D__LINUX__)
+
+	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
 
 	install(FILES ${LINK_LIBRARY_PATH}/libThreadPool.a DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 else ()
@@ -21,14 +21,10 @@ else ()
 	install(FILES ${LINK_LIBRARY_PATH}/ThreadPool.lib DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 endif (UNIX)
 
-if (${BUILD_SHARED_LIBS})
-	add_definitions(-DFILE_MANAGER_DLL)
-endif ()
-
 project(FileManager)
 
 add_library(
-	${PROJECT_NAME}
+	${PROJECT_NAME} SHARED
 	src/Cache.cpp
 	src/FileManager.cpp
 	src/Utility.cpp

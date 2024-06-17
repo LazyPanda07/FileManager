@@ -12,7 +12,6 @@ jobs:
     strategy:
       matrix:
         configuration: [Debug, Release]
-        shared: [[ON, DLL], [OFF, ""]]
 
     steps:
     - uses: actions/checkout@v4
@@ -24,40 +23,39 @@ jobs:
       run: |
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} -G "NMake Makefiles" ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -G "NMake Makefiles" ..
           nmake install
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         path: build/install-dir
-        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
+        name: ${{ matrix.configuration }}_Windows
   
 
   linux-build:
     runs-on: ubuntu-latest
+    container:
+      image: lazypanda07/ubuntu_cxx20:24.04
     strategy:
       matrix:
         configuration: [Debug, Release]
-        shared: [[ON, DLL], [OFF, ""]]
 
     steps:
     - uses: actions/checkout@v4
   
     - name: Build
       run: |
-          export CC=/usr/bin/gcc-13
-          export CXX=/usr/bin/g++-13
           mkdir build
           cd build
-          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DBUILD_SHARED_LIBS=${{ matrix.shared[0] }} ..
+          cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} ..
           make install -j $(nproc)
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         path: build/install-dir
-        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
+        name: ${{ matrix.configuration }}_Linux
 
 
   windows-tests:
@@ -66,7 +64,6 @@ jobs:
     strategy:
       matrix:
         configuration: [Debug, Release]
-        shared: [[ON, DLL], [OFF, ""]]
     
     steps:
     - uses: actions/checkout@v4
@@ -75,7 +72,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: FileManager
-        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Windows
+        name: ${{ matrix.configuration }}_Windows
 
     - name: Get Google Test
       uses: LazyPanda07/get-gtest@v1
@@ -104,10 +101,11 @@ jobs:
   linux-tests:
     runs-on: ubuntu-latest
     needs: linux-build
+    container:
+      image: lazypanda07/ubuntu_cxx20:24.04
     strategy:
       matrix:
         configuration: [Debug, Release]
-        shared: [[ON, DLL], [OFF, ""]]
     
     steps:
     - uses: actions/checkout@v4
@@ -116,12 +114,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: FileManager
-        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
-
-    - name: Get Google Test
-      uses: LazyPanda07/get-gtest@v1
-      with: 
-        install-path: Tests/gtest
+        name: ${{ matrix.configuration }}_Linux
 
     - name: Build tests
       working-directory: Tests
@@ -141,10 +134,11 @@ jobs:
   memory-leak-tests:
     runs-on: ubuntu-latest
     needs: linux-build
+    container:
+      image: lazypanda07/ubuntu_cxx20:24.04
     strategy:
       matrix:
         configuration: [Debug, Release]
-        shared: [[ON, "DLL"], [OFF, ""]]
 
     steps:
     - uses: actions/checkout@v4
@@ -153,12 +147,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         path: FileManager
-        name: ${{ matrix.configuration }}${{ matrix.shared[1] }}_Linux
-
-    - name: Get Google Test
-      uses: LazyPanda07/get-gtest@v1
-      with: 
-        install-path: Tests/gtest
+        name: ${{ matrix.configuration }}_Linux
 
     - name: Build tests
       working-directory: Tests
@@ -169,7 +158,7 @@ jobs:
           make install -j $(nproc)
 
     - name: Memory leak test
-      uses: LazyPanda07/check-memory-leaks@v1.1
+      uses: LazyPanda07/check-memory-leaks@v1.4
       with:
         path: Tests/build/bin
         name: Tests
@@ -203,7 +192,7 @@ jobs:
 
     - name: Create Linux zip
       if: ${{ env.CURRENT_BRANCH == 'master' }}
-      run: zip -r linux.zip Release_Linux ReleaseDLL_Linux
+      run: zip -r linux.zip Release_Linux
 
     - name: Publish Windows
       if: ${{ env.CURRENT_BRANCH == 'master' }}

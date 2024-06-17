@@ -5,11 +5,10 @@ set(LINK_LIBRARY_PATH ../dependencies/ThreadPool/lib)
 set(DLL ${CMAKE_SOURCE_DIR}/../FileManager)
 
 if (UNIX)
-	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
-
-	set(DLL ${DLL}/lib/libFileManager.so)
-
 	add_definitions(-D__LINUX__)
+
+	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
+	set(DLL ${DLL}/lib/libFileManager.so)
 else ()
 	if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
 		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/debug)
@@ -19,12 +18,6 @@ else ()
 
 	set(DLL ${DLL}/dll/FileManager.dll)
 endif (UNIX)
-
-if (EXISTS ${DLL})
-	add_definitions(-DFILE_MANAGER_DLL)
-
-	install(FILES ${DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
-endif ()
 
 project(Tests)
 
@@ -58,3 +51,4 @@ target_link_libraries(
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_BINARY_DIR}/bin)
+install(FILES ${DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
