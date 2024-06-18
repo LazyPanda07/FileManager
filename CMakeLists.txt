@@ -1,24 +1,10 @@
 cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
-set(LINK_LIBRARY_PATH dependencies/ThreadPool/lib)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
-option(BUILD_SHARED_LIBS "" OFF)
 
 if (UNIX)
 	add_definitions(-D__LINUX__)
-
-	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
-
-	install(FILES ${LINK_LIBRARY_PATH}/libThreadPool.a DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-else ()
-	if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/debug)
-	else ()
-		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/release)
-	endif()
-
-	install(FILES ${LINK_LIBRARY_PATH}/ThreadPool.lib DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
 endif (UNIX)
 
 project(FileManager)
@@ -40,15 +26,12 @@ add_library(
 	src/Handlers/WriteFileHandle.cpp
 )
 
-target_include_directories(
-	${PROJECT_NAME} PUBLIC
-	src/
-	dependencies/ThreadPool/include
-)
+add_subdirectory(3rdparty)
 
-target_link_directories(
+target_include_directories(
 	${PROJECT_NAME} PRIVATE
-	${LINK_LIBRARY_PATH}
+	${CMAKE_SOURCE_DIR}/src/
+	${THREAD_POOL_INCLUDE}
 )
 
 target_link_libraries(
