@@ -32,7 +32,7 @@ add_subdirectory(3rdparty)
 
 target_include_directories(
 	${PROJECT_NAME} PRIVATE
-	${CMAKE_SOURCE_DIR}/src/
+	${PROJECT_SOURCE_DIR}/src/
 	${THREAD_POOL_INCLUDE}
 )
 
