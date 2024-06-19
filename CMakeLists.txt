@@ -5,6 +5,8 @@ set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
 
 if (UNIX)
 	add_definitions(-D__LINUX__)
+
+	add_compile_options(-fPIC)
 endif (UNIX)
 
 project(FileManager)
