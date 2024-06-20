@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28.0)
+cmake_minimum_required(VERSION 3.27.0)
 
 project(3rdparty)
 
@@ -7,6 +7,11 @@ set(THREAD_POOL_PATH ${PROJECT_SOURCE_DIR}/ThreadPool)
 set(THREAD_POOL_INCLUDE ${PROJECT_SOURCE_DIR}/ThreadPool/src/ PARENT_SCOPE)
 
 if (EXISTS ${THREAD_POOL_PATH})
+	execute_process(
+		WORKING_DIRECTORY ${THREAD_POOL_PATH}
+		COMMAND git pull
+	)
+
 	execute_process(
 		WORKING_DIRECTORY ${THREAD_POOL_PATH}
 		COMMAND git checkout ${THREAD_POOL_TAG}
