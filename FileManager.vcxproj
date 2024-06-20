@@ -71,7 +71,7 @@
     </Link>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(SolutionDir)
+cd $(ProjectDir)
 if not exist build mkdir build
 cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\ThreadPool\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
     </PreBuildEvent>
@@ -98,7 +98,7 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PR
     </Link>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(SolutionDir)
+cd $(ProjectDir)
 if not exist build mkdir build
 cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\ThreadPool\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
     </PreBuildEvent>
