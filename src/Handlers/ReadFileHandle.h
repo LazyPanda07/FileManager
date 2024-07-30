@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <sstream>
 
 #include "FileHandle.h"
 
