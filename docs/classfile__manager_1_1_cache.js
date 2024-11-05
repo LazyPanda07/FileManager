@@ -6,8 +6,8 @@ var classfile__manager_1_1_cache =
       [ "notEnoughCacheSize", "classfile__manager_1_1_cache.html#a9faf2c187d995c1b934aa5dbc3d6648ca8738851c0ba596713bd0ecf1e84e40b3", null ]
     ] ],
     [ "addCache", "classfile__manager_1_1_cache.html#a9034c7aad21ee7ae4aa7f6c18088032e", null ],
-    [ "appendCache", "classfile__manager_1_1_cache.html#a3d2aca3cc654dd3852b6bb69a1525b18", null ],
     [ "appendCache", "classfile__manager_1_1_cache.html#ae40c785feea378891db63f775b0d855c", null ],
+    [ "appendCache", "classfile__manager_1_1_cache.html#adf30c6fbea6df1580902e99af3846676", null ],
     [ "clear", "classfile__manager_1_1_cache.html#afa711c357b38956fb7ef842e452f8628", null ],
     [ "clear", "classfile__manager_1_1_cache.html#a631c7c73f193d527d801b1c0b444a4db", null ],
     [ "contains", "classfile__manager_1_1_cache.html#a3d3738910c55cd32f55b0ff526a0c808", null ],

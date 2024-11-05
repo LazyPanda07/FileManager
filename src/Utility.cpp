@@ -26,7 +26,7 @@ namespace file_manager
 				return;
 			}
 
-			cache.cacheData.emplace(move(filePath), move(data));
+			cache.cacheData.try_emplace(move(filePath), move(data));
 		}
 	}
 }

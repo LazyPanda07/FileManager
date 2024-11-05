@@ -92,7 +92,7 @@ namespace file_manager
 
 		currentCacheSize += data.size();
 
-		cacheData.emplace(filePath, move(data));
+		cacheData.try_emplace(filePath, move(data));
 
 		return CacheResultCodes::noError;
 	}
@@ -102,7 +102,7 @@ namespace file_manager
 		return this->appendCache(filePath, data.data());
 	}
 
-	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& filePath, const string_view& data)
+	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& filePath, string_view data)
 	{
 		if (currentCacheSize + data.size() > cacheSize)
 		{

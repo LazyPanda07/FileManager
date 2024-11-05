@@ -62,7 +62,7 @@ namespace file_manager
 		 * @param data Cache data
 		 * @return Error code from Cache::CacheErrorCodes
 		*/
-		CacheResultCodes appendCache(const std::filesystem::path& filePath, const std::string_view& data);
+		CacheResultCodes appendCache(const std::filesystem::path& filePath, std::string_view data);
 
 		/// @brief Check if file data is cached
 		/// @param filePath Path to file
