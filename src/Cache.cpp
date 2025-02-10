@@ -70,7 +70,7 @@ namespace file_manager
 
 	}
 
-	Cache::CacheResultCodes Cache::addCache(const filesystem::path& filePath)
+	Cache::CacheResultCodes Cache::addCache(const filesystem::path& filePath, ios_base::openmode mode)
 	{
 		if (!filesystem::exists(filePath))
 		{
@@ -88,7 +88,7 @@ namespace file_manager
 			return CacheResultCodes::noError;
 		}
 
-		string data = (ostringstream() << ifstream(filePath).rdbuf()).str();
+		string data = (ostringstream() << ifstream(filePath, mode).rdbuf()).str();
 
 		currentCacheSize += data.size();
 

@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.4.4</span>
+   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.5.0</span>
    </div>
    <div id="projectbrief">Manage access to files with async model</div>
   </td>
@@ -122,9 +122,9 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a9034c7aad21ee7ae4aa7f6c18088032e" id="r_a9034c7aad21ee7ae4aa7f6c18088032e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a9faf2c187d995c1b934aa5dbc3d6648c">CacheResultCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9034c7aad21ee7ae4aa7f6c18088032e">addCache</a> (const std::filesystem::path &amp;filePath)</td></tr>
-<tr class="memdesc:a9034c7aad21ee7ae4aa7f6c18088032e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add cache data.  <br /></td></tr>
-<tr class="separator:a9034c7aad21ee7ae4aa7f6c18088032e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83658e2e9ddae0c74a39cad935d94bf2" id="r_a83658e2e9ddae0c74a39cad935d94bf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a9faf2c187d995c1b934aa5dbc3d6648c">CacheResultCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a83658e2e9ddae0c74a39cad935d94bf2">addCache</a> (const std::filesystem::path &amp;filePath, std::ios_base::openmode mode)</td></tr>
+<tr class="memdesc:a83658e2e9ddae0c74a39cad935d94bf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add cache data.  <br /></td></tr>
+<tr class="separator:a83658e2e9ddae0c74a39cad935d94bf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae40c785feea378891db63f775b0d855c" id="r_ae40c785feea378891db63f775b0d855c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a9faf2c187d995c1b934aa5dbc3d6648c">CacheResultCodes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae40c785feea378891db63f775b0d855c">appendCache</a> (const std::filesystem::path &amp;filePath, const std::vector&lt; char &gt; &amp;data)</td></tr>
 <tr class="memdesc:ae40c785feea378891db63f775b0d855c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Append specific cache.  <br /></td></tr>
 <tr class="separator:ae40c785feea378891db63f775b0d855c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,8 +201,8 @@ requires _utility::Operation&lt;OperationT&lt;uint64_t&gt;&gt;</td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a9034c7aad21ee7ae4aa7f6c18088032e" name="a9034c7aad21ee7ae4aa7f6c18088032e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9034c7aad21ee7ae4aa7f6c18088032e">&#9670;&#160;</a></span>addCache()</h2>
+<a id="a83658e2e9ddae0c74a39cad935d94bf2" name="a83658e2e9ddae0c74a39cad935d94bf2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83658e2e9ddae0c74a39cad935d94bf2">&#9670;&#160;</a></span>addCache()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,8 +210,12 @@ requires _utility::Operation&lt;OperationT&lt;uint64_t&gt;&gt;</td></tr>
         <tr>
           <td class="memname"><a class="el" href="#a9faf2c187d995c1b934aa5dbc3d6648c">Cache::CacheResultCodes</a> file_manager::Cache::addCache </td>
           <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;</td>          <td class="paramname"><span class="paramname"><em>filePath</em></span></td><td>)</td>
+          <td class="paramtype">const std::filesystem::path &amp;</td>          <td class="paramname"><span class="paramname"><em>filePath</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::ios_base::openmode</td>          <td class="paramname"><span class="paramname"><em>mode</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

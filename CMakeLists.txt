@@ -9,7 +9,7 @@ if (UNIX)
 	add_compile_options(-fPIC)
 endif (UNIX)
 
-project(FileManager VERSION 1.4.4)
+project(FileManager VERSION 1.5.0)
 
 add_library(
 	${PROJECT_NAME} SHARED

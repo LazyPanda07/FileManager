@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.4.4</span>
+   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.5.0</span>
    </div>
    <div id="projectbrief">Manage access to files with async model</div>
   </td>
@@ -134,7 +134,7 @@ $(function(){initNavTree('_read_file_handle_8cpp_source.html',''); initResizable
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    {</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>&amp; cache = FileManager::getInstance().getCache();</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">switch</span> (cache.<a class="code hl_function" href="classfile__manager_1_1_cache.html#a9034c7aad21ee7ae4aa7f6c18088032e">addCache</a>(filePath))</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">switch</span> (cache.<a class="code hl_function" href="classfile__manager_1_1_cache.html#a83658e2e9ddae0c74a39cad935d94bf2">addCache</a>(filePath, mode))</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        {</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">case</span> Cache::CacheResultCodes::noError:</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordflow">return</span> cache.<a class="code hl_function" href="classfile__manager_1_1_cache.html#a2a47d0456a99ad64654f6618d704a3a8">getCacheData</a>(filePath);</div>
@@ -186,7 +186,7 @@ $(function(){initNavTree('_read_file_handle_8cpp_source.html',''); initResizable
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>}</div>
 <div class="ttc" id="aclassfile__manager_1_1_cache_html"><div class="ttname"><a href="classfile__manager_1_1_cache.html">file_manager::Cache</a></div><div class="ttdoc">Files cache.</div><div class="ttdef"><b>Definition</b> <a href="_cache_8h_source.html#l00018">Cache.h:19</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_cache_html_a2a47d0456a99ad64654f6618d704a3a8"><div class="ttname"><a href="classfile__manager_1_1_cache.html#a2a47d0456a99ad64654f6618d704a3a8">file_manager::Cache::getCacheData</a></div><div class="ttdeci">const std::string &amp; getCacheData(const std::filesystem::path &amp;filePath) const</div><div class="ttdoc">Get cached data.</div><div class="ttdef"><b>Definition</b> <a href="_cache_8cpp_source.html#l00169">Cache.cpp:169</a></div></div>
-<div class="ttc" id="aclassfile__manager_1_1_cache_html_a9034c7aad21ee7ae4aa7f6c18088032e"><div class="ttname"><a href="classfile__manager_1_1_cache.html#a9034c7aad21ee7ae4aa7f6c18088032e">file_manager::Cache::addCache</a></div><div class="ttdeci">CacheResultCodes addCache(const std::filesystem::path &amp;filePath)</div><div class="ttdoc">Add cache data.</div><div class="ttdef"><b>Definition</b> <a href="_cache_8cpp_source.html#l00073">Cache.cpp:73</a></div></div>
+<div class="ttc" id="aclassfile__manager_1_1_cache_html_a83658e2e9ddae0c74a39cad935d94bf2"><div class="ttname"><a href="classfile__manager_1_1_cache.html#a83658e2e9ddae0c74a39cad935d94bf2">file_manager::Cache::addCache</a></div><div class="ttdeci">CacheResultCodes addCache(const std::filesystem::path &amp;filePath, std::ios_base::openmode mode)</div><div class="ttdoc">Add cache data.</div><div class="ttdef"><b>Definition</b> <a href="_cache_8cpp_source.html#l00073">Cache.cpp:73</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1exceptions_1_1_file_does_not_exist_exception_html"><div class="ttname"><a href="classfile__manager_1_1exceptions_1_1_file_does_not_exist_exception.html">file_manager::exceptions::FileDoesNotExistException</a></div><div class="ttdoc">Thrown if file does not exist.</div><div class="ttdef"><b>Definition</b> <a href="_file_does_not_exist_exception_8h_source.html#l00010">FileDoesNotExistException.h:11</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

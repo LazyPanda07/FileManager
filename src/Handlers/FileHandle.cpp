@@ -54,7 +54,7 @@ namespace file_manager
 		{
 			file.close();
 
-			FileManager::getInstance().notify(move(filePath), mode);
+			FileManager::getInstance().notify(move(filePath));
 		}
 	}
 }

@@ -119,7 +119,7 @@ namespace file_manager
 	public:
 		FileHandle* createHandle(const std::filesystem::path& filePath, requestFileHandleType handleType);
 
-		void notify(std::filesystem::path&& filePath, std::ios_base::openmode mode);
+		void notify(std::filesystem::path&& filePath);
 
 		void addRequest(const std::filesystem::path& filePath, fileCallback&& callback, std::promise<void>&& requestPromise, requestFileHandleType handleType);
 

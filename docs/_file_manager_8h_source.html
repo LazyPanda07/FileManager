@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.4.4</span>
+   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.5.0</span>
    </div>
    <div id="projectbrief">Manage access to files with async model</div>
   </td>
@@ -221,7 +221,7 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <a class="code hl_class" href="classfile__manager_1_1_file_handle.html">FileHandle</a>* createHandle(<span class="keyword">const</span> std::filesystem::path&amp; filePath, requestFileHandleType handleType);</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordtype">void</span> notify(std::filesystem::path&amp;&amp; filePath, std::ios_base::openmode mode);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordtype">void</span> notify(std::filesystem::path&amp;&amp; filePath);</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="keywordtype">void</span> addRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, fileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, requestFileHandleType handleType);</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
@@ -289,7 +289,7 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="ttc" id="aclassfile__manager_1_1_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_file_handle.html">file_manager::FileHandle</a></div><div class="ttdef"><b>Definition</b> <a href="_file_handle_8h_source.html#l00009">FileHandle.h:10</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_file_manager_html"><div class="ttname"><a href="classfile__manager_1_1_file_manager.html">file_manager::FileManager</a></div><div class="ttdoc">Provides files accessing from multiple threads. Singleton.</div><div class="ttdef"><b>Definition</b> <a href="#l00024">FileManager.h:25</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_read_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_read_file_handle.html">file_manager::ReadFileHandle</a></div><div class="ttdoc">Provides reading files.</div><div class="ttdef"><b>Definition</b> <a href="_read_file_handle_8h_source.html#l00011">ReadFileHandle.h:12</a></div></div>
-<div class="ttc" id="aclassfile__manager_1_1_write_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_write_file_handle.html">file_manager::WriteFileHandle</a></div><div class="ttdoc">Provides writing files.</div><div class="ttdef"><b>Definition</b> <a href="_write_file_handle_8h_source.html#l00010">WriteFileHandle.h:11</a></div></div>
+<div class="ttc" id="aclassfile__manager_1_1_write_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_write_file_handle.html">file_manager::WriteFileHandle</a></div><div class="ttdoc">Provides writing files.</div><div class="ttdef"><b>Definition</b> <a href="_write_file_handle_8h_source.html#l00012">WriteFileHandle.h:13</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

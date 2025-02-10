@@ -46,7 +46,7 @@ namespace file_manager
 		/// @brief Add cache data
 		/// @param filePath Path to file
 		/// @return Error code from Cache::CacheErrorCodes
-		CacheResultCodes addCache(const std::filesystem::path& filePath);
+		CacheResultCodes addCache(const std::filesystem::path& filePath, std::ios_base::openmode mode);
 
 		/**
 		 * @brief Append specific cache

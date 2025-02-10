@@ -31,7 +31,7 @@ namespace file_manager
 	{
 		Cache& cache = FileManager::getInstance().getCache();
 
-		switch (cache.addCache(filePath))
+		switch (cache.addCache(filePath, mode))
 		{
 		case Cache::CacheResultCodes::noError:
 			return cache.getCacheData(filePath);

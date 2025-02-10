@@ -199,7 +199,7 @@ namespace file_manager
 		return new FileHandle(filePath, ios_base::in);
 	}
 
-	void FileManager::notify(filesystem::path&& filePath, ios_base::openmode mode)
+	void FileManager::notify(filesystem::path&& filePath)
 	{
 		threadPool->addTask([this, tem = move(filePath)]()
 			{
