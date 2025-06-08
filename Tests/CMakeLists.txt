@@ -21,6 +21,13 @@ endif (UNIX)
 
 project(Tests)
 
+find_package(GTest)
+
+if(NOT ${GTest_FOUND})
+	set(GTEST_BOTH_LIBRARIES gtest gtest_main)
+	set(GTEST_INCLUDE_DIRS gtest/include/)
+endif()
+
 add_executable(
 	${PROJECT_NAME}
 	main.cpp
@@ -32,7 +39,7 @@ target_include_directories(
 	${PROJECT_NAME} PUBLIC
 	${CMAKE_SOURCE_DIR}/../src
 	${CMAKE_SOURCE_DIR}/../dependencies/ThreadPool/include
-	gtest/include
+	${GTEST_INCLUDE_DIRS}
 )
 
 target_link_directories(
@@ -46,8 +53,7 @@ target_link_libraries(
 	${PROJECT_NAME} PUBLIC
 	FileManager
 	ThreadPool
-	gtest
-	gtest_main
+	${GTEST_BOTH_LIBRARIES}
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_BINARY_DIR}/bin)
