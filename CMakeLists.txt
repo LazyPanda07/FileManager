@@ -9,7 +9,7 @@ if (UNIX)
 	add_compile_options(-fPIC)
 endif (UNIX)
 
-project(FileManager VERSION 1.5.1)
+project(FileManager VERSION 1.6.0)
 
 add_library(
 	${PROJECT_NAME} SHARED
@@ -27,6 +27,10 @@ add_library(
 	src/Handlers/WriteBinaryFileHandle.cpp
 	src/Handlers/WriteFileHandle.cpp
 )
+
+if (DEFINED ENV{MARCH} AND NOT "$ENV{MARCH}" STREQUAL "")
+	target_compile_options(${PROJECT_NAME} PRIVATE -march=$ENV{MARCH})
+endif()
 
 add_subdirectory(3rdparty)
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.27.0)
 
 project(3rdparty)
 
-set(THREAD_POOL_TAG v1.5.6)
+set(THREAD_POOL_TAG v1.6.0)
 set(THREAD_POOL_PATH ${PROJECT_SOURCE_DIR}/ThreadPool)
 set(THREAD_POOL_INCLUDE ${PROJECT_SOURCE_DIR}/ThreadPool/src/ PARENT_SCOPE)
 
