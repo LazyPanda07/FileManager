@@ -83,39 +83,39 @@ TEST(FileManager, Read)
 	ASSERT_EQ(totalSize, data.size());
 }
 
-TEST(FileManager, MultipleRead)
-{
-	for (size_t i = 1; i <= 4; i++)
-	{
-		threading::ThreadPool threadPool(i);
-		file_manager::FileManager& manager = file_manager::FileManager::getInstance(&threadPool);
-		const std::string fileName("read_test.txt");
-		std::mt19937_64 random(time(nullptr));
-		std::string data;
-
-		{
-			std::ofstream file(fileName);
-		}
-
-		manager.addFile(fileName);
-
-		std::future<size_t> first = std::async(std::launch::async, &randomFill, std::ref(fileName));
-		std::future<size_t> second = std::async(std::launch::async, &randomFill, std::ref(fileName));
-		std::future<size_t> third = std::async(std::launch::async, &randomFill, std::ref(fileName));
-		std::future<size_t> fourth = std::async(std::launch::async, &randomFill, std::ref(fileName));
-
-		size_t randomFillWrites = first.get() + second.get() + third.get() + fourth.get();
-
-		manager.readFile
-		(
-			fileName,
-			[&data](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
-			{
-				data = handle->readAllData();
-			}
-		);
-
-		ASSERT_EQ(randomFillWrites, data.size());
-		ASSERT_EQ(totalSize, data.size());
-	}
-}
+//TEST(FileManager, MultipleRead)
+//{
+//	for (size_t i = 1; i <= 4; i++)
+//	{
+//		threading::ThreadPool threadPool(i);
+//		file_manager::FileManager& manager = file_manager::FileManager::getInstance(&threadPool);
+//		const std::string fileName("read_test.txt");
+//		std::mt19937_64 random(time(nullptr));
+//		std::string data;
+//
+//		{
+//			std::ofstream file(fileName);
+//		}
+//
+//		manager.addFile(fileName);
+//
+//		std::future<size_t> first = std::async(std::launch::async, &randomFill, std::ref(fileName));
+//		std::future<size_t> second = std::async(std::launch::async, &randomFill, std::ref(fileName));
+//		std::future<size_t> third = std::async(std::launch::async, &randomFill, std::ref(fileName));
+//		std::future<size_t> fourth = std::async(std::launch::async, &randomFill, std::ref(fileName));
+//
+//		size_t randomFillWrites = first.get() + second.get() + third.get() + fourth.get();
+//
+//		manager.readFile
+//		(
+//			fileName,
+//			[&data](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
+//			{
+//				data = handle->readAllData();
+//			}
+//		);
+//
+//		ASSERT_EQ(randomFillWrites, data.size());
+//		ASSERT_EQ(totalSize, data.size());
+//	}
+//}

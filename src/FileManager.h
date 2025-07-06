@@ -108,8 +108,7 @@ namespace file_manager
 	private:
 		Cache cache;
 		NodesContainer nodes;
-		threading::ThreadPool* threadPool;
-		bool isThreadPoolWeak;
+		std::shared_ptr<threading::ThreadPool> threadPool;
 
 	private:
 		static void threadPoolCallback(std::promise<void>&& requestPromise);
@@ -132,9 +131,7 @@ namespace file_manager
 
 		FileManager(size_t threadsNumber);
 
-		FileManager(threading::ThreadPool* threadPool);
-
-		~FileManager();
+		FileManager(std::shared_ptr<threading::ThreadPool> threadPool);
 
 		FileManager(const FileManager&) = delete;
 
@@ -143,6 +140,8 @@ namespace file_manager
 		FileManager& operator = (const FileManager&) = delete;
 
 		FileManager& operator = (FileManager&&) noexcept = delete;
+
+		~FileManager() = default;
 
 	private:
 		std::future<void> addReadRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait);
@@ -170,7 +169,7 @@ namespace file_manager
 		 * @param threadPool FileManager will use this thread pool instead of initializing its own thread pool
 		 * @return Singleton instance
 		 */
-		static FileManager& getInstance(threading::ThreadPool* threadPool);
+		static FileManager& getInstance(std::shared_ptr<threading::ThreadPool> threadPool);
 
 		/**
 		 * @brief FileManager version

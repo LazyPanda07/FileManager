@@ -227,34 +227,21 @@ namespace file_manager
 	}
 
 	FileManager::FileManager() :
-		threadPool(nullptr),
-		isThreadPoolWeak(true)
+		threadPool(nullptr)
 	{
 
 	}
 
 	FileManager::FileManager(size_t threadsNumber) :
-		threadPool(new threading::ThreadPool(threadsNumber)),
-		isThreadPoolWeak(false)
+		threadPool(new threading::ThreadPool(threadsNumber))
 	{
 
 	}
 
-	FileManager::FileManager(threading::ThreadPool* threadPool) :
-		threadPool(threadPool),
-		isThreadPoolWeak(true)
+	FileManager::FileManager(shared_ptr<threading::ThreadPool> threadPool) :
+		threadPool(threadPool)
 	{
 
-	}
-
-	FileManager::~FileManager()
-	{
-		if (!isThreadPoolWeak)
-		{
-			delete threadPool;
-		}
-
-		threadPool = nullptr;
 	}
 
 	future<void> FileManager::addReadRequest(const filesystem::path& filePath, const function<void(unique_ptr<ReadFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait)
@@ -314,15 +301,13 @@ namespace file_manager
 
 		if (instance->threadPool->getThreadsCount() != threadsNumber)
 		{
-			delete instance->threadPool;
-
-			instance->threadPool = new threading::ThreadPool(threadsNumber);
+			instance->threadPool = make_shared<threading::ThreadPool>(threadsNumber);
 		}
 
 		return *instance;
 	}
 
-	FileManager& FileManager::getInstance(threading::ThreadPool* threadPool)
+	FileManager& FileManager::getInstance(shared_ptr<threading::ThreadPool> threadPool)
 	{
 		if (!instance)
 		{
