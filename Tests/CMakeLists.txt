@@ -1,21 +1,13 @@
 cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
-set(LINK_LIBRARY_PATH ../dependencies/ThreadPool/lib)
 set(DLL ${CMAKE_SOURCE_DIR}/../FileManager)
 
 if (UNIX)
 	add_definitions(-D__LINUX__)
 
-	set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Linux)
 	set(DLL ${DLL}/lib/libFileManager.so)
 else ()
-	if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/debug)
-	else ()
-		set(LINK_LIBRARY_PATH ${LINK_LIBRARY_PATH}/Windows/release)
-	endif ()
-
 	set(DLL ${DLL}/dll/FileManager.dll)
 endif (UNIX)
 
@@ -37,15 +29,13 @@ add_executable(
 
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
-	${CMAKE_SOURCE_DIR}/../src
-	${CMAKE_SOURCE_DIR}/../dependencies/ThreadPool/include
+	${CMAKE_SOURCE_DIR}/../FileManager/include
 	${GTEST_INCLUDE_DIRS}
 )
 
 target_link_directories(
 	${PROJECT_NAME} PUBLIC
 	${CMAKE_SOURCE_DIR}/../FileManager/lib
-	${LINK_LIBRARY_PATH}
 	gtest/lib
 )
 
