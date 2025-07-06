@@ -39,7 +39,7 @@ struct RequestPromiseHandler
 
 namespace file_manager
 {
-	FileManager::requestStruct::requestStruct(fileCallback&& callback, promise<void>&& requestPromise, requestFileHandleType handleType) :
+	FileManager::RequestStruct::RequestStruct(FileCallback&& callback, promise<void>&& requestPromise, RequestFileHandleType handleType) :
 		callback(move(callback)),
 		requestPromise(move(requestPromise)),
 		handleType(handleType)
@@ -47,7 +47,7 @@ namespace file_manager
 
 	}
 
-	bool operator == (const FileManager::requestStruct& request, FileManager::requestType type)
+	bool operator == (const FileManager::RequestStruct& request, FileManager::RequestType type)
 	{
 		return request.callback.index() == static_cast<size_t>(type);
 	}
@@ -59,7 +59,7 @@ namespace file_manager
 
 	}
 
-	void FileManager::FileNode::addRequest(fileCallback&& callback, std::promise<void>&& requestPromise, requestFileHandleType handleType)
+	void FileManager::FileNode::addRequest(FileCallback&& callback, std::promise<void>&& requestPromise, RequestFileHandleType handleType)
 	{
 		unique_lock<mutex> lock(requestsMutex);
 
@@ -73,9 +73,9 @@ namespace file_manager
 
 		while (requests.size())
 		{
-			requestStruct& request = requests.front();
+			RequestStruct& request = requests.front();
 
-			if (request == requestType::read)
+			if (request == RequestType::read)
 			{
 				if (state.isWriteRequest)
 				{
@@ -86,7 +86,7 @@ namespace file_manager
 
 				function<void(unique_ptr<ReadFileHandle>&&)> readCallback = move(get<function<void(unique_ptr<ReadFileHandle>&&)>>(request.callback));
 				RequestPromiseHandler handler(move(request.requestPromise));
-				requestFileHandleType handleType = request.handleType;
+				RequestFileHandleType handleType = request.handleType;
 
 				requests.pop();
 
@@ -100,7 +100,7 @@ namespace file_manager
 					}
 				);
 			}
-			else if (request == requestType::write)
+			else if (request == RequestType::write)
 			{
 				if (state.isWriteRequest || state.readRequests)
 				{
@@ -113,7 +113,7 @@ namespace file_manager
 
 				function<void(unique_ptr<WriteFileHandle>&&)> writeCallback = move(get<function<void(unique_ptr<WriteFileHandle>&&)>>(request.callback));
 				RequestPromiseHandler handler(move(request.requestPromise));
-				requestFileHandleType handleType = request.handleType;
+				RequestFileHandleType handleType = request.handleType;
 
 				requests.pop();
 
@@ -173,26 +173,26 @@ namespace file_manager
 		delete instance;
 	}
 
-	FileHandle* FileManager::createHandle(const filesystem::path& filePath, requestFileHandleType handleType)
+	FileHandle* FileManager::createHandle(const filesystem::path& filePath, RequestFileHandleType handleType)
 	{
 		switch (handleType)
 		{
-		case file_manager::FileManager::requestFileHandleType::read:
+		case file_manager::FileManager::RequestFileHandleType::read:
 			return new ReadFileHandle(filePath);
 
-		case file_manager::FileManager::requestFileHandleType::write:
+		case file_manager::FileManager::RequestFileHandleType::write:
 			return new WriteFileHandle(filePath);
 
-		case file_manager::FileManager::requestFileHandleType::readBinary:
+		case file_manager::FileManager::RequestFileHandleType::readBinary:
 			return new ReadBinaryFileHandle(filePath);
 
-		case file_manager::FileManager::requestFileHandleType::writeBinary:
+		case file_manager::FileManager::RequestFileHandleType::writeBinary:
 			return new WriteBinaryFileHandle(filePath);
 
-		case file_manager::FileManager::requestFileHandleType::append:
+		case file_manager::FileManager::RequestFileHandleType::append:
 			return new AppendFileHandle(filePath);
 
-		case file_manager::FileManager::requestFileHandleType::appendBinary:
+		case file_manager::FileManager::RequestFileHandleType::appendBinary:
 			return new AppendBinaryFileHandle(filePath);
 		}
 
@@ -207,7 +207,7 @@ namespace file_manager
 			});
 	}
 
-	void FileManager::addRequest(const filesystem::path& filePath, fileCallback&& callback, promise<void>&& requestPromise, requestFileHandleType handleType)
+	void FileManager::addRequest(const filesystem::path& filePath, FileCallback&& callback, promise<void>&& requestPromise, RequestFileHandleType handleType)
 	{
 		FileNode* node = nodes[filePath];
 
@@ -257,7 +257,7 @@ namespace file_manager
 		threadPool = nullptr;
 	}
 
-	future<void> FileManager::addReadRequest(const filesystem::path& filePath, const function<void(unique_ptr<ReadFileHandle>&&)>& callback, requestFileHandleType handleType, bool isWait)
+	future<void> FileManager::addReadRequest(const filesystem::path& filePath, const function<void(unique_ptr<ReadFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait)
 	{
 		this->addFile(filePath);
 
@@ -274,7 +274,7 @@ namespace file_manager
 		return isReady;
 	}
 
-	future<void> FileManager::addWriteRequest(const filesystem::path& filePath, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, requestFileHandleType handleType, bool isWait)
+	future<void> FileManager::addWriteRequest(const filesystem::path& filePath, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait)
 	{
 		this->addFile(filePath, false);
 
@@ -371,32 +371,32 @@ namespace file_manager
 
 	future<void> FileManager::readFile(const filesystem::path& filePath, const function<void(unique_ptr<ReadFileHandle>&&)>& callback, bool isWait)
 	{
-		return this->addReadRequest(filePath, callback, requestFileHandleType::read, isWait);
+		return this->addReadRequest(filePath, callback, RequestFileHandleType::read, isWait);
 	}
 
 	future<void> FileManager::readBinaryFile(const filesystem::path& filePath, const function<void(unique_ptr<ReadFileHandle>&&)>& callback, bool isWait)
 	{
-		return this->addReadRequest(filePath, callback, requestFileHandleType::readBinary, isWait);
+		return this->addReadRequest(filePath, callback, RequestFileHandleType::readBinary, isWait);
 	}
 
 	future<void> FileManager::writeFile(const filesystem::path& filePath, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, bool isWait)
 	{
-		return this->addWriteRequest(filePath, callback, requestFileHandleType::write, isWait);
+		return this->addWriteRequest(filePath, callback, RequestFileHandleType::write, isWait);
 	}
 
 	future<void> FileManager::appendFile(const filesystem::path& filePath, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, bool isWait)
 	{
-		return this->addWriteRequest(filePath, callback, requestFileHandleType::append, isWait);
+		return this->addWriteRequest(filePath, callback, RequestFileHandleType::append, isWait);
 	}
 
 	future<void> FileManager::writeBinaryFile(const filesystem::path& filePath, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, bool isWait)
 	{
-		return this->addWriteRequest(filePath, callback, requestFileHandleType::writeBinary, isWait);
+		return this->addWriteRequest(filePath, callback, RequestFileHandleType::writeBinary, isWait);
 	}
 
 	future<void> FileManager::appendBinaryFile(const filesystem::path& filePath, const function<void(unique_ptr<WriteFileHandle>&&)>& callback, bool isWait)
 	{
-		return this->addWriteRequest(filePath, callback, requestFileHandleType::appendBinary, isWait);
+		return this->addWriteRequest(filePath, callback, RequestFileHandleType::appendBinary, isWait);
 	}
 
 	Cache& FileManager::getCache()

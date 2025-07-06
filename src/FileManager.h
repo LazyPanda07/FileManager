@@ -24,13 +24,13 @@ namespace file_manager
 	class FILE_MANAGER_API FileManager
 	{
 	private:
-		enum class requestType
+		enum class RequestType
 		{
 			read,
 			write
 		};
 
-		enum class requestFileHandleType
+		enum class RequestFileHandleType
 		{
 			read,
 			write,
@@ -41,18 +41,18 @@ namespace file_manager
 		};
 
 	private:
-		using fileCallback = std::variant<std::function<void(std::unique_ptr<ReadFileHandle>&&)>, std::function<void(std::unique_ptr<WriteFileHandle>&&)>>;
+		using FileCallback = std::variant<std::function<void(std::unique_ptr<ReadFileHandle>&&)>, std::function<void(std::unique_ptr<WriteFileHandle>&&)>>;
 
-		struct requestStruct
+		struct RequestStruct
 		{
-			fileCallback callback;
+			FileCallback callback;
 			std::promise<void> requestPromise;
-			requestFileHandleType handleType;
+			RequestFileHandleType handleType;
 
-			requestStruct(fileCallback&& callback, std::promise<void>&& requestPromise, requestFileHandleType handleType);
+			RequestStruct(FileCallback&& callback, std::promise<void>&& requestPromise, RequestFileHandleType handleType);
 		};
 
-		friend bool operator == (const requestStruct& request, requestType type);
+		friend bool operator == (const RequestStruct& request, RequestType type);
 
 	private:
 		class FileNode
@@ -67,7 +67,7 @@ namespace file_manager
 			};
 
 		private:
-			std::queue<requestStruct> requests;
+			std::queue<RequestStruct> requests;
 			std::mutex requestsMutex;
 
 		public:
@@ -76,7 +76,7 @@ namespace file_manager
 		public:
 			FileNode() = default;
 
-			void addRequest(fileCallback&& callback, std::promise<void>&& requestPromise, requestFileHandleType handleType);
+			void addRequest(FileCallback&& callback, std::promise<void>&& requestPromise, RequestFileHandleType handleType);
 
 			void processQueue(const std::filesystem::path& filePath);
 
@@ -117,11 +117,11 @@ namespace file_manager
 		static void deleter(FileManager* instance);
 
 	public:
-		FileHandle* createHandle(const std::filesystem::path& filePath, requestFileHandleType handleType);
+		FileHandle* createHandle(const std::filesystem::path& filePath, RequestFileHandleType handleType);
 
 		void notify(std::filesystem::path&& filePath);
 
-		void addRequest(const std::filesystem::path& filePath, fileCallback&& callback, std::promise<void>&& requestPromise, requestFileHandleType handleType);
+		void addRequest(const std::filesystem::path& filePath, FileCallback&& callback, std::promise<void>&& requestPromise, RequestFileHandleType handleType);
 
 		void decreaseReadRequests(const std::filesystem::path& filePath);
 
@@ -145,9 +145,9 @@ namespace file_manager
 		FileManager& operator = (FileManager&&) noexcept = delete;
 
 	private:
-		std::future<void> addReadRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, requestFileHandleType handleType, bool isWait);
+		std::future<void> addReadRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait);
 
-		std::future<void> addWriteRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, requestFileHandleType handleType, bool isWait);
+		std::future<void> addWriteRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait);
 
 	public:
 		/**
