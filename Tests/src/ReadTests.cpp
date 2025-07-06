@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "FileManager.h"
+#include "ThreadPool.h"
 
 using namespace std::chrono_literals;
 
