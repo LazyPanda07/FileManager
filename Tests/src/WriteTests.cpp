@@ -1,4 +1,5 @@
 #include <vector>
+#include <thread>
 
 #include "gtest/gtest.h"
 
@@ -47,7 +48,7 @@ void threadWrite(const std::string& fileName, const std::string& text)
 
 TEST(FileManager, Write)
 {
-	file_manager::FileManager& manager = file_manager::FileManager::getInstance();
+	file_manager::FileManager& manager = file_manager::FileManager::getInstance(std::thread::hardware_concurrency());
 	const std::string fileName("write_test.txt");
 	std::vector<std::future<void>> threads;
 	std::string data;

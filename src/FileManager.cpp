@@ -282,9 +282,10 @@ namespace file_manager
 	{
 		if (!instance)
 		{
+			constexpr size_t defaultThreadsNumber = 2;
 			unique_lock<mutex> lock(FileManager::instanceMutex);
 
-			instance = FileManagerPtr(new FileManager(thread::hardware_concurrency()), &FileManager::deleter);
+			instance = FileManagerPtr(new FileManager(defaultThreadsNumber), &FileManager::deleter);
 		}
 
 		return *instance;

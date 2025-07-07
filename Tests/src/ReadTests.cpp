@@ -1,4 +1,7 @@
 #include <random>
+#include <thread>
+#include <format>
+#include <unordered_map>
 
 #include "gtest/gtest.h"
 
@@ -7,7 +10,7 @@
 
 using namespace std::chrono_literals;
 
-size_t totalSize = 0;
+std::unordered_map<std::string, size_t> totalSizes;
 
 size_t randomFill(const std::string& fileName)
 {
@@ -24,11 +27,11 @@ size_t randomFill(const std::string& fileName)
 			manager.appendFile
 			(
 				fileName,
-				[](std::unique_ptr<file_manager::WriteFileHandle>&& handle)
+				[&fileName](std::unique_ptr<file_manager::WriteFileHandle>&& handle)
 				{
 					handle->write("1");
 
-					totalSize++;
+					totalSizes[fileName]++;
 				},
 				false
 			);
@@ -38,9 +41,9 @@ size_t randomFill(const std::string& fileName)
 			manager.readFile
 			(
 				fileName,
-				[](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
+				[&fileName](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
 				{
-					ASSERT_EQ(handle->readAllData().size(), totalSize);
+					ASSERT_EQ(handle->readAllData().size(), totalSizes.at(fileName));
 				},
 				false
 			);
@@ -52,9 +55,8 @@ size_t randomFill(const std::string& fileName)
 
 TEST(FileManager, Read)
 {
-	file_manager::FileManager& manager = file_manager::FileManager::getInstance();
+	file_manager::FileManager& manager = file_manager::FileManager::getInstance(std::thread::hardware_concurrency());
 	const std::string fileName("read_test.txt");
-	std::mt19937_64 random(time(nullptr));
 	std::string data;
 
 	{
@@ -80,42 +82,41 @@ TEST(FileManager, Read)
 	);
 
 	ASSERT_EQ(randomFillWrites, data.size());
-	ASSERT_EQ(totalSize, data.size());
+	ASSERT_EQ(totalSizes.at(fileName), data.size());
 }
 
-//TEST(FileManager, MultipleRead)
-//{
-//	for (size_t i = 1; i <= 4; i++)
-//	{
-//		threading::ThreadPool threadPool(i);
-//		file_manager::FileManager& manager = file_manager::FileManager::getInstance(&threadPool);
-//		const std::string fileName("read_test.txt");
-//		std::mt19937_64 random(time(nullptr));
-//		std::string data;
-//
-//		{
-//			std::ofstream file(fileName);
-//		}
-//
-//		manager.addFile(fileName);
-//
-//		std::future<size_t> first = std::async(std::launch::async, &randomFill, std::ref(fileName));
-//		std::future<size_t> second = std::async(std::launch::async, &randomFill, std::ref(fileName));
-//		std::future<size_t> third = std::async(std::launch::async, &randomFill, std::ref(fileName));
-//		std::future<size_t> fourth = std::async(std::launch::async, &randomFill, std::ref(fileName));
-//
-//		size_t randomFillWrites = first.get() + second.get() + third.get() + fourth.get();
-//
-//		manager.readFile
-//		(
-//			fileName,
-//			[&data](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
-//			{
-//				data = handle->readAllData();
-//			}
-//		);
-//
-//		ASSERT_EQ(randomFillWrites, data.size());
-//		ASSERT_EQ(totalSize, data.size());
-//	}
-//}
+TEST(FileManager, MultipleRead)
+{
+	for (size_t i = 1; i <= 8; i++)
+	{
+		std::shared_ptr<threading::ThreadPool> threadPool = std::make_shared<threading::ThreadPool>(i);
+		file_manager::FileManager& manager = file_manager::FileManager::getInstance(&threadPool);
+		const std::string fileName(std::format("read_test{}.txt", i));
+		std::string data;
+
+		{
+			std::ofstream file(fileName);
+		}
+
+		manager.addFile(fileName);
+
+		std::future<size_t> first = std::async(std::launch::async, &randomFill, std::ref(fileName));
+		std::future<size_t> second = std::async(std::launch::async, &randomFill, std::ref(fileName));
+		std::future<size_t> third = std::async(std::launch::async, &randomFill, std::ref(fileName));
+		std::future<size_t> fourth = std::async(std::launch::async, &randomFill, std::ref(fileName));
+
+		size_t randomFillWrites = first.get() + second.get() + third.get() + fourth.get();
+
+		manager.readFile
+		(
+			fileName,
+			[&data](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
+			{
+				data = handle->readAllData();
+			}
+		);
+
+		ASSERT_EQ(randomFillWrites, data.size());
+		ASSERT_EQ(totalSizes.at(fileName), data.size());
+	}
+}
