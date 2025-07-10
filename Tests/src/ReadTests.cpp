@@ -31,7 +31,16 @@ size_t randomFill(const std::string& fileName)
 				{
 					handle->write("1");
 
-					totalSizes[fileName]++;
+					try
+					{
+						totalSizes.at(fileName)++;
+					}
+					catch (const std::exception&)
+					{
+						std::cerr << "Can't find " << fileName << " in totalSizes at " << __LINE__ << std::endl;
+
+						throw;
+					}
 				},
 				false
 			);
@@ -43,7 +52,16 @@ size_t randomFill(const std::string& fileName)
 				fileName,
 				[&fileName](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
 				{
-					ASSERT_EQ(handle->readAllData().size(), totalSizes.at(fileName));
+					try
+					{
+						ASSERT_EQ(handle->readAllData().size(), totalSizes.at(fileName));
+					}
+					catch (const std::exception&)
+					{
+						std::cerr << "Can't find " << fileName << " in totalSizes at " << __LINE__ << std::endl;
+
+						throw;
+					}
 				},
 				false
 			);
@@ -62,6 +80,8 @@ TEST(FileManager, Read)
 	{
 		std::ofstream file(fileName);
 	}
+
+	totalSizes[fileName] = 0;
 
 	manager.addFile(fileName);
 
@@ -97,6 +117,8 @@ TEST(FileManager, MultipleRead)
 		{
 			std::ofstream file(fileName);
 		}
+
+		totalSizes[fileName] = 0;
 
 		manager.addFile(fileName);
 
