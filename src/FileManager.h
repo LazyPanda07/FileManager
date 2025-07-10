@@ -83,7 +83,7 @@ namespace file_manager
 			~FileNode() = default;
 		};
 
-		class NodesContainer
+		class FILE_MANAGER_API NodesContainer
 		{
 		private:
 			std::unordered_map<std::filesystem::path, FileNode*, utility::pathHash> data;
@@ -96,14 +96,16 @@ namespace file_manager
 			
 			FileNode* operator [](const std::filesystem::path& filePath) const;
 
-			~NodesContainer();
+			inline ~NodesContainer()
+			{
+				for (const auto& [_, value] : data)
+				{
+					delete value;
+				}
+
+				data.clear();
+			}
 		};
-
-	private:
-		using FileManagerPtr = std::unique_ptr<FileManager, void(*)(FileManager*)>;
-
-		static FileManagerPtr instance;
-		inline static std::mutex instanceMutex;
 
 	private:
 		Cache cache;
@@ -112,8 +114,6 @@ namespace file_manager
 
 	private:
 		static void threadPoolCallback(std::promise<void>&& requestPromise);
-
-		static void deleter(FileManager* instance);
 
 	public:
 		FileHandle* createHandle(const std::filesystem::path& filePath, RequestFileHandleType handleType);
@@ -236,5 +236,6 @@ namespace file_manager
 		friend class ReadFileHandle;
 		friend class WriteFileHandle;
 		friend class Cache;
+		friend struct std::default_delete<FileManager>;
 	};
 }

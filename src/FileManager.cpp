@@ -14,6 +14,9 @@
 
 using namespace std;
 
+static unique_ptr<file_manager::FileManager> instance;
+static mutex instanceMutex;
+
 struct RequestPromiseHandler
 {
 	promise<void> requestPromise;
@@ -151,26 +154,9 @@ namespace file_manager
 		return data.at(filePath);
 	}
 
-	FileManager::NodesContainer::~NodesContainer()
-	{
-		for (const auto& [key, value] : data)
-		{
-			delete value;
-		}
-
-		data.clear();
-	}
-
-	FileManager::FileManagerPtr FileManager::instance = FileManager::FileManagerPtr(nullptr, [](FileManager*) {});
-
 	void FileManager::threadPoolCallback(promise<void>&& requestPromise)
 	{
 		requestPromise.set_value();
-	}
-
-	void FileManager::deleter(FileManager* instance)
-	{
-		delete instance;
 	}
 
 	FileHandle* FileManager::createHandle(const filesystem::path& filePath, RequestFileHandleType handleType)
@@ -283,9 +269,9 @@ namespace file_manager
 		if (!instance)
 		{
 			constexpr size_t defaultThreadsNumber = 2;
-			unique_lock<mutex> lock(FileManager::instanceMutex);
+			unique_lock<mutex> lock(instanceMutex);
 
-			instance = FileManagerPtr(new FileManager(defaultThreadsNumber), &FileManager::deleter);
+			instance = unique_ptr<FileManager>(new FileManager(defaultThreadsNumber));
 		}
 
 		return *instance;
@@ -295,9 +281,9 @@ namespace file_manager
 	{
 		if (!instance)
 		{
-			unique_lock<mutex> lock(FileManager::instanceMutex);
+			unique_lock<mutex> lock(instanceMutex);
 
-			instance = FileManagerPtr(new FileManager(threadsNumber), &FileManager::deleter);
+			instance = unique_ptr<FileManager>(new FileManager(threadsNumber));
 		}
 
 		if (instance->threadPool->getThreadsCount() != threadsNumber)
@@ -312,9 +298,9 @@ namespace file_manager
 	{
 		if (!instance)
 		{
-			unique_lock<mutex> lock(FileManager::instanceMutex);
+			unique_lock<mutex> lock(instanceMutex);
 
-			instance = FileManagerPtr(new FileManager(threadPool), &FileManager::deleter);
+			instance = unique_ptr<FileManager>(new FileManager(threadPool));
 		}
 
 		if (instance->threadPool != threadPool)

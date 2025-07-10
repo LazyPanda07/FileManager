@@ -90,7 +90,7 @@ TEST(FileManager, MultipleRead)
 	for (size_t i = 1; i <= 8; i++)
 	{
 		std::shared_ptr<threading::ThreadPool> threadPool = std::make_shared<threading::ThreadPool>(i);
-		file_manager::FileManager& manager = file_manager::FileManager::getInstance(&threadPool);
+		file_manager::FileManager& manager = file_manager::FileManager::getInstance(threadPool);
 		const std::string fileName(std::format("read_test{}.txt", i));
 		std::string data;
 
