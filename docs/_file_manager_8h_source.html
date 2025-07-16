@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.6.0</span>
+   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.7.0</span>
    </div>
    <div id="projectbrief">Manage access to files with async model</div>
   </td>
@@ -126,13 +126,13 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classfile__manager_1_1_file_manager.html">   24</a></span>    <span class="keyword">class </span>FILE_MANAGER_API <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    {</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">enum class</span> requestType</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">enum class</span> RequestType</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        {</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            read,</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            write</div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        };</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">enum class</span> requestFileHandleType</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">enum class</span> RequestFileHandleType</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        {</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            read,</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            write,</div>
@@ -143,18 +143,18 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        };</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">using </span>fileCallback = std::variant&lt;std::function&lt;void(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;, std::function&lt;void(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&gt;;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">using </span>FileCallback = std::variant&lt;std::function&lt;void(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;, std::function&lt;void(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&gt;;</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">struct </span>requestStruct</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">struct </span>RequestStruct</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            fileCallback callback;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            FileCallback callback;</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            std::promise&lt;void&gt; requestPromise;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            requestFileHandleType handleType;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            RequestFileHandleType handleType;</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            requestStruct(fileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, requestFileHandleType handleType);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            RequestStruct(FileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, RequestFileHandleType handleType);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        };</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> requestStruct&amp; request, requestType type);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">friend</span> <span class="keywordtype">bool</span> operator == (<span class="keyword">const</span> RequestStruct&amp; request, RequestType type);</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keyword">class </span>FileNode</div>
@@ -169,7 +169,7 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            };</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::queue&lt;requestStruct&gt; requests;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::queue&lt;RequestStruct&gt; requests;</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            std::mutex requestsMutex;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keyword">public</span>:</div>
@@ -178,14 +178,14 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            FileNode() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordtype">void</span> addRequest(fileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, requestFileHandleType handleType);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordtype">void</span> addRequest(FileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, RequestFileHandleType handleType);</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordtype">void</span> processQueue(<span class="keyword">const</span> std::filesystem::path&amp; filePath);</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            ~FileNode() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        };</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keyword">class </span>NodesContainer</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keyword">class </span>FILE_MANAGER_API NodesContainer</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        {</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            std::unordered_map&lt;std::filesystem::path, FileNode*, utility::pathHash&gt; data;</div>
@@ -198,96 +198,97 @@ $(function(){initNavTree('_file_manager_8h_source.html',''); initResizable(true)
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            </div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            FileNode* operator [](<span class="keyword">const</span> std::filesystem::path&amp; filePath) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            ~NodesContainer();</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        };</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keyword">using </span>FileManagerPtr = std::unique_ptr&lt;<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>, void(*)(<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>*)&gt;;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">static</span> FileManagerPtr instance;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keyword">inline</span> <span class="keyword">static</span> std::mutex instanceMutex;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a> cache;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        NodesContainer nodes;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        threading::ThreadPool* threadPool;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordtype">bool</span> isThreadPoolWeak;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> threadPoolCallback(std::promise&lt;void&gt;&amp;&amp; requestPromise);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> deleter(<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>* instance);</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <a class="code hl_class" href="classfile__manager_1_1_file_handle.html">FileHandle</a>* createHandle(<span class="keyword">const</span> std::filesystem::path&amp; filePath, requestFileHandleType handleType);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordtype">void</span> notify(std::filesystem::path&amp;&amp; filePath);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="keywordtype">void</span> addRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, fileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, requestFileHandleType handleType);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordtype">void</span> decreaseReadRequests(<span class="keyword">const</span> std::filesystem::path&amp; filePath);</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="keywordtype">void</span> completeWriteRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath);</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>();</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(<span class="keywordtype">size_t</span> threadsNumber);</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(threading::ThreadPool* threadPool);</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">~FileManager</a>();</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(<span class="keyword">const</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;&amp;) <span class="keyword">noexcept</span> = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; operator = (<span class="keyword">const</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; operator = (<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;&amp;) <span class="keyword">noexcept</span> = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        std::future&lt;void&gt; addReadRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;&amp; callback, requestFileHandleType handleType, <span class="keywordtype">bool</span> isWait);</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        std::future&lt;void&gt; addWriteRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, requestFileHandleType handleType, <span class="keywordtype">bool</span> isWait);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keyword">static</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; getInstance();</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keyword">static</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; getInstance(<span class="keywordtype">size_t</span> threadsNumber);</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="keyword">static</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; getInstance(threading::ThreadPool* threadPool);</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <span class="keyword">static</span> std::string getVersion();</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordtype">void</span> addFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keywordtype">bool</span> isFileAlreadyExist = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        std::future&lt;void&gt; readFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        std::future&lt;void&gt; readBinaryFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        std::future&lt;void&gt; writeFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        std::future&lt;void&gt; appendFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        std::future&lt;void&gt; writeBinaryFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        std::future&lt;void&gt; appendBinaryFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>&amp; getCache();</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keyword">const</span> <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>&amp; getCache() <span class="keyword">const</span>;</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_file_handle.html">FileHandle</a>;</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_read_file_handle.html">ReadFileHandle</a>;</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_write_file_handle.html">WriteFileHandle</a>;</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="keyword">inline</span> ~NodesContainer()</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [_, value] : data)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                    <span class="keyword">delete</span> value;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                data.clear();</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        };</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a> cache;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        NodesContainer nodes;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        std::shared_ptr&lt;threading::ThreadPool&gt; threadPool;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keyword">static</span> <span class="keywordtype">void</span> threadPoolCallback(std::promise&lt;void&gt;&amp;&amp; requestPromise);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <a class="code hl_class" href="classfile__manager_1_1_file_handle.html">FileHandle</a>* createHandle(<span class="keyword">const</span> std::filesystem::path&amp; filePath, RequestFileHandleType handleType);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keywordtype">void</span> notify(std::filesystem::path&amp;&amp; filePath);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordtype">void</span> addRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, FileCallback&amp;&amp; callback, std::promise&lt;void&gt;&amp;&amp; requestPromise, RequestFileHandleType handleType);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordtype">void</span> decreaseReadRequests(<span class="keyword">const</span> std::filesystem::path&amp; filePath);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordtype">void</span> completeWriteRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>();</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(<span class="keywordtype">size_t</span> threadsNumber);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(std::shared_ptr&lt;threading::ThreadPool&gt; threadPool);</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(<span class="keyword">const</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>(<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;&amp;) <span class="keyword">noexcept</span> = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; operator = (<span class="keyword">const</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; operator = (<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp;&amp;) <span class="keyword">noexcept</span> = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">~FileManager</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        std::future&lt;void&gt; addReadRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;&amp; callback, RequestFileHandleType handleType, <span class="keywordtype">bool</span> isWait);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        std::future&lt;void&gt; addWriteRequest(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, RequestFileHandleType handleType, <span class="keywordtype">bool</span> isWait);</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="keyword">static</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; getInstance();</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keyword">static</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; getInstance(<span class="keywordtype">size_t</span> threadsNumber);</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="classfile__manager_1_1_file_manager.html#a52f6220ff6a749e663034e1b80dc6f59">  172</a></span>        <span class="keyword">static</span> <a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&amp; <a class="code hl_function" href="classfile__manager_1_1_file_manager.html#a52f6220ff6a749e663034e1b80dc6f59">getInstance</a>(std::shared_ptr&lt;threading::ThreadPool&gt; threadPool);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="keyword">static</span> std::string getVersion();</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keywordtype">void</span> addFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keywordtype">bool</span> isFileAlreadyExist = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        std::future&lt;void&gt; readFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        std::future&lt;void&gt; readBinaryFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;ReadFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        std::future&lt;void&gt; writeFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        std::future&lt;void&gt; appendFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        std::future&lt;void&gt; writeBinaryFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        std::future&lt;void&gt; appendBinaryFile(<span class="keyword">const</span> std::filesystem::path&amp; filePath, <span class="keyword">const</span> std::function&lt;<span class="keywordtype">void</span>(std::unique_ptr&lt;WriteFileHandle&gt;&amp;&amp;)&gt;&amp; callback, <span class="keywordtype">bool</span> isWait = <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>&amp; getCache();</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keyword">const</span> <a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>&amp; getCache() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_file_handle.html">FileHandle</a>;</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_read_file_handle.html">ReadFileHandle</a>;</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_write_file_handle.html">WriteFileHandle</a>;</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classfile__manager_1_1_cache.html">Cache</a>;</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keyword">friend</span> <span class="keyword">struct </span>std::default_delete&lt;<a class="code hl_class" href="classfile__manager_1_1_file_manager.html">FileManager</a>&gt;;</div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    };</div>
 </div>
 <div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>}</div>
 <div class="ttc" id="aclassfile__manager_1_1_cache_html"><div class="ttname"><a href="classfile__manager_1_1_cache.html">file_manager::Cache</a></div><div class="ttdoc">Files cache.</div><div class="ttdef"><b>Definition</b> <a href="_cache_8h_source.html#l00018">Cache.h:19</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_file_handle.html">file_manager::FileHandle</a></div><div class="ttdef"><b>Definition</b> <a href="_file_handle_8h_source.html#l00009">FileHandle.h:10</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_file_manager_html"><div class="ttname"><a href="classfile__manager_1_1_file_manager.html">file_manager::FileManager</a></div><div class="ttdoc">Provides files accessing from multiple threads. Singleton.</div><div class="ttdef"><b>Definition</b> <a href="#l00024">FileManager.h:25</a></div></div>
+<div class="ttc" id="aclassfile__manager_1_1_file_manager_html_a52f6220ff6a749e663034e1b80dc6f59"><div class="ttname"><a href="classfile__manager_1_1_file_manager.html#a52f6220ff6a749e663034e1b80dc6f59">file_manager::FileManager::getInstance</a></div><div class="ttdeci">static FileManager &amp; getInstance(std::shared_ptr&lt; threading::ThreadPool &gt; threadPool)</div><div class="ttdoc">Singleton getter.</div></div>
 <div class="ttc" id="aclassfile__manager_1_1_read_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_read_file_handle.html">file_manager::ReadFileHandle</a></div><div class="ttdoc">Provides reading files.</div><div class="ttdef"><b>Definition</b> <a href="_read_file_handle_8h_source.html#l00011">ReadFileHandle.h:12</a></div></div>
 <div class="ttc" id="aclassfile__manager_1_1_write_file_handle_html"><div class="ttname"><a href="classfile__manager_1_1_write_file_handle.html">file_manager::WriteFileHandle</a></div><div class="ttdoc">Provides writing files.</div><div class="ttdef"><b>Definition</b> <a href="_write_file_handle_8h_source.html#l00012">WriteFileHandle.h:13</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

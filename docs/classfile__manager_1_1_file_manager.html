@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.6.0</span>
+   <div id="projectname">FileManager<span id="projectnumber">&#160;v1.7.0</span>
    </div>
    <div id="projectbrief">Manage access to files with async model</div>
   </td>
@@ -113,12 +113,12 @@ $(function(){initNavTree('classfile__manager_1_1_file_manager.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad734a53714a4db3fd9983ff894eeee62" id="r_ad734a53714a4db3fd9983ff894eeee62"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad734a53714a4db3fd9983ff894eeee62">createHandle</a> (const std::filesystem::path &amp;filePath, requestFileHandleType handleType)</td></tr>
-<tr class="separator:ad734a53714a4db3fd9983ff894eeee62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72059595c2ec0855abbc4e7cd8e9d302" id="r_a72059595c2ec0855abbc4e7cd8e9d302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classfile__manager_1_1_file_handle.html">FileHandle</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72059595c2ec0855abbc4e7cd8e9d302">createHandle</a> (const std::filesystem::path &amp;filePath, RequestFileHandleType handleType)</td></tr>
+<tr class="separator:a72059595c2ec0855abbc4e7cd8e9d302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a881c41a30bbb615c99e24d3faf3ab803" id="r_a881c41a30bbb615c99e24d3faf3ab803"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a881c41a30bbb615c99e24d3faf3ab803">notify</a> (std::filesystem::path &amp;&amp;filePath)</td></tr>
 <tr class="separator:a881c41a30bbb615c99e24d3faf3ab803"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac17d71b3bd6cfa1182de3183e4470445" id="r_ac17d71b3bd6cfa1182de3183e4470445"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac17d71b3bd6cfa1182de3183e4470445">addRequest</a> (const std::filesystem::path &amp;filePath, fileCallback &amp;&amp;callback, std::promise&lt; void &gt; &amp;&amp;requestPromise, requestFileHandleType handleType)</td></tr>
-<tr class="separator:ac17d71b3bd6cfa1182de3183e4470445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f04e97b57f710f171313f29602c7c4a" id="r_a9f04e97b57f710f171313f29602c7c4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f04e97b57f710f171313f29602c7c4a">addRequest</a> (const std::filesystem::path &amp;filePath, FileCallback &amp;&amp;callback, std::promise&lt; void &gt; &amp;&amp;requestPromise, RequestFileHandleType handleType)</td></tr>
+<tr class="separator:a9f04e97b57f710f171313f29602c7c4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a71603cf52cda9aeebe1eb030bf541fff" id="r_a71603cf52cda9aeebe1eb030bf541fff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71603cf52cda9aeebe1eb030bf541fff">decreaseReadRequests</a> (const std::filesystem::path &amp;filePath)</td></tr>
 <tr class="separator:a71603cf52cda9aeebe1eb030bf541fff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a896ecd90fae4e0a1f637f76c86a2f29e" id="r_a896ecd90fae4e0a1f637f76c86a2f29e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a896ecd90fae4e0a1f637f76c86a2f29e">completeWriteRequest</a> (const std::filesystem::path &amp;filePath)</td></tr>
@@ -159,9 +159,9 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a48c1deae69778a28b103c58a0c995da2" id="r_a48c1deae69778a28b103c58a0c995da2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48c1deae69778a28b103c58a0c995da2">getInstance</a> (size_t threadsNumber)</td></tr>
 <tr class="memdesc:a48c1deae69778a28b103c58a0c995da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton getter. Will reinitialize if threadsNumber != current threadsNumber.  <br /></td></tr>
 <tr class="separator:a48c1deae69778a28b103c58a0c995da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90f783bd4188a2e284f832afe56a48ad" id="r_a90f783bd4188a2e284f832afe56a48ad"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a90f783bd4188a2e284f832afe56a48ad">getInstance</a> (threading::ThreadPool *threadPool)</td></tr>
-<tr class="memdesc:a90f783bd4188a2e284f832afe56a48ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton getter.  <br /></td></tr>
-<tr class="separator:a90f783bd4188a2e284f832afe56a48ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52f6220ff6a749e663034e1b80dc6f59" id="r_a52f6220ff6a749e663034e1b80dc6f59"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52f6220ff6a749e663034e1b80dc6f59">getInstance</a> (std::shared_ptr&lt; threading::ThreadPool &gt; threadPool)</td></tr>
+<tr class="memdesc:a52f6220ff6a749e663034e1b80dc6f59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Singleton getter.  <br /></td></tr>
+<tr class="separator:a52f6220ff6a749e663034e1b80dc6f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf9774e1225b90b2b09889e702550761" id="r_aaf9774e1225b90b2b09889e702550761"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf9774e1225b90b2b09889e702550761">getVersion</a> ()</td></tr>
 <tr class="memdesc:aaf9774e1225b90b2b09889e702550761"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classfile__manager_1_1_file_manager.html" title="Provides files accessing from multiple threads. Singleton.">FileManager</a> version.  <br /></td></tr>
 <tr class="separator:aaf9774e1225b90b2b09889e702550761"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,8 +176,10 @@ Friends</h2></td></tr>
 <tr class="separator:a20a3475032799bb5be3b0e166738e164"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9d22b110b724211d946d911ecacdf64" id="r_ac9d22b110b724211d946d911ecacdf64"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9d22b110b724211d946d911ecacdf64">Cache</a></td></tr>
 <tr class="separator:ac9d22b110b724211d946d911ecacdf64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af32c49dde63a799976081362b0eeb675" id="r_af32c49dde63a799976081362b0eeb675"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af32c49dde63a799976081362b0eeb675">operator==</a> (const requestStruct &amp;request, FileManager::requestType type)</td></tr>
-<tr class="separator:af32c49dde63a799976081362b0eeb675"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a289696171230a98d4396ed61bbf955fa" id="r_a289696171230a98d4396ed61bbf955fa"><td class="memItemLeft" align="right" valign="top">struct&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a289696171230a98d4396ed61bbf955fa">std::default_delete&lt; FileManager &gt;</a></td></tr>
+<tr class="separator:a289696171230a98d4396ed61bbf955fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a4bbc9b0c78155a728dfb648e6c6ab" id="r_af0a4bbc9b0c78155a728dfb648e6c6ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0a4bbc9b0c78155a728dfb648e6c6ab">operator==</a> (const RequestStruct &amp;request, FileManager::RequestType type)</td></tr>
+<tr class="separator:af0a4bbc9b0c78155a728dfb648e6c6ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Provides files accessing from multiple threads. Singleton. </p>
@@ -220,12 +222,12 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00349">349</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00321">321</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="ac17d71b3bd6cfa1182de3183e4470445" name="ac17d71b3bd6cfa1182de3183e4470445"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac17d71b3bd6cfa1182de3183e4470445">&#9670;&#160;</a></span>addRequest()</h2>
+<a id="a9f04e97b57f710f171313f29602c7c4a" name="a9f04e97b57f710f171313f29602c7c4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f04e97b57f710f171313f29602c7c4a">&#9670;&#160;</a></span>addRequest()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -238,7 +240,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">fileCallback &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>, </td>
+          <td class="paramtype">FileCallback &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>callback</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -248,12 +250,12 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">requestFileHandleType</td>          <td class="paramname"><span class="paramname"><em>handleType</em></span>&#160;)</td>
+          <td class="paramtype">RequestFileHandleType</td>          <td class="paramname"><span class="paramname"><em>handleType</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00210">210</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00196">196</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -291,7 +293,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00397">397</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00369">369</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -329,7 +331,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00387">387</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00359">359</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -348,12 +350,12 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00224">224</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00210">210</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="ad734a53714a4db3fd9983ff894eeee62" name="ad734a53714a4db3fd9983ff894eeee62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad734a53714a4db3fd9983ff894eeee62">&#9670;&#160;</a></span>createHandle()</h2>
+<a id="a72059595c2ec0855abbc4e7cd8e9d302" name="a72059595c2ec0855abbc4e7cd8e9d302"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72059595c2ec0855abbc4e7cd8e9d302">&#9670;&#160;</a></span>createHandle()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -366,12 +368,12 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">requestFileHandleType</td>          <td class="paramname"><span class="paramname"><em>handleType</em></span>&#160;)</td>
+          <td class="paramtype">RequestFileHandleType</td>          <td class="paramname"><span class="paramname"><em>handleType</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00176">176</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00162">162</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -390,7 +392,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00219">219</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00205">205</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -412,7 +414,7 @@ Friends</h2></td></tr>
 <p><a class="el" href="classfile__manager_1_1_cache.html" title="Files cache.">Cache</a> getter. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classfile__manager_1_1_cache.html" title="Files cache.">Cache</a> instance </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00402">402</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00374">374</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -434,7 +436,7 @@ Friends</h2></td></tr>
 <p><a class="el" href="classfile__manager_1_1_cache.html" title="Files cache.">Cache</a> getter. </p>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classfile__manager_1_1_cache.html" title="Files cache.">Cache</a> instance </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00407">407</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00379">379</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -464,7 +466,7 @@ Friends</h2></td></tr>
 <p>Singleton getter Also initialize thread pool with max threads for current hardware Default getter after initialization. </p>
 <dl class="section return"><dt>Returns</dt><dd>Singleton instance </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00294">294</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00267">267</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -500,12 +502,12 @@ Friends</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Singleton instance </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00306">306</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00280">280</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
-<a id="a90f783bd4188a2e284f832afe56a48ad" name="a90f783bd4188a2e284f832afe56a48ad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90f783bd4188a2e284f832afe56a48ad">&#9670;&#160;</a></span>getInstance() <span class="overload">[3/3]</span></h2>
+<a id="a52f6220ff6a749e663034e1b80dc6f59" name="a52f6220ff6a749e663034e1b80dc6f59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a52f6220ff6a749e663034e1b80dc6f59">&#9670;&#160;</a></span>getInstance() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -514,9 +516,9 @@ Friends</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp; file_manager::FileManager::getInstance </td>
+          <td class="memname">static <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &amp; file_manager::FileManager::getInstance </td>
           <td>(</td>
-          <td class="paramtype">threading::ThreadPool *</td>          <td class="paramname"><span class="paramname"><em>threadPool</em></span></td><td>)</td>
+          <td class="paramtype">std::shared_ptr&lt; threading::ThreadPool &gt;</td>          <td class="paramname"><span class="paramname"><em>threadPool</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -535,8 +537,6 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Singleton instance </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00325">325</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -566,7 +566,7 @@ Friends</h2></td></tr>
 <p><a class="el" href="classfile__manager_1_1_file_manager.html" title="Provides files accessing from multiple threads. Singleton.">FileManager</a> version. </p>
 <dl class="section return"><dt>Returns</dt><dd>Get <a class="el" href="classfile__manager_1_1_file_manager.html" title="Provides files accessing from multiple threads. Singleton.">FileManager</a> version </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00342">342</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00314">314</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -585,7 +585,7 @@ Friends</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00202">202</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00188">188</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -631,7 +631,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00377">377</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00349">349</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -677,7 +677,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00372">372</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00344">344</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -715,7 +715,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00392">392</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00364">364</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -753,7 +753,7 @@ Friends</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00382">382</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00354">354</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -778,7 +778,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00239">239</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00238">238</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
 
 </div>
 </div>
@@ -802,12 +802,12 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00236">236</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00235">235</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
 
 </div>
 </div>
-<a id="af32c49dde63a799976081362b0eeb675" name="af32c49dde63a799976081362b0eeb675"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af32c49dde63a799976081362b0eeb675">&#9670;&#160;</a></span>operator==</h2>
+<a id="af0a4bbc9b0c78155a728dfb648e6c6ab" name="af0a4bbc9b0c78155a728dfb648e6c6ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a4bbc9b0c78155a728dfb648e6c6ab">&#9670;&#160;</a></span>operator==</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -818,12 +818,12 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">bool operator== </td>
           <td>(</td>
-          <td class="paramtype">const requestStruct &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
+          <td class="paramtype">const RequestStruct &amp;</td>          <td class="paramname"><span class="paramname"><em>request</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">FileManager::requestType</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
+          <td class="paramtype">FileManager::RequestType</td>          <td class="paramname"><span class="paramname"><em>type</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -833,7 +833,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00050">50</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8cpp_source.html#l00053">53</a> of file <a class="el" href="_file_manager_8cpp_source.html">FileManager.cpp</a>.</p>
 
 </div>
 </div>
@@ -857,7 +857,31 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00237">237</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00236">236</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
+
+</div>
+</div>
+<a id="a289696171230a98d4396ed61bbf955fa" name="a289696171230a98d4396ed61bbf955fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a289696171230a98d4396ed61bbf955fa">&#9670;&#160;</a></span>std::default_delete&lt; FileManager &gt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend struct std::default_delete&lt; <a class="el" href="classfile__manager_1_1_file_manager.html">FileManager</a> &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00238">238</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
 
 </div>
 </div>
@@ -881,7 +905,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00238">238</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_file_manager_8h_source.html#l00237">237</a> of file <a class="el" href="_file_manager_8h_source.html">FileManager.h</a>.</p>
 
 </div>
 </div>

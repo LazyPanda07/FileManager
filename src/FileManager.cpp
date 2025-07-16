@@ -306,8 +306,6 @@ namespace file_manager
 		if (instance->threadPool != threadPool)
 		{
 			instance->threadPool = threadPool;
-
-			std::cout << "Now file manager uses " << instance->threadPool->getThreadsCount() << " number of threads" << std::endl;
 		}
 
 		return *instance;
