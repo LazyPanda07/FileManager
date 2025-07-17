@@ -12,7 +12,7 @@ inline constexpr int writes = 512;
 inline constexpr int totalWrites = threadsCount * writes;
 inline constexpr size_t totalFiles = 128;
 
-void threadWrite(const std::string& fileName, const std::string& text)
+static void threadWrite(const std::string& fileName, const std::string& text)
 {
 	file_manager::FileManager& manager = file_manager::FileManager::getInstance();
 	std::vector<std::future<void>> futures;

@@ -8,7 +8,7 @@ namespace file_manager
 {
 	namespace utility
 	{
-		size_t pathHash::operator () (const filesystem::path& filePath) const noexcept
+		size_t PathHash::operator () (const filesystem::path& filePath) const noexcept
 		{
 			return hash<string>()(filePath.string());
 		}

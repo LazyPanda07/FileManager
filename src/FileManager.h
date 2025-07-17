@@ -86,7 +86,7 @@ namespace file_manager
 		class FILE_MANAGER_API NodesContainer
 		{
 		private:
-			std::unordered_map<std::filesystem::path, FileNode*, utility::pathHash> data;
+			std::unordered_map<std::filesystem::path, FileNode*, utility::PathHash> data;
 			mutable std::mutex readWriteMutex;
 
 		public:
@@ -111,9 +111,6 @@ namespace file_manager
 		Cache cache;
 		NodesContainer nodes;
 		std::shared_ptr<threading::ThreadPool> threadPool;
-
-	private:
-		static void threadPoolCallback(std::promise<void>&& requestPromise);
 
 	public:
 		FileHandle* createHandle(const std::filesystem::path& filePath, RequestFileHandleType handleType);

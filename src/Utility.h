@@ -44,7 +44,7 @@ namespace file_manager
 	namespace utility
 	{
 		/// @brief filesystem::path hash function
-		struct FILE_MANAGER_API pathHash
+		struct FILE_MANAGER_API PathHash
 		{
 			size_t operator () (const std::filesystem::path& filePath) const noexcept;
 		};

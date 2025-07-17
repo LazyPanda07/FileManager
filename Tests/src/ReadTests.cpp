@@ -12,7 +12,7 @@ using namespace std::chrono_literals;
 
 std::unordered_map<std::string, size_t> totalSizes;
 
-size_t randomFill(const std::string& fileName)
+static size_t randomFill(const std::string& fileName)
 {
 	file_manager::FileManager& manager = file_manager::FileManager::getInstance();
 	std::mt19937_64 random(time(nullptr));

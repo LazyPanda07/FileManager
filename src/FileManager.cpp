@@ -144,7 +144,7 @@ namespace file_manager
 			return;
 		}
 
-		data[filePath] = new FileNode();
+		data.try_emplace(filePath, new FileNode());
 	}
 
 	FileManager::FileNode* FileManager::NodesContainer::operator [](const filesystem::path& filePath) const
@@ -152,11 +152,6 @@ namespace file_manager
 		unique_lock<mutex> lock(readWriteMutex);
 
 		return data.at(filePath);
-	}
-
-	void FileManager::threadPoolCallback(promise<void>&& requestPromise)
-	{
-		requestPromise.set_value();
 	}
 
 	FileHandle* FileManager::createHandle(const filesystem::path& filePath, RequestFileHandleType handleType)

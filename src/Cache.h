@@ -27,7 +27,7 @@ namespace file_manager
 		};
 
 	private:
-		std::unordered_map<std::filesystem::path, std::string, utility::pathHash> cacheData;
+		std::unordered_map<std::filesystem::path, std::string, utility::PathHash> cacheData;
 		uint64_t cacheSize;
 		std::atomic<uint64_t> currentCacheSize;
 		mutable std::mutex cacheDataMutex;
