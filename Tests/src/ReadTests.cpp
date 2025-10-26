@@ -27,7 +27,7 @@ static size_t randomFill(const std::string& fileName)
 			manager.appendFile
 			(
 				fileName,
-				[&fileName](std::unique_ptr<file_manager::WriteFileHandle>&& handle)
+				[fileName](std::unique_ptr<file_manager::WriteFileHandle>&& handle)
 				{
 					handle->write("1");
 
@@ -35,9 +35,9 @@ static size_t randomFill(const std::string& fileName)
 					{
 						totalSizes.at(fileName)++;
 					}
-					catch (const std::exception&)
+					catch (const std::exception& e)
 					{
-						std::cerr << "Can't find " << fileName << " in totalSizes at " << __LINE__ << std::endl;
+						std::cerr << "Can't find " << fileName << " in totalSizes at " << __LINE__ << ' ' << e.what() << std::endl;
 
 						throw;
 					}
@@ -50,15 +50,15 @@ static size_t randomFill(const std::string& fileName)
 			manager.readFile
 			(
 				fileName,
-				[&fileName](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
+				[fileName](std::unique_ptr<file_manager::ReadFileHandle>&& handle)
 				{
 					try
 					{
 						ASSERT_EQ(handle->readAllData().size(), totalSizes.at(fileName));
 					}
-					catch (const std::exception&)
+					catch (const std::exception& e)
 					{
-						std::cerr << "Can't find " << fileName << " in totalSizes at " << __LINE__ << std::endl;
+						std::cerr << "Can't find " << fileName << " in totalSizes at " << __LINE__ << ' ' << e.what() << std::endl;
 
 						throw;
 					}
