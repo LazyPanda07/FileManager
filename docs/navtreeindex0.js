@@ -82,6 +82,6 @@ var NAVTREEINDEX0 =
 "index.html":[],
 "pages.html":[],
 "struct_request_promise_handler.html":[1,0,2],
-"structfile__manager_1_1utility_1_1path_hash.html":[1,0,0,1,0],
+"structfile__manager_1_1utility_1_1_path_hash.html":[1,0,0,1,0],
 "structstd_1_1less_3_01pair_3_01uint64__t_00_01filesystem_1_1path_01_4_01_4.html":[1,0,1,0]
 };

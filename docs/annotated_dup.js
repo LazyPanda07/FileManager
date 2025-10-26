@@ -7,7 +7,7 @@ var annotated_dup =
         [ "NotAFileException", "classfile__manager_1_1exceptions_1_1_not_a_file_exception.html", null ]
       ] ],
       [ "utility", null, [
-        [ "pathHash", "structfile__manager_1_1utility_1_1path_hash.html", null ]
+        [ "PathHash", "structfile__manager_1_1utility_1_1_path_hash.html", null ]
       ] ],
       [ "AppendBinaryFileHandle", "classfile__manager_1_1_append_binary_file_handle.html", null ],
       [ "AppendFileHandle", "classfile__manager_1_1_append_file_handle.html", null ],
