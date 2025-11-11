@@ -60,20 +60,20 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)build\ThreadPool\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;$(ProjectDir)3rdparty\ThreadPool\include\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)build\ThreadPool\lib\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)3rdparty\ThreadPool\lib\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(ProjectDir)
-if not exist build mkdir build
-cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\ThreadPool\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
+
+if not exist "$(ProjectDir)3rdparty\build" mkdir "$(ProjectDir)3rdparty\build"
+cd "$(ProjectDir)3rdparty\build" &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(ProjectDir)3rdparty\ThreadPool .. &amp;&amp; cmake --build . -j --config $(Configuration) &amp;&amp; cmake --install . --config $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -85,7 +85,7 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PR
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)src\;$(SolutionDir)build\ThreadPool\include\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)include\;$(ProjectDir)3rdparty\ThreadPool\include\</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -93,30 +93,30 @@ cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PR
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)build\ThreadPool\lib\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)3rdparty\ThreadPool\lib\</AdditionalLibraryDirectories>
       <AdditionalDependencies>ThreadPool.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
       <Command>call "$(VCInstallDir)Auxiliary\Build\vcvars64.bat"
-cd $(ProjectDir)
-if not exist build mkdir build
-cd build &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(SolutionDir)build\ThreadPool\ ..\3rdparty -G "NMake Makefiles" &amp;&amp; nmake install</Command>
+
+if not exist "$(ProjectDir)3rdparty\build" mkdir "$(ProjectDir)3rdparty\build"
+cd "$(ProjectDir)3rdparty\build" &amp;&amp; cmake -DCMAKE_BUILD_TYPE=$(Configuration) -DCMAKE_INSTALL_PREFIX=$(ProjectDir)3rdparty\ThreadPool .. &amp;&amp; cmake --build . -j --config $(Configuration) &amp;&amp; cmake --install . --config $(Configuration)</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Cache.h" />
-    <ClInclude Include="src\Exceptions\BaseFileManagerException.h" />
-    <ClInclude Include="src\Exceptions\FileDoesNotExistException.h" />
-    <ClInclude Include="src\Exceptions\NotAFileException.h" />
-    <ClInclude Include="src\FileManager.h" />
-    <ClInclude Include="src\Handlers\AppendBinaryFileHandle.h" />
-    <ClInclude Include="src\Handlers\AppendFileHandle.h" />
-    <ClInclude Include="src\Handlers\FileHandle.h" />
-    <ClInclude Include="src\Handlers\ReadBinaryFileHandle.h" />
-    <ClInclude Include="src\Handlers\ReadFileHandle.h" />
-    <ClInclude Include="src\Handlers\WriteBinaryFileHandle.h" />
-    <ClInclude Include="src\Handlers\WriteFileHandle.h" />
-    <ClInclude Include="src\Utility.h" />
+    <ClInclude Include="include\Cache.h" />
+    <ClInclude Include="include\Exceptions\BaseFileManagerException.h" />
+    <ClInclude Include="include\Exceptions\FileDoesNotExistException.h" />
+    <ClInclude Include="include\Exceptions\NotAFileException.h" />
+    <ClInclude Include="include\FileManager.h" />
+    <ClInclude Include="include\Handlers\AppendBinaryFileHandle.h" />
+    <ClInclude Include="include\Handlers\AppendFileHandle.h" />
+    <ClInclude Include="include\Handlers\FileHandle.h" />
+    <ClInclude Include="include\Handlers\ReadBinaryFileHandle.h" />
+    <ClInclude Include="include\Handlers\ReadFileHandle.h" />
+    <ClInclude Include="include\Handlers\WriteBinaryFileHandle.h" />
+    <ClInclude Include="include\Handlers\WriteFileHandle.h" />
+    <ClInclude Include="include\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Handlers\AppendBinaryFileHandle.cpp" />

@@ -1,8 +1,6 @@
-#include "WriteFileHandle.h"
+#include "Handlers/WriteFileHandle.h"
 
 #include "FileManager.h"
-
-using namespace std;
 
 namespace file_manager
 {
@@ -13,27 +11,27 @@ namespace file_manager
 			return false;
 		}
 
-		string_view availableCacheData(pbase(), pptr());
+		std::string_view availableCacheData(pbase(), pptr());
 
 		if (availableCacheData.size() + cache.getCurrentCacheSize() > cache.getCacheSize())
 		{
 			isCachingAvailable = false;
 
-			_utility::changeCurrentCacheSize<minus>(cacheData.size());
+			_utility::changeCurrentCacheSize<std::minus>(cacheData.size());
 
 			cacheData.clear();
 
 			return false;
 		}
 
-		_utility::changeCurrentCacheSize<plus>(availableCacheData.size());
+		_utility::changeCurrentCacheSize<std::plus>(availableCacheData.size());
 
 		cacheData += availableCacheData;
 
 		return true;
 	}
 
-	WriteFileHandle::CachingBuffer::CachingBuffer(Cache& cache, const filesystem::path& filePath, ios_base::openmode mode) :
+	WriteFileHandle::CachingBuffer::CachingBuffer(Cache& cache, const std::filesystem::path& filePath, std::ios_base::openmode mode) :
 		cache(cache),
 		filePath(filePath),
 		isCachingAvailable(cache.getCacheSize())
@@ -45,7 +43,7 @@ namespace file_manager
 	{
 		this->increaseCacheData();
 
-		return filebuf::sync();
+		return std::filebuf::sync();
 	}
 
 	WriteFileHandle::CachingBuffer::~CachingBuffer()
@@ -55,21 +53,21 @@ namespace file_manager
 			return;
 		}
 
-		_utility::addCache(move(filePath), move(cacheData));
+		_utility::addCache(std::move(filePath), std::move(cacheData));
 	}
 
-	WriteFileHandle::WriteFileHandle(const filesystem::path& filePath, ios_base::openmode mode) :
-		FileHandle(filePath, mode | ios_base::out)
+	WriteFileHandle::WriteFileHandle(const std::filesystem::path& filePath, std::ios_base::openmode mode) :
+		FileHandle(filePath, mode | std::ios_base::out)
 	{
 
 	}
 
-	void WriteFileHandle::write(const string& data)
+	void WriteFileHandle::write(const std::string& data)
 	{
 		file.write(data.data(), data.size()).flush();
 	}
 
-	ostream& WriteFileHandle::getStream()
+	std::ostream& WriteFileHandle::getStream()
 	{
 		return file.write(nullptr, 0);
 	}

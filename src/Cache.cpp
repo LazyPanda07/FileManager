@@ -3,8 +3,6 @@
 #include "FileManager.h"
 #include "Exceptions/FileDoesNotExistException.h"
 
-using namespace std;
-
 namespace std
 {
 	template<>
@@ -21,15 +19,15 @@ namespace file_manager
 {
 	void Cache::updateCache()
 	{
-		priority_queue<pair<uint64_t, filesystem::path>> paths;
-		vector<pair<uint64_t, const filesystem::path*>> notExistingPaths;
-		unique_lock<mutex> cacheDataLock(cacheDataMutex);
+		std::priority_queue<std::pair<uint64_t, std::filesystem::path>> paths;
+		std::vector<std::pair<uint64_t, const std::filesystem::path*>> notExistingPaths;
+		std::lock_guard<std::mutex> cacheDataLock(cacheDataMutex);
 
 		for (const auto& [path, _] : cacheData)
 		{
-			uint64_t size = filesystem::file_size(path);
+			uint64_t size = std::filesystem::file_size(path);
 
-			if (!filesystem::exists(path))
+			if (!std::filesystem::exists(path))
 			{
 				notExistingPaths.emplace_back(size, &path);
 
@@ -70,25 +68,25 @@ namespace file_manager
 
 	}
 
-	Cache::CacheResultCodes Cache::addCache(const filesystem::path& filePath, ios_base::openmode mode)
+	Cache::CacheResultCodes Cache::addCache(const std::filesystem::path& filePath, std::ios_base::openmode mode)
 	{
-		if (!filesystem::exists(filePath))
+		if (!std::filesystem::exists(filePath))
 		{
 			return CacheResultCodes::fileDoesNotExist;
 		}
-		else if (currentCacheSize + filesystem::file_size(filePath) > cacheSize)
+		else if (currentCacheSize + std::filesystem::file_size(filePath) > cacheSize)
 		{
 			return CacheResultCodes::notEnoughCacheSize;
 		}
 
-		unique_lock<mutex> dataLock(cacheDataMutex);
+		std::lock_guard<std::mutex> dataLock(cacheDataMutex);
 
 		if (cacheData.contains(filePath))
 		{
 			return CacheResultCodes::noError;
 		}
 
-		string data = (ostringstream() << ifstream(filePath, mode).rdbuf()).str();
+		std::string data = (std::ostringstream() << std::ifstream(filePath, mode).rdbuf()).str();
 
 		currentCacheSize += data.size();
 
@@ -97,19 +95,19 @@ namespace file_manager
 		return CacheResultCodes::noError;
 	}
 
-	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& filePath, const vector<char>& data)
+	Cache::CacheResultCodes Cache::appendCache(const std::filesystem::path& filePath, const std::vector<char>& data)
 	{
 		return this->appendCache(filePath, data.data());
 	}
 
-	Cache::CacheResultCodes Cache::appendCache(const filesystem::path& filePath, string_view data)
+	Cache::CacheResultCodes Cache::appendCache(const std::filesystem::path& filePath, std::string_view data)
 	{
 		if (currentCacheSize + data.size() > cacheSize)
 		{
 			return CacheResultCodes::notEnoughCacheSize;
 		}
 
-		unique_lock<mutex> dataLock(cacheDataMutex);
+		std::lock_guard<std::mutex> dataLock(cacheDataMutex);
 
 		if (auto it = cacheData.find(filePath); it != cacheData.end())
 		{
@@ -125,25 +123,25 @@ namespace file_manager
 		return CacheResultCodes::noError;
 	}
 
-	bool Cache::contains(const filesystem::path& filePath) const
+	bool Cache::contains(const std::filesystem::path& filePath) const
 	{
-		unique_lock<mutex> dataLock(cacheDataMutex);
+		std::lock_guard<std::mutex> dataLock(cacheDataMutex);
 
 		return cacheData.contains(filePath);
 	}
 
 	void Cache::clear()
 	{
-		unique_lock<mutex> dataLock(cacheDataMutex);
+		std::lock_guard<std::mutex> dataLock(cacheDataMutex);
 		
 		currentCacheSize = 0;
 
 		cacheData.clear();
 	}
 
-	void Cache::clear(const filesystem::path& filePath)
+	void Cache::clear(const std::filesystem::path& filePath)
 	{
-		unique_lock<mutex> dataLock(cacheDataMutex);
+		std::lock_guard<std::mutex> dataLock(cacheDataMutex);
 		auto it = cacheData.find(filePath);
 
 		if (it == cacheData.end())
@@ -166,9 +164,9 @@ namespace file_manager
 		}
 	}
 
-	const string& Cache::getCacheData(const filesystem::path& filePath) const
+	const std::string& Cache::getCacheData(const std::filesystem::path& filePath) const
 	{
-		unique_lock<mutex> dataLock(cacheDataMutex);
+		std::lock_guard<std::mutex> dataLock(cacheDataMutex);
 		auto it = cacheData.find(filePath);
 
 		if (it == cacheData.end())
@@ -189,7 +187,7 @@ namespace file_manager
 		return currentCacheSize;
 	}
 
-	const string& Cache::operator [] (const filesystem::path& filePath) const
+	const std::string& Cache::operator [] (const std::filesystem::path& filePath) const
 	{
 		return this->getCacheData(filePath);
 	}

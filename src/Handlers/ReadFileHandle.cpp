@@ -1,21 +1,19 @@
-#include "ReadFileHandle.h"
+#include "Handlers/ReadFileHandle.h"
 
 #include "FileManager.h"
 #include "Exceptions/FileDoesNotExistException.h"
 
-using namespace std;
-
 namespace file_manager
 {
-	ReadFileHandle::ReadOnlyBuffer::ReadOnlyBuffer(string_view view)
+	ReadFileHandle::ReadOnlyBuffer::ReadOnlyBuffer(std::string_view view)
 	{
 		char* data = const_cast<char*>(view.data());
 
 		setg(data, data, data + view.size());
 	}
 
-	ReadFileHandle::ReadFileHandle(const filesystem::path& filePath, ios_base::openmode mode) :
-		FileHandle(filePath, mode | ios_base::in)
+	ReadFileHandle::ReadFileHandle(const std::filesystem::path& filePath, std::ios_base::openmode mode) :
+		FileHandle(filePath, mode | std::ios_base::in)
 	{
 		Cache& cache = FileManager::getInstance().getCache();
 
@@ -23,11 +21,11 @@ namespace file_manager
 		{
 			buffer = make_unique<ReadOnlyBuffer>(cache.getCacheData(filePath));
 
-			static_cast<iostream&>(file).rdbuf(buffer.get());
+			static_cast<std::iostream& > (file).rdbuf(buffer.get());
 		}
 	}
 
-	const string& ReadFileHandle::readAllData()
+	const std::string& ReadFileHandle::readAllData()
 	{
 		Cache& cache = FileManager::getInstance().getCache();
 
@@ -40,20 +38,20 @@ namespace file_manager
 			throw exceptions::FileDoesNotExistException(filePath);
 
 		case Cache::CacheResultCodes::notEnoughCacheSize:
-			data = (ostringstream() << file.rdbuf()).str();
+			data = (std::ostringstream() << file.rdbuf()).str();
 		}
 
 		return data;
 	}
 
-	streamsize ReadFileHandle::readSome(string& outData, streamsize count, bool shrinkOutData, bool resizeOutData)
+	std::streamsize ReadFileHandle::readSome(std::string& outData, std::streamsize count, bool shrinkOutData, bool resizeOutData)
 	{
 		if (resizeOutData && outData.size() != count)
 		{
 			outData.resize(count);
 		}
 
-		streamsize result = file.read(outData.data(), count).gcount();
+		std::streamsize result = file.read(outData.data(), count).gcount();
 
 		if (shrinkOutData && outData.size() != result)
 		{
@@ -63,7 +61,7 @@ namespace file_manager
 		return result;
 	}
 
-	istream& ReadFileHandle::getStream()
+	std::istream& ReadFileHandle::getStream()
 	{
 		return file.read(nullptr, 0);
 	}

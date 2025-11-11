@@ -1,11 +1,9 @@
-#include "AppendFileHandle.h"
-
-using namespace std;
+#include "Handlers/AppendFileHandle.h"
 
 namespace file_manager
 {
-	AppendFileHandle::AppendFileHandle(const filesystem::path& filePath) :
-		WriteFileHandle(filePath, ios_base::app)
+	AppendFileHandle::AppendFileHandle(const std::filesystem::path& filePath) :
+		WriteFileHandle(filePath, std::ios_base::app)
 	{
 
 	}

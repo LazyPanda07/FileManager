@@ -112,7 +112,7 @@ namespace file_manager
 		NodesContainer nodes;
 		std::shared_ptr<threading::ThreadPool> threadPool;
 
-	public:
+	private:
 		FileHandle* createHandle(const std::filesystem::path& filePath, RequestFileHandleType handleType);
 
 		void notify(std::filesystem::path&& filePath);
@@ -141,9 +141,9 @@ namespace file_manager
 		~FileManager() = default;
 
 	private:
-		std::future<void> addReadRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait);
+		std::future<void> addReadRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, RequestFileHandleType handleType, bool wait);
 
-		std::future<void> addWriteRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, RequestFileHandleType handleType, bool isWait);
+		std::future<void> addWriteRequest(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, RequestFileHandleType handleType, bool wait);
 
 	public:
 		/**
@@ -184,42 +184,57 @@ namespace file_manager
 		/// @brief Read file in standard mode
 		/// @param filePath Path to file
 		/// @param callback Function that will be called for reading file
-		/// @param isWait If true thread will wait till callback end
+		/// @param wait If true thread will wait till callback end
 		/// @exception FileDoesNotExistException 
 		/// @exception NotAFileException 
-		std::future<void> readFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, bool isWait = true);
+		std::future<void> readFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, bool wait = true);
 
 		/// @brief Read file in binary mode
 		/// @param filePath Path to file
 		/// @param callback Function that will be called for reading file
-		/// @param isWait If true thread will wait till callback end
+		/// @param wait If true thread will wait till callback end
 		/// @exception FileDoesNotExistException 
 		/// @exception NotAFileException 
-		std::future<void> readBinaryFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, bool isWait = true);
+		std::future<void> readBinaryFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<ReadFileHandle>&&)>& callback, bool wait = true);
 
 		/// @brief Create/Recreate and write file in standard mode
 		/// @param filePath Path to file
 		/// @param callback Function that will be called for writing file
-		/// @param isWait If true thread will wait till callback end
-		std::future<void> writeFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool isWait = true);
+		/// @param wait If true thread will wait till callback end
+		std::future<void> writeFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool wait = true);
 
 		/// @brief Create file if it does not exist and write file in standard mode
 		/// @param filePath Path to file
 		/// @param callback Function that will be called for writing file
-		/// @param isWait If true thread will wait till callback end
-		std::future<void> appendFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool isWait = true);
+		/// @param wait If true thread will wait till callback end
+		std::future<void> appendFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool wait = true);
 
 		/// @brief Create/Recreate and write file in binary mode
 		/// @param filePath Path to file
 		/// @param callback Function that will be called for writing file
-		/// @param isWait If true thread will wait till callback end
-		std::future<void> writeBinaryFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool isWait = true);
+		/// @param wait If true thread will wait till callback end
+		std::future<void> writeBinaryFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool wait = true);
 
 		/// @brief Create file if it does not exist and write file in binary mode
 		/// @param filePath Path to file
 		/// @param callback Function that will be called for writing file
-		/// @param isWait If true thread will wait till callback end
-		std::future<void> appendBinaryFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool isWait = true);
+		/// @param wait If true thread will wait till callback end
+		std::future<void> appendBinaryFile(const std::filesystem::path& filePath, const std::function<void(std::unique_ptr<WriteFileHandle>&&)>& callback, bool wait = true);
+
+		/**
+		 * @brief Remove file from filesystem and from cache
+		 * @param filePath Path to file
+		 * @param wait If true thread will wait file removing
+		 * @return 
+		 */
+		std::future<void> removeFile(const std::filesystem::path& filePath, bool wait = true);
+
+		/**
+		 * @brief Check if file exists
+		 * @param filePath Path to file
+		 * @return 
+		 */
+		bool exists(const std::filesystem::path& filePath) const;
 
 		/// @brief Cache getter
 		/// @return Cache instance

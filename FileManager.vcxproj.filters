@@ -15,43 +15,43 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\FileManager.h">
+    <ClInclude Include="include\FileManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exceptions\FileDoesNotExistException.h">
+    <ClInclude Include="include\Exceptions\FileDoesNotExistException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exceptions\BaseFileManagerException.h">
+    <ClInclude Include="include\Exceptions\BaseFileManagerException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Exceptions\NotAFileException.h">
+    <ClInclude Include="include\Exceptions\NotAFileException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Cache.h">
+    <ClInclude Include="include\Cache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility.h">
+    <ClInclude Include="include\Utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\FileHandle.h">
+    <ClInclude Include="include\Handlers\FileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\ReadFileHandle.h">
+    <ClInclude Include="include\Handlers\ReadFileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\WriteFileHandle.h">
+    <ClInclude Include="include\Handlers\WriteFileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\AppendBinaryFileHandle.h">
+    <ClInclude Include="include\Handlers\AppendBinaryFileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\AppendFileHandle.h">
+    <ClInclude Include="include\Handlers\AppendFileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\WriteBinaryFileHandle.h">
+    <ClInclude Include="include\Handlers\WriteBinaryFileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Handlers\ReadBinaryFileHandle.h">
+    <ClInclude Include="include\Handlers\ReadBinaryFileHandle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

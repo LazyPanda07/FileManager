@@ -1,17 +1,12 @@
-#include "FileDoesNotExistException.h"
+#include "Exceptions/FileDoesNotExistException.h"
 
 #include <format>
 
-using namespace std;
-
-namespace file_manager
+namespace file_manager::exceptions
 {
-	namespace exceptions
+	FileDoesNotExistException::FileDoesNotExistException(const std::filesystem::path& filePath) :
+		BaseFileManagerException(std::format("File '{}' does not exist", filePath.string()))
 	{
-		FileDoesNotExistException::FileDoesNotExistException(const filesystem::path& filePath) :
-			BaseFileManagerException(format("File '{}' does not exist"sv, filePath.string()))
-		{
 
-		}
 	}
 }

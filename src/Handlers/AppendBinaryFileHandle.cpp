@@ -1,11 +1,9 @@
-#include "AppendBinaryFileHandle.h"
-
-using namespace std;
+#include "Handlers/AppendBinaryFileHandle.h"
 
 namespace file_manager
 {
-	AppendBinaryFileHandle::AppendBinaryFileHandle(const filesystem::path& filePath) :
-		WriteBinaryFileHandle(filePath, ios_base::app)
+	AppendBinaryFileHandle::AppendBinaryFileHandle(const std::filesystem::path& filePath) :
+		WriteBinaryFileHandle(filePath, std::ios_base::app)
 	{
 
 	}

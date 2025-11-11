@@ -1,15 +1,14 @@
 cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install-dir CACHE STRING "")
 
 if (UNIX)
 	add_definitions(-D__LINUX__)
 
-	add_compile_options(-fPIC)
+	set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif (UNIX)
 
-project(FileManager VERSION 1.7.1)
+project(FileManager VERSION 1.8.0)
 
 add_library(
 	${PROJECT_NAME} SHARED
@@ -35,9 +34,8 @@ endif()
 add_subdirectory(3rdparty)
 
 target_include_directories(
-	${PROJECT_NAME} PRIVATE
-	${PROJECT_SOURCE_DIR}/src/
-	${THREAD_POOL_INCLUDE}
+	${PROJECT_NAME} PUBLIC
+	include
 )
 
 target_link_libraries(
@@ -47,9 +45,9 @@ target_link_libraries(
 
 install(
 	TARGETS ${PROJECT_NAME}
-	ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-	LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
-	RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/dll
+	ARCHIVE DESTINATION lib
+	LIBRARY DESTINATION lib
+	RUNTIME DESTINATION dll
 )
 
-install(DIRECTORY src/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include FILES_MATCHING PATTERN "*.h")
+install(DIRECTORY include DESTINATION .)

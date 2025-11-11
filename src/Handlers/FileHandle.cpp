@@ -1,12 +1,10 @@
-#include "FileHandle.h"
+#include "Handlers/FileHandle.h"
 
 #include "FileManager.h"
 
-using namespace std;
-
 namespace file_manager
 {
-	FileHandle::FileHandle(const filesystem::path& filePath, ios_base::openmode mode) :
+	FileHandle::FileHandle(const std::filesystem::path& filePath, std::ios_base::openmode mode) :
 		filePath(filePath),
 		file(filePath, mode),
 		mode(mode),
@@ -17,12 +15,12 @@ namespace file_manager
 
 	FileHandle::FileHandle(FileHandle&& other) noexcept
 	{
-		(*this) = move(other);
+		(*this) = std::move(other);
 	}
 
 	FileHandle& FileHandle::operator = (FileHandle&& other) noexcept
 	{
-		filePath = move(other.filePath);
+		filePath = std::move(other.filePath);
 		file = move(other.file);
 		mode = other.mode;
 
@@ -35,15 +33,15 @@ namespace file_manager
 
 	uint64_t FileHandle::getFileSize() const
 	{
-		return filesystem::file_size(filePath);
+		return std::filesystem::file_size(filePath);
 	}
 
-	const filesystem::path& FileHandle::getPathToFile() const
+	const std::filesystem::path& FileHandle::getPathToFile() const
 	{
 		return filePath;
 	}
 
-	filesystem::path FileHandle::getFileName() const
+	std::filesystem::path FileHandle::getFileName() const
 	{
 		return filePath.filename();
 	}
@@ -54,7 +52,7 @@ namespace file_manager
 		{
 			file.close();
 
-			FileManager::getInstance().notify(move(filePath));
+			FileManager::getInstance().notify(std::move(filePath));
 		}
 	}
 }

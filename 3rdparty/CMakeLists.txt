@@ -1,25 +1,18 @@
 cmake_minimum_required(VERSION 3.27.0)
 
+set(FETCHCONTENT_QUIET OFF CACHE BOOL "")
+set(THREAD_POOL_VERSION 1.7.2)
+
 project(3rdparty)
 
-set(THREAD_POOL_TAG v1.7.1)
-set(THREAD_POOL_PATH ${PROJECT_SOURCE_DIR}/ThreadPool)
-set(THREAD_POOL_INCLUDE ${PROJECT_SOURCE_DIR}/ThreadPool/src/ PARENT_SCOPE)
+include(FetchContent)
 
-if (EXISTS ${THREAD_POOL_PATH})
-	execute_process(
-		WORKING_DIRECTORY ${THREAD_POOL_PATH}
-		COMMAND git pull
+if (NOT TARGET ThreadPool)
+	FetchContent_Declare(
+		ThreadPool
+		GIT_REPOSITORY https://github.com/LazyPanda07/ThreadPool
+		GIT_TAG v${THREAD_POOL_VERSION}
 	)
 
-	execute_process(
-		WORKING_DIRECTORY ${THREAD_POOL_PATH}
-		COMMAND git checkout ${THREAD_POOL_TAG}
-	)
-else()
-	execute_process(
-		COMMAND git clone https://github.com/LazyPanda07/ThreadPool -b ${THREAD_POOL_TAG} ${THREAD_POOL_PATH}
-	)
+	FetchContent_MakeAvailable(ThreadPool)
 endif()
-
-add_subdirectory(ThreadPool)

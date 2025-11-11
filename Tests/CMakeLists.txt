@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.27.0)
 
 set(CMAKE_CXX_STANDARD 20)
 set(DLL ${CMAKE_SOURCE_DIR}/../FileManager)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR})
+set(GTEST_VERSION 1.17.0)
 
 if (UNIX)
 	add_definitions(-D__LINUX__)
@@ -13,12 +15,15 @@ endif (UNIX)
 
 project(Tests)
 
-find_package(GTest)
+include(FetchContent)
 
-if(NOT ${GTest_FOUND})
-	set(GTEST_BOTH_LIBRARIES gtest gtest_main)
-	set(GTEST_INCLUDE_DIRS gtest/include/)
-endif()
+FetchContent_Declare(
+	gtest
+	GIT_REPOSITORY https://github.com/google/googletest.git
+	GIT_TAG v${GTEST_VERSION}
+)
+
+FetchContent_MakeAvailable(gtest)
 
 add_executable(
 	${PROJECT_NAME}
@@ -30,21 +35,20 @@ add_executable(
 target_include_directories(
 	${PROJECT_NAME} PUBLIC
 	${CMAKE_SOURCE_DIR}/../FileManager/include
-	${GTEST_INCLUDE_DIRS}
 )
 
 target_link_directories(
 	${PROJECT_NAME} PUBLIC
 	${CMAKE_SOURCE_DIR}/../FileManager/lib
-	gtest/lib
 )
 
 target_link_libraries(
 	${PROJECT_NAME} PUBLIC
 	FileManager
 	ThreadPool
-	${GTEST_BOTH_LIBRARIES}
+	gtest
+	gtest_main
 )
 
-install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_BINARY_DIR}/bin)
-install(FILES ${DLL} DESTINATION ${CMAKE_BINARY_DIR}/bin)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES ${DLL} DESTINATION bin)

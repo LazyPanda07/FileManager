@@ -1,11 +1,9 @@
-#include "ReadBinaryFileHandle.h"
-
-using namespace std;
+#include "Handlers/ReadBinaryFileHandle.h"
 
 namespace file_manager
 {
-	ReadBinaryFileHandle::ReadBinaryFileHandle(const filesystem::path& filePath) :
-		ReadFileHandle(filePath, ios_base::binary)
+	ReadBinaryFileHandle::ReadBinaryFileHandle(const std::filesystem::path& filePath) :
+		ReadFileHandle(filePath, std::ios_base::binary)
 	{
 
 	}

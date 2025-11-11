@@ -1,17 +1,12 @@
-#include "NotAFileException.h"
+#include "Exceptions/NotAFileException.h"
 
 #include <format>
 
-using namespace std;
-
-namespace file_manager
+namespace file_manager::exceptions
 {
-	namespace exceptions
+	NotAFileException::NotAFileException(const std::filesystem::path& path) :
+		BaseFileManagerException(std::format("Path '{}' does not represent file", path.string()))
 	{
-		NotAFileException::NotAFileException(const filesystem::path& path) :
-			BaseFileManagerException(format("Path '{}' does not represent file"sv, path.string()))
-		{
 
-		}
 	}
 }
