@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.27.0)
 
 set(FETCHCONTENT_QUIET OFF CACHE BOOL "")
-set(THREAD_POOL_VERSION 1.8.0)
+set(THREAD_POOL_VERSION 1.8.1)
 
 project(3rdparty)
 

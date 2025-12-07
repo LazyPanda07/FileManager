@@ -306,7 +306,7 @@ namespace file_manager
 
 	std::string FileManager::getVersion()
 	{
-		std::string version = "1.8.2";
+		std::string version = "1.8.3";
 
 		return version;
 	}
