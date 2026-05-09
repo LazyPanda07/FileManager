@@ -3,7 +3,7 @@ name: CI
 
 on: 
   push:
-    branches: [master, dev]
+    branches: [main, dev]
 
 
 permissions:
@@ -18,7 +18,7 @@ jobs:
         configuration: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
   
     - name: Enable NMake
       uses: ilammy/msvc-dev-cmd@v1.13.0
@@ -32,7 +32,7 @@ jobs:
           cmake --install .
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         path: build/install-dir
         name: ${{ matrix.configuration }}_Windows
@@ -47,7 +47,7 @@ jobs:
         configuration: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
   
     - name: Build
       run: |
@@ -58,7 +58,7 @@ jobs:
           cmake --install .
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         path: build/install-dir
         name: ${{ matrix.configuration }}_Linux
@@ -73,7 +73,7 @@ jobs:
         configuration: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
   
     - name: Build
       run: |
@@ -84,7 +84,7 @@ jobs:
           cmake --install .
 
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         path: build/install-dir
         name: ${{ matrix.configuration }}_LinuxARM
@@ -98,10 +98,10 @@ jobs:
         configuration: [Debug, Release]
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         path: FileManager
         name: ${{ matrix.configuration }}_Windows
@@ -135,10 +135,10 @@ jobs:
         configuration: [Debug, Release]
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         path: FileManager
         name: ${{ matrix.configuration }}_Linux
@@ -169,10 +169,10 @@ jobs:
         configuration: [Debug, Release]
     
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         path: FileManager
         name: ${{ matrix.configuration }}_LinuxARM
@@ -203,10 +203,10 @@ jobs:
         configuration: [Debug, Release]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
   
     - name: Download artifacts
-      uses: actions/download-artifact@v4
+      uses: actions/download-artifact@v8
       with:
         path: FileManager
         name: ${{ matrix.configuration }}_Linux
@@ -234,7 +234,7 @@ jobs:
     needs: [windows-tests, linux-tests, linux-aarch64-tests, memory-leak-tests]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
   
     - uses: LazyPanda07/extract-current-branch@master
     
@@ -243,26 +243,23 @@ jobs:
       run: echo "VERSION=$($($($(Select-String -Path .\src\FileManager.cpp -Pattern version) -split '( = )')[3].TrimEnd(';')).Trim('\"'))" >> $Env:GITHUB_ENV
 
     - name: Download artifacts
-      if: ${{ env.CURRENT_BRANCH == 'master' }}
-      uses: actions/download-artifact@v4
+      if: ${{ env.CURRENT_BRANCH == 'main' }}
+      uses: actions/download-artifact@v8
       
     - name: Setup Windows build list
       run: echo "WINDOWS_BUILD_LIST="$(ls | grep Windows)"" >> ${GITHUB_ENV}
       
     - name: Create Windows zip
-      if: ${{ env.CURRENT_BRANCH == 'master' }}
       run: zip -r windows.zip ${{ env.WINDOWS_BUILD_LIST }}
 
     - name: Create Linux zip
-      if: ${{ env.CURRENT_BRANCH == 'master' }}
       run: zip -r linux.zip Release_Linux
 
     - name: Create Linux ARM zip
-      if: ${{ env.CURRENT_BRANCH == 'master' }}
       run: zip -r linux_aarch64.zip Release_LinuxARM
 
     - name: Publish
-      if: ${{ env.CURRENT_BRANCH == 'master' }}
+      if: ${{ env.CURRENT_BRANCH == 'main' }}
       run: gh release create v${{ env.VERSION }} *.zip --title v${{ env.VERSION }} --generate-notes
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
