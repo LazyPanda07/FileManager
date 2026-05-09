@@ -19,7 +19,7 @@ namespace file_manager
 		/// @brief Shortcut for declaring KiB (1024 bytes)
 		/// @param count Count of KiB
 		/// @return Result of converting KiB to bytes
-		inline unsigned long long operator "" _kib(unsigned long long count)
+		inline unsigned long long operator ""_kib(unsigned long long count)
 		{
 			return count * 1024;
 		}
@@ -27,7 +27,7 @@ namespace file_manager
 		/// @brief Shortcut for declaring MiB (1024 KiB)
 		/// @param count Count of MiB
 		/// @return Result of converting MiB to bytes
-		inline unsigned long long operator "" _mib(unsigned long long count)
+		inline unsigned long long operator ""_mib(unsigned long long count)
 		{
 			return count * static_cast<unsigned long long>(std::pow(1024, 2));
 		}
@@ -35,7 +35,7 @@ namespace file_manager
 		/// @brief Shortcut for declaring GiB (1024 MiB)
 		/// @param count Count of GiB
 		/// @return Result of converting GiB to bytes
-		inline unsigned long long operator "" _gib(unsigned long long count)
+		inline unsigned long long operator ""_gib(unsigned long long count)
 		{
 			return count * static_cast<unsigned long long>(std::pow(1024, 3));
 		}

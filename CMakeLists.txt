@@ -8,7 +8,7 @@ if (UNIX)
 	set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 endif (UNIX)
 
-project(FileManager VERSION 1.8.3)
+project(FileManager VERSION 1.8.4)
 
 add_library(
 	${PROJECT_NAME} SHARED
