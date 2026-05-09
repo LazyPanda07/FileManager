@@ -25,7 +25,7 @@ jobs:
 
     - name: Build
       run: |
-          mkdir builds
+          mkdir build
           cd build
           cmake -DCMAKE_BUILD_TYPE=${{ matrix.configuration }} -DCMAKE_INSTALL_PREFIX=install-dir -G "Ninja" ..
           cmake --build . -j
